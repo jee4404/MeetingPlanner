@@ -13,7 +13,7 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "reunion")
 public class Reunion {
-    @DatabaseField(id = true, useGetSet = true, generatedId = true, canBeNull = false)
+    @DatabaseField(generatedId = true, canBeNull = false)
     private Integer id;
     @DatabaseField(useGetSet = true, canBeNull = false)
     private Date dateReunion;
@@ -26,9 +26,9 @@ public class Reunion {
 
     /*
         orm-lite a besoin d'un constructeur
-        sans paramêtre de visibilité package
+        sans paramêtre de visibilité package au min
     * */
-    Reunion(){}
+    public Reunion(){}
 
     public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente)
     {

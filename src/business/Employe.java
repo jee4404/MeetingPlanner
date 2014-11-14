@@ -8,7 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "employe")
 public class Employe {
-    @DatabaseField(id = true, useGetSet = true, generatedId = true, canBeNull = false)
+    @DatabaseField(generatedId = true, canBeNull = false)
     private Integer id;
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String nom;
@@ -19,9 +19,9 @@ public class Employe {
 
     /*
         orm-lite a besoin d'un constructeur
-        sans paramêtre de visibilité package
+        sans paramêtre de visibilité package au min
     * */
-    Employe(){}
+    public Employe(){}
 
     public Employe(String nom, String prenom, String courriel)
     {

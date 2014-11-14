@@ -15,9 +15,9 @@ public class Local {
 
     /*
         orm-lite a besoin d'un constructeur
-        sans paramêtre de visibilité package
+        sans paramêtre de visibilité package au min
     * */
-    Local(){}
+    public Local(){}
 
     public Local(String code, int capacite)
     {
