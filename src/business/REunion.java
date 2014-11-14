@@ -14,7 +14,7 @@ import java.util.List;
 @DatabaseTable(tableName = "reunion")
 public class Reunion {
     @DatabaseField(id = true, useGetSet = true, generatedId = true, canBeNull = false)
-    private int id;
+    private Integer id;
     @DatabaseField(useGetSet = true, canBeNull = false)
     private Date dateReunion;
     @DatabaseField(useGetSet = true, canBeNull = false)
@@ -38,7 +38,7 @@ public class Reunion {
         this.participants = new ArrayList<Employe>();
     }
 
-    public int getId()
+    public Integer getId()
     {
         return this.id;
     }
