@@ -1,4 +1,4 @@
 .idea
 MeetingPlanner.iml
 out/
-./db/meetingplanner
+db/meetingplanner
