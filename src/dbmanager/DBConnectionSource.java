@@ -20,7 +20,7 @@ public class DBConnectionSource {
     {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.connectionSource = new JdbcConnectionSource(Configuration.dbLocation + Configuration.dbURL);
+            this.connectionSource = new JdbcConnectionSource(Configuration.dbURL);
         }
         catch (SQLException ex)
         {
