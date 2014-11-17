@@ -19,14 +19,14 @@ public class FenetreEquipement extends JFrame{
 	  private JTable tableau;
 	  private JScrollPane listeParticipants;
 	  public FenetreEquipement(){                
-		    this.setTitle("Équipement");
+		    this.setTitle("Ã‰quipement");
 		    this.setSize(400, 230);
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setContentPane(pan);
 		    pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
-		    // Configuration des composants de la fenêtre
+		    // Configuration des composants de la fenÃªtre
 		    btAjouter.setPreferredSize(new Dimension(150, 30));
 		    btRetirer.setPreferredSize(new Dimension(150, 30));
 		    btFermer.setPreferredSize(new Dimension(150, 30));
@@ -42,18 +42,18 @@ public class FenetreEquipement extends JFrame{
 			gc.gridy=3;
 			gc.anchor = GridBagConstraints.PAGE_END;
 			pan.add(btFermer, gc);
-			 //Les données du tableau
+			 //Les donnÃ©es du tableau
 		    Object[][] data = {
 		      {"Projecteur", "1"},
 		      {"Ordinateur portable", "3"},
 		      {"Tableau blanc", "1"},
 		      {"Tableau feuille", "2"},
-		      {"Écran", "1"},
+		      {"Ã‰cran", "1"},
 		      {"Micros", "2"},
 		    };
 
 		    //Les titres des colonnes
-		    String  title[] = {"Type", "Quantité"};
+		    String  title[] = {"Type", "QuantitÃ©"};
 		    tableau = new JTable(data, title);
 		    listeParticipants = new JScrollPane(tableau);
 		    listeParticipants.setPreferredSize(new Dimension(200, 150));

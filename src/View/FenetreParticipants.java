@@ -26,7 +26,7 @@ public class FenetreParticipants extends JFrame {
 		    this.setContentPane(pan);
 		    pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
-		    // Configuration des composants de la fenêtre
+		    // Configuration des composants de la fenÃªtre
 		    btAjouter.setPreferredSize(new Dimension(150, 30));
 		    btRetirer.setPreferredSize(new Dimension(150, 30));
 		    btFermer.setPreferredSize(new Dimension(150, 30));
@@ -42,16 +42,16 @@ public class FenetreParticipants extends JFrame {
 			gc.gridy=3;
 			gc.anchor = GridBagConstraints.PAGE_END;
 			pan.add(btFermer, gc);
-			 //Les données du tableau
+			 //Les donnÃ©es du tableau
 		    Object[][] data = {
-		      {"Jean Augé"},
-		      {"Mireille Bédard"},
+		      {"Jean AugÃ©"},
+		      {"Mireille BÃ©dard"},
 		      {"Chang Choi"},
 		      {"Marie Dion"},
 		      {"Timothy Eaton"},
 		      {"Hans Faust"},
 		      {"Jimmy Giacona"},
-		      {"Noëlla Hétu"},
+		      {"NoÃ«lla HÃ©tu"},
 		      {"Zhuang Ing"}
 		    };
 

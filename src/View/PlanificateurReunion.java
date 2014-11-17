@@ -20,16 +20,16 @@ public class PlanificateurReunion extends JFrame {
 
 	private static final long serialVersionUID = 1L; 
 	  private JPanel pan = new JPanel();
-	  private JButton btCreerReunion = new JButton("Créer réunion...");
-	  private JButton btModifier = new JButton("Modifier réunion...");
-	  private JButton btAnnuler = new JButton("Annuler réunion");
+	  private JButton btCreerReunion = new JButton("CrÃ©er rÃ©union...");
+	  private JButton btModifier = new JButton("Modifier rÃ©union...");
+	  private JButton btAnnuler = new JButton("Annuler rÃ©union");
 	  private JButton btFermer = new JButton("Fermer");
-	  private JLabel lbTitre = new JLabel("Mes réunions");
+	  private JLabel lbTitre = new JLabel("Mes rÃ©unions");
 	  private JTable tableau;
 	  private JScrollPane listeReunion;
 	  private Font ftTitre = new Font("Tahoma", Font.BOLD,14);
 	  public PlanificateurReunion(){                
-		    this.setTitle("Planificateur de réunions");
+		    this.setTitle("Planificateur de rÃ©unions");
 		    this.setSize(450, 300);
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +37,7 @@ public class PlanificateurReunion extends JFrame {
 		    pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
 		    
-		    // Configuration des composants de la fenêtre
+		    // Configuration des composants de la fenÃªtre
 		    btCreerReunion.setPreferredSize(new Dimension(250, 30));
 		    btModifier.setPreferredSize(new Dimension(150, 30));
 		    btAnnuler.setPreferredSize(new Dimension(150, 30));
@@ -61,7 +61,7 @@ public class PlanificateurReunion extends JFrame {
 			gc.gridy=5;
 			gc.anchor = GridBagConstraints.PAGE_END;
 			pan.add(btFermer, gc);
-		    //Les données du tableau
+		    //Les donnÃ©es du tableau
 		    Object[][] data = {
 		      {"Projet XYZ", "14-11-2014", "15:30"},
 		      {"Recrutement", "31-11-2014", "13:00"},
