@@ -5,3 +5,5 @@ db/meetingplanner
 .classpath
 .project
 .settings/
+bin/
+db/sqlite3.exe
