@@ -1,6 +1,5 @@
 package business;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -27,13 +26,13 @@ public class Reunion {
     @DatabaseField(useGetSet = true, canBeNull = false)
     private boolean estRecurente;
 
-    //@ForeignCollectionField()
+    @ForeignCollectionField()
     private Collection<Employe> participants;
 
     @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
     private Local local;
 
-    //@DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
+    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
     private Employe organisateur;
 
     /*
