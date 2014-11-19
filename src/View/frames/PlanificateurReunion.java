@@ -1,4 +1,4 @@
-package View;
+package view.frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
