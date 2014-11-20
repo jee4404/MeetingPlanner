@@ -68,4 +68,8 @@ public class EmployeDBManager {
     {
         this.daoEmploye.update(employe);
     }
+    
+    /*public List trouverTousEmployes(){
+    	return this.daoEmploye.queryForAll();
+    }*/
 }

@@ -10,14 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+ * @author Marie Desaulniers
+ */
 public class FenetreEquipement extends JFrame{
 
 	 private JPanel pan = new JPanel();
-	  private JButton btAjouter = new JButton("Ajouter...");
-	  private JButton btRetirer = new JButton("Retirer...");
-	  private JButton btFermer = new JButton("Fermer");
+	  private Bouton btAjouter = new Bouton("Ajouter...");
+	  private Bouton btRetirer = new Bouton("Retirer...");
+	  private Bouton btFermer = new Bouton("Fermer");
 	  private JTable tableau;
-	  private JScrollPane listeParticipants;
+	  private JScrollPane listeEquipement;
 	  public FenetreEquipement(){                
 		    this.setTitle("Équipement");
 		    this.setSize(400, 230);
@@ -26,23 +29,9 @@ public class FenetreEquipement extends JFrame{
 		    this.setContentPane(pan);
 		    pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
-		    // Configuration des composants de la fenêtre
-		    btAjouter.setPreferredSize(new Dimension(150, 30));
-		    btRetirer.setPreferredSize(new Dimension(150, 30));
-		    btFermer.setPreferredSize(new Dimension(150, 30));
 		    
-		    gc.insets = new Insets(5, 5, 3, 3);
-			gc.gridx=1;
-			gc.gridy=0;
-			pan.add(btAjouter, gc);
-			gc.gridx=1;
-			gc.gridy=1;
-			pan.add(btRetirer, gc);
-			gc.gridx=1;
-			gc.gridy=3;
-			gc.anchor = GridBagConstraints.PAGE_END;
-			pan.add(btFermer, gc);
-			 //Les données du tableau
+		    //Le tableau des équipements
+		    String  entete[] = {"Type", "Quantité"};
 		    Object[][] data = {
 		      {"Projecteur", "1"},
 		      {"Ordinateur portable", "3"},
@@ -51,16 +40,21 @@ public class FenetreEquipement extends JFrame{
 		      {"Écran", "1"},
 		      {"Micros", "2"},
 		    };
-
-		    //Les titres des colonnes
-		    String  title[] = {"Type", "Quantité"};
-		    tableau = new JTable(data, title);
-		    listeParticipants = new JScrollPane(tableau);
-		    listeParticipants.setPreferredSize(new Dimension(200, 150));
-		    gc.gridx=0;
-			gc.gridy=0;
+		    tableau = new JTable(data, entete);
+		    listeEquipement = new ListeDeroulante(tableau,200,150);
+		    
+		    // Positionnement des composants sur la grille (boutons et tableau)
+		    gc.insets = new Insets(5, 5, 3, 3);
+			gc.gridx=1;		gc.gridy=0;
+			pan.add(btAjouter, gc);
+			gc.gridx=1;		gc.gridy=1;
+			pan.add(btRetirer, gc);
+			gc.gridx=1;		gc.gridy=3;
+			gc.anchor = GridBagConstraints.PAGE_END;
+			pan.add(btFermer, gc);
+		    gc.gridx=0;		gc.gridy=0;
 			gc.gridheight = 4;
-		    pan.add(listeParticipants,gc);
+		    pan.add(listeEquipement,gc);
 			this.setVisible(true);
 	  }
 
