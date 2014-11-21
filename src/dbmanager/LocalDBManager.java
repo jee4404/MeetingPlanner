@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * du type donné via l'orm ormlite
  */
 public class LocalDBManager {
-    private Dao<Local, Integer> daoLocal;
+    private Dao<Local, String> daoLocal;
     private static LocalDBManager instance;
 
     private LocalDBManager()
@@ -47,9 +47,9 @@ public class LocalDBManager {
         this.daoLocal.create(local);
     }
 
-    public Local trouverLocal(Integer idLocal) throws SQLException
+    public Local trouverLocal(String codeLocal) throws SQLException
     {
-        Local local = this.daoLocal.queryForId(idLocal);
+        Local local = this.daoLocal.queryForId(codeLocal);
         return local;
     }
 
