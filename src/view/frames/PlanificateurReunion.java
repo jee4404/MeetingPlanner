@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,7 +18,7 @@ import view.components.*;
  * @author Marie Desaulniers
  * Interface graphique principale du planificateur de réunion
  */
-public class PlanificateurReunion extends JFrame {
+public class PlanificateurReunion extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L; 
 	private JTabbedPane onglet;
@@ -106,5 +109,34 @@ public class PlanificateurReunion extends JFrame {
 		panMesInvitations.add(listeReunion2,gc2);
 		
 		this.setVisible(true);
+		
+	    btCreerReunion.addActionListener(this);
+	    btModifier.addActionListener(this);
+	    btAnnuler.addActionListener(this);
+	    btFermer1.addActionListener(this);
+	    btFermer2.addActionListener(this);
+	    btAccepter.addActionListener(this);
+	    btRefuser.addActionListener(this);
+
 	  }
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	    Object src = evt.getSource();
+	    if (src == btCreerReunion) {
+	      // ... perform action for btCreerReunion
+	    } else if (src == btModifier) {
+		      // ... perform action for btModifier
+	    } else if (src == btAnnuler) {
+	    	// ... perform action for btAnnuler
+	    } else if ((src == btFermer1) || (src == btFermer2)) {
+	    	// ... perform action for btFermer1 or btFermer2
+	    } else if (src == btAccepter) {
+	    	// ... perform action for btAccepter
+	    } else if (src == btRefuser) {
+	    	// ... perform action for btRefuser
+	    }
+	}
 }

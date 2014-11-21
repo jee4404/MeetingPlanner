@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +17,7 @@ import view.components.*;
 /**
  * @author Marie Desaulniers
  */
-public class FenetreParticipants extends JFrame {
+public class FenetreParticipants extends JFrame implements ActionListener {
 	 private JPanel pan = new JPanel();
 	  private Bouton btAjouter = new Bouton("Ajouter <<", 100, 25);
 	  private Bouton btRetirer = new Bouton("Retirer >>", 100, 25);
@@ -74,6 +76,25 @@ public class FenetreParticipants extends JFrame {
 			gc.gridheight = 4;
 			pan.add(listeEmployes,gc);
 			this.setVisible(true);
+			
+		    btAjouter.addActionListener(this);
+		    btRetirer.addActionListener(this);
+		    btFermer.addActionListener(this);
+
 	  }
 
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	    Object src = evt.getSource();
+	    if (src == btAjouter) {
+	      // ... perform action for btAjouter
+	    } else if (src == btRetirer) {
+		      // ... perform action for btRetirer
+	    } else if (src == btFermer) {
+	    	// ... perform action for btFermer
+	    }
+	    
+	    
+	}
 }
