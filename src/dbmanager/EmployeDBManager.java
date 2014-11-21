@@ -1,6 +1,8 @@
 package dbmanager;
 
 import business.Employe;
+import business.Organisateur;
+import business.Participant;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;

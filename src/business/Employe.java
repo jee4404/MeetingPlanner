@@ -1,21 +1,25 @@
 package business;
 
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by Rémy on 2014-11-13.
  */
-@DatabaseTable(tableName = "employe")
-public class Employe {
+public abstract class Employe {
     @DatabaseField(generatedId = true, canBeNull = false)
     private Integer id;
+
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String nom;
+
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String prenom;
+
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String courriel;
+
+    @DatabaseField(useGetSet = true, foreign = true)
+    private ListeParticipants listeParticipants;
 
     /*
         orm-lite a besoin d'un constructeur
@@ -49,17 +53,28 @@ public class Employe {
     {
         return this.id;
     }
+    public ListeParticipants getListeParticipants()
+    {
+        return this.listeParticipants;
+    }
 
     public void setNom(String nom)
     {
         this.nom = nom;
     }
+
     public void setPrenom(String prenom)
     {
         this.prenom = prenom;
     }
+
     public void setCourriel(String courriel)
     {
         this.courriel = courriel;
+    }
+
+    public void setListeParticipants(ListeParticipants listeParticipants)
+    {
+        this.listeParticipants = listeParticipants;
     }
 }

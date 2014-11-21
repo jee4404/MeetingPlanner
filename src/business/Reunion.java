@@ -26,40 +26,34 @@ public class Reunion {
     @DatabaseField(useGetSet = true, canBeNull = false)
     private boolean estRecurente;
 
-    @ForeignCollectionField()
-    private Collection<Employe> participants;
-
     @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
     private Local local;
 
     @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
-    private Employe organisateur;
+    private Organisateur organisateur;
 
+    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
+    private ListeParticipants listeParticipants;
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
     * */
-    public Reunion()
-    {
-        this.participants = new ArrayList<Employe>();
-    }
+    public Reunion(){}
 
-    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Employe organisateur)
+    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
     {
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
-        this.participants = new ArrayList<Employe>();
         this.local = null;
         this.organisateur = organisateur;
     }
 
-    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Employe organisateur)
+    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
     {
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
-        this.participants = new ArrayList<Employe>();
         this.local = local;
         this.organisateur = organisateur;
     }
@@ -93,19 +87,19 @@ public class Reunion {
         return this.dateReunion;
     }
 
-    public Collection<Employe> getParticipants()
-    {
-        return this.participants;
-    }
-
     public Local getLocal()
     {
         return this.local;
     }
 
-    public Employe getOrganisateur()
+    public Organisateur getOrganisateur()
     {
         return this.organisateur;
+    }
+
+    public ListeParticipants getListeParticipants()
+    {
+        return this.listeParticipants;
     }
 
     public void setDateReunion(Date dateReunion)
@@ -123,28 +117,18 @@ public class Reunion {
         this.estRecurente = estRecurente;
     }
 
-    public void ajouterParticipant(Employe employe)
-    {
-        this.participants.add(employe);
-    }
-
-    public void retirerParticipant(Employe employe)
-    {
-        this.participants.remove(employe);
-    }
-
     public void setLocal(Local local)
     {
         this.local = local;
     }
 
-    public void setParticipants(List<Employe> participants)
-    {
-        this.participants = participants;
-    }
-
-    public void setOrganisateur(Employe organisateur)
+    public void setOrganisateur(Organisateur organisateur)
     {
         this.organisateur = organisateur;
+    }
+
+    public void setListeParticipants(ListeParticipants liste)
+    {
+        this.listeParticipants = liste;
     }
 }
