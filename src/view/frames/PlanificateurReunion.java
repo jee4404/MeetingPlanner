@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-
+import view.components.*;
 /**
  * @author Marie Desaulniers
  * Interface graphique principale du planificateur de réunion
