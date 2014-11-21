@@ -1,16 +1,12 @@
 package View;
 
-import javax.swing.JButton;
 import java.awt.Dimension;
 
-/**
- * @author Marie Desaulniers
- * Bouton de dimension prédéterminée
- */
+import javax.swing.JButton;
+
 public class Bouton extends JButton{
 	Dimension dimBouton = new Dimension(150,25);
-	
-	public  Bouton(String titre){
+	public Bouton(String titre){
 		this.setPreferredSize(dimBouton);
 		this.setText(titre);
 	}

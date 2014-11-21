@@ -15,8 +15,7 @@ import javax.swing.JTable;
  */
 public class FenetreParticipants extends JFrame {
 	 private JPanel pan = new JPanel();
-	  private Bouton btAjouter = new Bouton("Ajouter...");
-	  private Bouton btRetirer = new Bouton("Retirer...");
+	  private Bouton btModifier = new Bouton("Modifier...");
 	  private Bouton btFermer = new Bouton("Fermer");
 	  private JTable tableau;
 	  private JScrollPane listeParticipants;
@@ -48,9 +47,7 @@ public class FenetreParticipants extends JFrame {
 		    // Positionnement des composants sur la grille (boutons et tableau)
 		    gc.insets = new Insets(5, 5, 3, 3);
 			gc.gridx=1;		gc.gridy=0;
-			pan.add(btAjouter, gc);
-			gc.gridx=1;		gc.gridy=1;
-			pan.add(btRetirer, gc);
+			pan.add(btModifier, gc);
 			gc.gridx=1;		gc.gridy=3;
 			gc.anchor = GridBagConstraints.PAGE_END;
 			pan.add(btFermer, gc);
