@@ -5,7 +5,9 @@ import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import dbmanager.ParticipationDBManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -17,9 +19,12 @@ public class ListeParticipants {
 
     public ListeParticipants(){}
 
-    public ListeParticipants(Reunion reunion)
+    public ListeParticipants(Reunion reunion) throws SQLException
     {
         this.reunion = reunion;
+
+        // init liste des participations
+        this.participations = ParticipationDBManager.getInstance().trouverParticipationParReunion(reunion.getId());
     }
 
     // TODO : il faut ajouter la ligne de participation en base
