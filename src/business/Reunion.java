@@ -31,9 +31,6 @@ public class Reunion {
 
     @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
     private Organisateur organisateur;
-
-    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
-    private ListeParticipants listeParticipants;
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
@@ -97,11 +94,6 @@ public class Reunion {
         return this.organisateur;
     }
 
-    public ListeParticipants getListeParticipants()
-    {
-        return this.listeParticipants;
-    }
-
     public void setDateReunion(Date dateReunion)
     {
         this.dateReunion = dateReunion;
@@ -125,10 +117,5 @@ public class Reunion {
     public void setOrganisateur(Organisateur organisateur)
     {
         this.organisateur = organisateur;
-    }
-
-    public void setListeParticipants(ListeParticipants liste)
-    {
-        this.listeParticipants = liste;
     }
 }
