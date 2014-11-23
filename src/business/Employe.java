@@ -20,9 +20,6 @@ public class Employe {
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String courriel;
 
-    @ForeignCollectionField
-    private ForeignCollection<Participation> participationsReunion;
-
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
@@ -56,11 +53,6 @@ public class Employe {
         return this.id;
     }
 
-    public ForeignCollection<Participation> getParticipationsReunion()
-    {
-        return this.participationsReunion;
-    }
-
     public void setNom(String nom)
     {
         this.nom = nom;
@@ -76,8 +68,4 @@ public class Employe {
         this.courriel = courriel;
     }
 
-    public void setParticipationsReunion(ForeignCollection<Participation> participations)
-    {
-        this.participationsReunion = participations;
-    }
 }
