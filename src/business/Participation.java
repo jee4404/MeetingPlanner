@@ -11,10 +11,10 @@ public class Participation {
     @DatabaseField(generatedId = true, canBeNull = false )
     private Integer id;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, useGetSet = true)
     private Participant participant;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, useGetSet = true)
     private Reunion reunion;
 
     @DatabaseField
