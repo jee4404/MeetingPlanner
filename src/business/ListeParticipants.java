@@ -6,18 +6,13 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 /**
  * Created by Rémy on 2014-11-19.
  */
-@DatabaseTable(tableName = "listeparticipant")
 public class ListeParticipants {
-    @DatabaseField(generatedId = true, useGetSet = true)
-    private Integer id;
-
-    @ForeignCollectionField()
-    private ForeignCollection<Participant> participants;
-
-    @DatabaseField(foreign = true, useGetSet = true, canBeNull = true)
+    private List<Participation> participations;
     private Reunion reunion;
 
     public ListeParticipants(){}
@@ -27,29 +22,34 @@ public class ListeParticipants {
         this.reunion = reunion;
     }
 
-    // orm get-set
-    public Integer getId()
+    public void ajouterParticipant(Participant participant)
     {
-        return this.id;
+        this.participations.add(participant);
     }
 
+    public void enleverParticipant(Participant participant)
+    {
+        this.participations.remove(participant);
+    }
+
+    // orm get-set
     public Reunion getReunion()
     {
         return this.reunion;
     }
 
-    public ForeignCollection<Participant> getParticipants()
+    public List<Participation> getParticipants()
     {
-        return this.participants;
-    }
-
-    public void setId(Integer id)
-    {
-        this.id = id;
+        return this.participations;
     }
 
     public void setReunion(Reunion reunion)
     {
         this.reunion = reunion;
+    }
+
+    public void setParticipants(List<Employe> participants)
+    {
+        this.participations = participants;
     }
 }
