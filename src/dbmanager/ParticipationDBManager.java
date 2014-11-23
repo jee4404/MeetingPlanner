@@ -8,6 +8,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Rémy on 2014-11-23.
@@ -67,10 +68,10 @@ public class ParticipationDBManager {
         this.daoParticipations.delete(participation);
     }
 
-    public void trouverParticipationParReunion(Integer idReunion) throws SQLException
+    public List<Participation> trouverParticipationParReunion(Integer idReunion) throws SQLException
     {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("reunion_id", idReunion);
-        this.daoParticipations.queryForFieldValues(queryParams);
+        return this.daoParticipations.queryForFieldValues(queryParams);
     }
 }
