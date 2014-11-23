@@ -1,14 +1,13 @@
 package dbmanager;
 
 import business.Employe;
-import business.Organisateur;
-import business.Participant;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Rémy on 2014-11-13.
@@ -71,7 +70,8 @@ public class EmployeDBManager {
         this.daoEmploye.update(employe);
     }
     
-    /*public List trouverTousEmployes(){
+    public List<Employe> trouverTousEmployes() throws  SQLException
+    {
     	return this.daoEmploye.queryForAll();
-    }*/
+    }
 }

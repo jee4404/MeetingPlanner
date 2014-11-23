@@ -7,6 +7,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.List;
+
 /**
  * Created by Rémy on 2014-11-13.
  * Les DBManager permettent les opérations CRUD sur les objets
@@ -68,4 +70,8 @@ public class LocalDBManager {
         this.daoLocal.update(local);
     }
 
+    public List<Local> trouverTousLocaux() throws SQLException
+    {
+        return this.daoLocal.queryForAll();
+    }
 }

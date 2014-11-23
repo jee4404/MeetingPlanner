@@ -1,11 +1,13 @@
 package business;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 
 /**
  * Created by Rémy on 2014-11-13.
  */
-public abstract class Employe {
+public class Employe {
     @DatabaseField(generatedId = true, canBeNull = false)
     private Integer id;
 
@@ -18,8 +20,8 @@ public abstract class Employe {
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String courriel;
 
-    @DatabaseField(useGetSet = true, foreign = true)
-    private ListeParticipants listeParticipants;
+    @ForeignCollectionField
+    private ForeignCollection<Participation> participationsReunion;
 
     /*
         orm-lite a besoin d'un constructeur
@@ -53,9 +55,10 @@ public abstract class Employe {
     {
         return this.id;
     }
-    public ListeParticipants getListeParticipants()
+
+    public ForeignCollection<Participation> getParticipationsReunion()
     {
-        return this.listeParticipants;
+        return this.participationsReunion;
     }
 
     public void setNom(String nom)
@@ -73,8 +76,8 @@ public abstract class Employe {
         this.courriel = courriel;
     }
 
-    public void setListeParticipants(ListeParticipants listeParticipants)
+    public void setParticipationsReunion(ForeignCollection<Participation> participations)
     {
-        this.listeParticipants = listeParticipants;
+        this.participationsReunion = participations;
     }
 }

@@ -22,17 +22,18 @@ public class ListeParticipants {
         this.reunion = reunion;
     }
 
-    public void ajouterParticipant(Participant participant)
+    // TODO : il faut ajouter la ligne de participation en base
+    public void ajouterParticipation(Participation participation)
     {
-        this.participations.add(participant);
+        this.participations.add(participation);
     }
 
-    public void enleverParticipant(Participant participant)
+    // TODO : il faut supprimer la ligne de participation en base
+    public void enleverParticipation(Participation participation)
     {
-        this.participations.remove(participant);
+        this.participations.remove(participation);
     }
 
-    // orm get-set
     public Reunion getReunion()
     {
         return this.reunion;
@@ -43,13 +44,15 @@ public class ListeParticipants {
         return this.participations;
     }
 
+    // TODO : il faut mettre la ligne de participation en base à jour
     public void setReunion(Reunion reunion)
     {
         this.reunion = reunion;
     }
 
-    public void setParticipants(List<Employe> participants)
+    // ne devrait pas être utilié
+    public void setParticipations(List<Participation> participations)
     {
-        this.participations = participants;
+        this.participations = participations;
     }
 }
