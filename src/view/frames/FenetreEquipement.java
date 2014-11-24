@@ -20,7 +20,7 @@ import view.components.*;
  */
 public class FenetreEquipement extends JFrame implements ActionListener {
 
-	 private JPanel pan = new JPanel();
+	  private JPanel pan = new JPanel();
 	  private Bouton btAjouter = new Bouton("Ajouter <<", 100, 25);
 	  private Bouton btRetirer = new Bouton("Retirer >>", 100, 25);
 	  private Bouton btFermer = new Bouton("Fermer", 100, 25);
@@ -36,8 +36,8 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setContentPane(pan);
-		    pan.setLayout(new GridBagLayout());
-		    GridBagConstraints gc = new GridBagConstraints();
+		    this.pan.setLayout(new GridBagLayout());
+		    GridBagConstraints gcEqp = new GridBagConstraints();
 		    
 		    //Le tableau des équipements
 		    String  entete[] = {"Type", "Quantité"};
@@ -49,30 +49,30 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		      {"Écran", "1"},
 		      {"Micros", "2"},
 		    };
-		    tableau = new JTable(data, entete);
-		    tableauDispo = new JTable(data, entete);
-		    listeEquipement = new ListeDeroulante(tableau,200,150);
-		    listeEquipmentDispo = new ListeDeroulante(tableauDispo,200,150);
+		    this.tableau = new JTable(data, entete);
+		    this.tableauDispo = new JTable(data, entete);
+		    this.listeEquipement = new ListeDeroulante(tableau,200,150);
+		    this.listeEquipmentDispo = new ListeDeroulante(tableauDispo,200,150);
 		    
 		    // Positionnement des composants sur la grille (boutons et tableau)
-		    gc.insets = new Insets(5, 5, 3, 3);
-		    gc.gridx=0;		gc.gridy=0;
-			pan.add(lbEquipment, gc);
-			gc.gridx=2;		gc.gridy=0;
-			pan.add(lbEquipmentDispo, gc);
-			gc.gridx=1;		gc.gridy=1;
-			pan.add(btAjouter, gc);
-			gc.gridx=1;		gc.gridy=2;
-			pan.add(btRetirer, gc);
-			gc.gridx=1;		gc.gridy=4;
-			gc.anchor = GridBagConstraints.PAGE_END;
-			pan.add(btFermer, gc);
-		    gc.gridx=0;		gc.gridy=1;
-			gc.gridheight = 4;
-		    pan.add(listeEquipement,gc);
-		    gc.gridx=2; gc.gridy=1;
-		    gc.gridheight = 4;
-		    pan.add(listeEquipmentDispo, gc);
+		    gcEqp.insets = new Insets(5, 5, 3, 3);
+		    gcEqp.gridx=0;		gcEqp.gridy=0;
+			pan.add(lbEquipment, gcEqp);
+			gcEqp.gridx=2;		gcEqp.gridy=0;
+			pan.add(lbEquipmentDispo, gcEqp);
+			gcEqp.gridx=1;		gcEqp.gridy=1;
+			pan.add(btAjouter, gcEqp);
+			gcEqp.gridx=1;		gcEqp.gridy=2;
+			pan.add(btRetirer, gcEqp);
+			gcEqp.gridx=1;		gcEqp.gridy=4;
+			gcEqp.anchor = GridBagConstraints.PAGE_END;
+			pan.add(btFermer, gcEqp);
+			gcEqp.gridx=0;		gcEqp.gridy=1;
+			gcEqp.gridheight = 4;
+		    pan.add(listeEquipement,gcEqp);
+		    gcEqp.gridx=2; gcEqp.gridy=1;
+		    gcEqp.gridheight = 4;
+		    pan.add(listeEquipmentDispo, gcEqp);
 			this.setVisible(true);
 	  }
 

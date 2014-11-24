@@ -18,7 +18,7 @@ import view.components.*;
  * @author Marie Desaulniers
  */
 public class FenetreParticipants extends JFrame implements ActionListener {
-	 private JPanel pan = new JPanel();
+	  private JPanel pan = new JPanel();
 	  private Bouton btAjouter = new Bouton("Ajouter <<", 100, 25);
 	  private Bouton btRetirer = new Bouton("Retirer >>", 100, 25);
 	  private Bouton btFermer = new Bouton("Fermer", 100, 25);
@@ -35,7 +35,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setContentPane(pan);
-		    pan.setLayout(new GridBagLayout());
+		    this.pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
 		    
 		    //Le tableau des participants

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 
 public class Bouton extends JButton{
-	//Dimension dimBouton = new Dimension(150,25);
 	Dimension dimBouton = new Dimension();
 	public Bouton(String titre, int dx, int dy){
 		dimBouton.width = dx;

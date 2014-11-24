@@ -22,21 +22,10 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L; 
 	private JTabbedPane onglet;
-	private JPanel panMesReunions = new JPanel();
-	private JPanel panMesInvitations = new JPanel();
-	int btWidth = 150;
-	int btHeight = 25;
-	private Bouton btCreerReunion = new Bouton("Nouvelle réunion...", btWidth, btHeight);
-	private Bouton btModifier = new Bouton("Modifier réunion...", btWidth, btHeight);
-	private Bouton btAnnuler = new Bouton("Annuler réunion", btWidth, btHeight);
-	private Bouton btFermer1 = new Bouton("Fermer", btWidth, btHeight);
-	private Bouton btFermer2 = new Bouton("Fermer", btWidth, btHeight);
-	private Bouton btAccepter = new Bouton("Accepter", btWidth, btHeight);
-	private Bouton btRefuser = new Bouton("Refuser", btWidth, btHeight);
-	private JTable tableau1;
-	private JTable tableau2;
-	private ListeDeroulante listeReunion1;
-	private ListeDeroulante listeReunion2;
+	private JPanel panMesReunions, panMesInvitations;
+	private Bouton btCreerReunion, btModifier,btAnnuler, btFermer1, btFermer2, btAccepter,btRefuser;
+	private JTable tableau1,tableau2;
+	private ListeDeroulante listeReunion1, listeReunion2;
 
 	public PlanificateurReunion(){
 		// Configuration de la fenêtre
@@ -45,7 +34,20 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);               
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    
+		
+		// Création des composants
+		panMesReunions = new JPanel();
+		panMesInvitations = new JPanel();
+		int btWidth = 150;	int btHeight = 25;
+		btCreerReunion = new Bouton("Nouvelle réunion...", btWidth, btHeight);
+		btModifier = new Bouton("Modifier réunion...", btWidth, btHeight);
+		btAnnuler = new Bouton("Annuler réunion", btWidth, btHeight);
+		btFermer1 = new Bouton("Fermer", btWidth, btHeight);
+		btFermer2 = new Bouton("Fermer", btWidth, btHeight);
+		btAccepter = new Bouton("Accepter", btWidth, btHeight);
+		btRefuser = new Bouton("Refuser", btWidth, btHeight);
+		
+
 		// Configuration des onglets
 		onglet = new JTabbedPane();
 		onglet.addTab("Mes Réunions", panMesReunions);
