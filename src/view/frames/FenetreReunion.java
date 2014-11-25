@@ -5,11 +5,14 @@ import javax.swing.*;
 import view.components.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Rémy on 2014-11-18.
+ * Modified by Marie on 2014-11-23
  */
-public class FenetreReunion extends JFrame {
+public class FenetreReunion extends JFrame implements ActionListener{
 	private JPanel panPrincipal,panGauche, panDroit,panHautDroit, panBasDroit;
     private JTextField sujetReunionField,dateReunionField,localReunionField;
     private JLabel sujetReunionLabel, dateReunionLabel,
@@ -26,6 +29,7 @@ public class FenetreReunion extends JFrame {
         this.setTitle("Planifier une réunion");
         this.setSize(570, 270);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);  
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Configuration des panneaux
@@ -168,5 +172,33 @@ public class FenetreReunion extends JFrame {
         panBasDroit.add(btFermer,gcBD);
 
         this.setVisible(true);
+        
+        btLocal.addActionListener(this);
+        btParticipants.addActionListener(this);
+        btEquip.addActionListener(this);
+        btFermer.addActionListener(this);
+        btSave.addActionListener(this);
+
+
     }
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	    Object src = evt.getSource();
+	    if (src == btLocal) {
+	    	FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
+	    } else if (src == btParticipants) {
+	    	FenetreParticipants fenParticipants = new FenetreParticipants();
+	    } else if (src == btEquip) {
+	    	FenetreEquipement fenEquipement = new FenetreEquipement();
+	    } else if (src == btFermer) {
+	    	this.setVisible(false);
+	    }else if (src == btSave) {
+	    	// ... perform action for btFermer
+	    }
+	    
+	    
+	    
+	    
+}
 }

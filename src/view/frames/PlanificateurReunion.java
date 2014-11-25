@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+
 import view.components.*;
 /**
  * @author Marie Desaulniers
@@ -119,7 +120,6 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    btFermer2.addActionListener(this);
 	    btAccepter.addActionListener(this);
 	    btRefuser.addActionListener(this);
-
 	  }
 	
 	
@@ -128,17 +128,17 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 	    Object src = evt.getSource();
 	    if (src == btCreerReunion) {
-	      // ... perform action for btCreerReunion
+	    	FenetreReunion fenReunion = new FenetreReunion();
 	    } else if (src == btModifier) {
-		      // ... perform action for btModifier
+	    	FenetreReunion fenReunion = new FenetreReunion();
 	    } else if (src == btAnnuler) {
 	    	// ... perform action for btAnnuler
 	    } else if ((src == btFermer1) || (src == btFermer2)) {
-	    	// ... perform action for btFermer1 or btFermer2
+	    	this.setVisible(false);
 	    } else if (src == btAccepter) {
 	    	// ... perform action for btAccepter
 	    } else if (src == btRefuser) {
-	    	// ... perform action for btRefuser
+	    	FenetreMotifRefus fenMotif = new FenetreMotifRefus();
 	    }
 	}
 }

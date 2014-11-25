@@ -21,15 +21,11 @@ import view.components.*;
 public class FenetreEquipement extends JFrame implements ActionListener {
 
 	  private JPanel pan = new JPanel();
-	  private Bouton btAjouter = new Bouton("Ajouter <<", 100, 25);
-	  private Bouton btRetirer = new Bouton("Retirer >>", 100, 25);
-	  private Bouton btFermer = new Bouton("Fermer", 100, 25);
-	  private JTable tableau;
-	  private JTable tableauDispo;
-	  private JScrollPane listeEquipement;
-	  private JScrollPane listeEquipmentDispo;
-	  private JLabel lbEquipment = new JLabel("Équipement requis");
-	  private JLabel lbEquipmentDispo = new JLabel("Équipement disponible");
+	  private Bouton btAjouter,btRetirer,btFermer;
+	  private JTable tableau,tableauDispo;
+	  private JScrollPane listeEquipement,listeEquipmentDispo;
+	  private JLabel lbEquipment,lbEquipmentDispo;
+	  
 	  public FenetreEquipement(){                
 		    this.setTitle("Équipement");
 		    this.setSize(580, 250);
@@ -40,6 +36,13 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    this.pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gcEqp = new GridBagConstraints();
 		    
+		    //Création des composants
+		    this.btAjouter = new Bouton("Ajouter <<", 100, 25);
+			this.btRetirer = new Bouton("Retirer >>", 100, 25);
+			this.btFermer = new Bouton("Fermer", 100, 25);
+			this.lbEquipment = new JLabel("Équipement requis");
+			this.lbEquipmentDispo = new JLabel("Équipement disponible");
+			
 		    //Le tableau des équipements
 		    String  entete[] = {"Type", "Quantité"};
 		    Object[][] data = {
@@ -75,6 +78,10 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    gcEqp.gridheight = 4;
 		    pan.add(listeEquipmentDispo, gcEqp);
 			this.setVisible(true);
+			
+			btAjouter.addActionListener(this);
+			btRetirer.addActionListener(this);
+			btFermer.addActionListener(this);
 	  }
 
 		@Override
@@ -86,7 +93,7 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    } else if (src == btRetirer) {
 			      // ... perform action for btRetirer
 		    } else if (src == btFermer) {
-		    	// ... perform action for btFermer
+		    	this.setVisible(false);
 		    }
 		    
 		    

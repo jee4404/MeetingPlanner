@@ -18,16 +18,11 @@ import view.components.*;
  * @author Marie Desaulniers
  */
 public class FenetreParticipants extends JFrame implements ActionListener {
-	  private JPanel pan = new JPanel();
-	  private Bouton btAjouter = new Bouton("Ajouter <<", 100, 25);
-	  private Bouton btRetirer = new Bouton("Retirer >>", 100, 25);
-	  private Bouton btFermer = new Bouton("Fermer", 100, 25);
-	  private JTable tableau;
-	  private JTable lstEmployes;
-	  private JScrollPane listeParticipants;
-	  private JScrollPane listeEmployes;
-	  private JLabel lbParticipants = new JLabel("Participants");
-	  private JLabel lbEmployes = new JLabel("Employés");
+	  private JPanel pan;
+	  private Bouton btAjouter, btRetirer, btFermer;
+	  private JTable tableau, lstEmployes;
+	  private JScrollPane listeParticipants, listeEmployes;;
+	  private JLabel lbParticipants,lbEmployes;
 
 	  public FenetreParticipants(){                
 		    this.setTitle("Participants");
@@ -35,9 +30,17 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 		    this.setResizable(false);
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    this.pan = new JPanel();
 		    this.setContentPane(pan);
 		    this.pan.setLayout(new GridBagLayout());
 		    GridBagConstraints gc = new GridBagConstraints();
+		    
+		    // Création des composants
+			 this.btAjouter = new Bouton("Ajouter <<", 100, 25);
+			 this.btRetirer = new Bouton("Retirer >>", 100, 25);
+			 this.btFermer = new Bouton("Fermer", 100, 25);
+			 this.lbParticipants = new JLabel("Participants");
+			 this.lbEmployes = new JLabel("Employés");
 		    
 		    //Le tableau des participants
 		    Object[][] data = {
@@ -96,7 +99,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	    } else if (src == btRetirer) {
 		      // ... perform action for btRetirer
 	    } else if (src == btFermer) {
-	    	// ... perform action for btFermer
+	    	this.setVisible(false);
 	    }
 	    
 	    
