@@ -32,6 +32,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	  public FenetreParticipants(){                
 		    this.setTitle("Participants");
 		    this.setSize(580, 250);
+		    this.setResizable(false);
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setContentPane(pan);
@@ -40,18 +41,21 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 		    
 		    //Le tableau des participants
 		    Object[][] data = {
-		      {"Jean Augé"},
-		      {"Mireille Bédard"},
-		      {"Chang Choi"},
-		      {"Marie Dion"},
-		      {"Timothy Eaton"},
-		      {"Hans Faust"},
-		      {"Jimmy Giacona"},
-		      {"Noëlla Hétu"},
-		      {"Zhuang Ing"}
+		      {"Jean Augé", "accepté"},
+		      {"Mireille Bédard", "décliné"},
+		      {"Chang Choi", "en attente" },
+		      {"Marie Dion", "accepté"},
+		      {"Timothy Eaton", "accepté"},
+		      {"Hans Faust", "décliné"},
+		      {"Jimmy Giacona", "en attente"},
+		      {"Noëlla Hétu","accepté"},
+		      {"Zhuang Ing","accepté"}
 		    };
-		    String  title[] = {"Nom"};
+		    String  title[] = {"Nom", "État"};
 		    tableau = new JTable(data, title);
+		    Object[][] tableEmployes = {
+		    		
+		    };
 		    lstEmployes = new JTable(data, title);
 		    listeParticipants = new ListeDeroulante(tableau,200,150);
 		    listeEmployes = new ListeDeroulante(lstEmployes,200,150);

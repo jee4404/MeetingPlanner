@@ -29,7 +29,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 
 	public PlanificateurReunion(){
 		// Configuration de la fenêtre
-		this.setTitle("Planificateur de réunions");
+		this.setTitle("Accueil");
 		this.setSize(500, 250);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);               

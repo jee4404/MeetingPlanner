@@ -25,6 +25,7 @@ public class FenetreReunion extends JFrame {
     	// Configuration de la fenêtre
         this.setTitle("Planifier une réunion");
         this.setSize(570, 270);
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Configuration des panneaux

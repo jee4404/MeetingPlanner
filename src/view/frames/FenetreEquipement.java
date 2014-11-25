@@ -33,6 +33,7 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 	  public FenetreEquipement(){                
 		    this.setTitle("Équipement");
 		    this.setSize(580, 250);
+		    this.setResizable(false);
 		    this.setLocationRelativeTo(null);               
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setContentPane(pan);
