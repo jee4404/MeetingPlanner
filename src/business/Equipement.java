@@ -15,7 +15,7 @@ public class Equipement {
     private String typeEquipement;
 
     @DatabaseField(useGetSet = true, canBeNull = true)
-    private String desciption;
+    private String description;
 
     public Equipement(){}
 
@@ -29,9 +29,9 @@ public class Equipement {
         return this.typeEquipement;
     }
 
-    public String getDesciption()
+    public String getDescription()
     {
-        return this.desciption;
+        return this.description;
     }
 
     public void setTypeEquipement(String typeEquipement)
@@ -39,8 +39,8 @@ public class Equipement {
         this.typeEquipement = typeEquipement;
     }
 
-    public void setDesciption(String desciption)
+    public void setDescription(String description)
     {
-        this.desciption = desciption;
+        this.description = description;
     }
 }

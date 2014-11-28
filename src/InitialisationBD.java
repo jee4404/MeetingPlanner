@@ -12,8 +12,7 @@ public class InitialisationBD {
 	
 	public static void remplirDBEmploye(){
 		try {
-			if(false)
-				throw new SQLException("bouh");
+			
 	        // test orm lite - methode 1, creation objet par constructeur
 	        EmployeDBManager employeDBManager = EmployeDBManager.getInstance();
 	        Employe testEmploye = new Employe("foo", "bar", "foo@bar.com");
@@ -46,8 +45,7 @@ public class InitialisationBD {
 		
 	public static void remplirDBLocal(){
 		try {
-			if(false)
-				throw new SQLException("bouh");
+			
 			// test avec classe local
 	        LocalDBManager localDBManager = LocalDBManager.getInstance();
 	        Local testLocal = new Local("0E3C", 20);
@@ -62,37 +60,36 @@ public class InitialisationBD {
 
     public static void remplirDBEquipement(){
     	try {
-			if(false)
-				throw new SQLException("bouh");
+			
 			// test avec classe local
 			EquipementDBManager instanceDBEquipement = EquipementDBManager.getInstance();
 	        Equipement testEquip1 = new Equipement();
 	        testEquip1.setTypeEquipement("Projecteur");
-	        testEquip1.setDesiption("Projecteur portable");
+	        testEquip1.setDescription("Projecteur portable");
 	        instanceDBEquipement.creerEquipement(testEquip1);
 	        Equipement testEquip2 = new Equipement();
 	        testEquip2.setTypeEquipement("Retro-projecteur");
-	        testEquip2.setDesiption("Projecteur portable");
+	        testEquip2.setDescription("Projecteur portable");
 	        instanceDBEquipement.creerEquipement(testEquip2);
 	        Equipement testEquip3 = new Equipement();
 	        testEquip3.setTypeEquipement("Ordinateur portable");
-	        testEquip3.setDesiption("Système exploitation W7");
+	        testEquip3.setDescription("Système exploitation W7");
 	        instanceDBEquipement.creerEquipement(testEquip3);
 	        Equipement testEquip4 = new Equipement();
 	        testEquip4.setTypeEquipement("Tableau blanc");
-	        testEquip4.setDesiption("Portable 60cm x 90cm");
+	        testEquip4.setDescription("Portable 60cm x 90cm");
 	        instanceDBEquipement.creerEquipement(testEquip4);
 	        Equipement testEquip5 = new Equipement();
 	        testEquip5.setTypeEquipement("Tableau feuille");
-	        testEquip5.setDesiption("Portable 60cm x 90cm");
+	        testEquip5.setDescription("Portable 60cm x 90cm");
 	        instanceDBEquipement.creerEquipement(testEquip5);
 	        Equipement testEquip6 = new Equipement();
 	        testEquip6.setTypeEquipement("Écran");
-	        testEquip6.setDesiption("Fixe");
+	        testEquip6.setDescription("Fixe");
 	        instanceDBEquipement.creerEquipement(testEquip6);
 	        Equipement testEquip7 = new Equipement();
 	        testEquip7.setTypeEquipement("Micro");
-	        testEquip7.setDesiption("Portable");
+	        testEquip7.setDescription("Portable");
 	        instanceDBEquipement.creerEquipement(testEquip7);
 		}
 		 catch (SQLException ex)
