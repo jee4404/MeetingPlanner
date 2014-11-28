@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import business.Employe;
+import controleurs.ControleurParticipant;
+import dbmanager.EmployeDBManager;
 import view.components.*;
 /**
  * @author Marie Desaulniers
@@ -23,6 +28,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	  private JTable tableau, lstEmployes;
 	  private JScrollPane listeParticipants, listeEmployes;;
 	  private JLabel lbParticipants,lbEmployes;
+	  private Object[][] tableEmployes;
 
 	  public FenetreParticipants(){                
 		    this.setTitle("Participants");
@@ -43,23 +49,31 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 			 this.lbEmployes = new JLabel("Employés");
 		    
 		    //Le tableau des participants
-		    Object[][] data = {
+		    Object[][] tableParticipants = {
 		      {"Jean Augé", "accepté"},
 		      {"Mireille Bédard", "décliné"},
 		      {"Chang Choi", "en attente" },
-		      {"Marie Dion", "accepté"},
-		      {"Timothy Eaton", "accepté"},
-		      {"Hans Faust", "décliné"},
 		      {"Jimmy Giacona", "en attente"},
 		      {"Noëlla Hétu","accepté"},
-		      {"Zhuang Ing","accepté"}
+
 		    };
-		    String  title[] = {"Nom", "État"};
-		    tableau = new JTable(data, title);
-		    Object[][] tableEmployes = {
-		    		
-		    };
-		    lstEmployes = new JTable(data, title);
+		    String  enteteParticipant[] = {"Nom", "État"};
+		    tableau = new JTable(tableParticipants, enteteParticipant);
+		    
+		    /*Object[][] tableEmployes = {
+		      {"Jean Augé"},
+			  {"Mireille Bédard"},
+			  {"Chang Choi"},
+			  {"Marie Dion"},
+			  {"Timothy Eaton"},
+			  {"Hans Faust"},
+			  {"Jimmy Giacona"},
+			  {"Noëlla Hétu"},
+			  {"Zhuang Ing"}
+		    };*/
+		    tableEmployes= this.getTableEmployes();
+		    String  enteteEmploye[] = {"Prénom, Nom"};
+		    lstEmployes = new JTable(tableEmployes, enteteEmploye);
 		    listeParticipants = new ListeDeroulante(tableau,200,150);
 		    listeEmployes = new ListeDeroulante(lstEmployes,200,150);
 
@@ -101,7 +115,20 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	    } else if (src == btFermer) {
 	    	this.setVisible(false);
 	    }
-	    
-	    
+	}
+	
+	private Object[][] getTableEmployes(){
+		List<Employe> lstEmploye = new ArrayList<Employe>();
+		ControleurParticipant instanceControleur = ControleurParticipant.getInstance();
+		lstEmploye = instanceControleur.getListEmploye();
+		for (int i = 0; i < lstEmploye.size(); i++) {
+		    Employe element = lstEmploye.get(i);
+		    String nom = element.getNom();
+		    String prenom = element.getPrenom();
+		    Object[] nomComplet = {prenom,nom};
+		    tableEmployes[i] = nomComplet;
+		}
+		return tableEmployes;
+		
 	}
 }
