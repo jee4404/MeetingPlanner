@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import business.Employe;
+import business.Equipement;
+import controleurs.ControleurEquipement;
+import controleurs.ControleurParticipant;
 import view.components.*;
 
 /**
@@ -54,7 +61,7 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		      {"Micros", "2"},
 		    };
 		    this.tableau = new JTable(data, entete);
-		    this.tableauDispo = new JTable(data, entete);
+		    this.tableauDispo= getTableEquipement();
 		    this.listeEquipement = new ListeDeroulante(tableau,200,150);
 		    this.listeEquipmentDispo = new ListeDeroulante(tableauDispo,200,150);
 		    
@@ -96,6 +103,24 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    	this.setVisible(false);
 		    }
 		    
-		    
 	}
+		private JTable getTableEquipement(){
+			List<Equipement> lstEquipement = new ArrayList<Equipement>();
+			ControleurEquipement instanceControleur = ControleurEquipement.getInstance();
+			lstEquipement = instanceControleur.getListEquipement();
+			String  enteteEquipement[] = {"Type"};
+			JTable table;
+			Equipement element;
+			String type;
+		    DefaultTableModel tableModel = new DefaultTableModel(enteteEquipement,1);
+		    table = new JTable(tableModel);
+			for (int i = 0; i < lstEquipement.size(); i++) {
+			    element = lstEquipement.get(i);
+			    type = element.getTypeEquipement();
+			    Object[] typeEquipement = {type};
+			    tableModel.addRow(typeEquipement);
+			}
+			return table;
+		}
+		
 }
