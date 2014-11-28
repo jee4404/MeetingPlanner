@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import business.Employe;
+import controleurs.ControleurParticipant;
+import dbmanager.EmployeDBManager;
 import view.components.*;
 /**
  * @author Marie Desaulniers
@@ -23,6 +29,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	  private JTable tableau, lstEmployes;
 	  private JScrollPane listeParticipants, listeEmployes;;
 	  private JLabel lbParticipants,lbEmployes;
+	  private Object[][] tableEmployes;
 
 	  public FenetreParticipants(){                
 		    this.setTitle("Participants");
@@ -43,23 +50,18 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 			 this.lbEmployes = new JLabel("Employés");
 		    
 		    //Le tableau des participants
-		    Object[][] data = {
+		    Object[][] tableParticipants = {
 		      {"Jean Augé", "accepté"},
 		      {"Mireille Bédard", "décliné"},
 		      {"Chang Choi", "en attente" },
-		      {"Marie Dion", "accepté"},
-		      {"Timothy Eaton", "accepté"},
-		      {"Hans Faust", "décliné"},
 		      {"Jimmy Giacona", "en attente"},
 		      {"Noëlla Hétu","accepté"},
-		      {"Zhuang Ing","accepté"}
+
 		    };
-		    String  title[] = {"Nom", "État"};
-		    tableau = new JTable(data, title);
-		    Object[][] tableEmployes = {
-		    		
-		    };
-		    lstEmployes = new JTable(data, title);
+		    String  enteteParticipant[] = {"Nom", "État"};
+		    tableau = new JTable(tableParticipants, enteteParticipant);
+
+		    lstEmployes = getTableEmployes();
 		    listeParticipants = new ListeDeroulante(tableau,200,150);
 		    listeEmployes = new ListeDeroulante(lstEmployes,200,150);
 
@@ -101,7 +103,26 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	    } else if (src == btFermer) {
 	    	this.setVisible(false);
 	    }
-	    
-	    
 	}
+	
+	private JTable getTableEmployes(){
+		List<Employe> lstEmploye = new ArrayList<Employe>();
+		ControleurParticipant instanceControleur = ControleurParticipant.getInstance();
+		lstEmploye = instanceControleur.getListEmploye();
+		String  enteteParticipant[] = {"Nom", "État"};
+		JTable table;
+		Employe element;
+		String nom, prenom;
+	    DefaultTableModel tableModel = new DefaultTableModel(enteteParticipant,2);
+	    table = new JTable(tableModel);
+		for (int i = 0; i < lstEmploye.size(); i++) {
+		    element = lstEmploye.get(i);
+		    nom = element.getNom();
+		    prenom = element.getPrenom();
+		    Object[] nomComplet = {prenom,nom};
+		    tableModel.addRow(nomComplet);
+		}
+		return table;
+	}
+	
 }
