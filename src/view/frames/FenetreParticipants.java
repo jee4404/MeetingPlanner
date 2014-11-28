@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import business.Employe;
 import controleurs.ControleurParticipant;
@@ -59,21 +60,8 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 		    };
 		    String  enteteParticipant[] = {"Nom", "État"};
 		    tableau = new JTable(tableParticipants, enteteParticipant);
-		    
-		    /*Object[][] tableEmployes = {
-		      {"Jean Augé"},
-			  {"Mireille Bédard"},
-			  {"Chang Choi"},
-			  {"Marie Dion"},
-			  {"Timothy Eaton"},
-			  {"Hans Faust"},
-			  {"Jimmy Giacona"},
-			  {"Noëlla Hétu"},
-			  {"Zhuang Ing"}
-		    };*/
-		    tableEmployes= this.getTableEmployes();
-		    String  enteteEmploye[] = {"Prénom, Nom"};
-		    lstEmployes = new JTable(tableEmployes, enteteEmploye);
+
+		    lstEmployes = getTableEmployes();
 		    listeParticipants = new ListeDeroulante(tableau,200,150);
 		    listeEmployes = new ListeDeroulante(lstEmployes,200,150);
 
@@ -117,18 +105,24 @@ public class FenetreParticipants extends JFrame implements ActionListener {
 	    }
 	}
 	
-	private Object[][] getTableEmployes(){
+	private JTable getTableEmployes(){
 		List<Employe> lstEmploye = new ArrayList<Employe>();
 		ControleurParticipant instanceControleur = ControleurParticipant.getInstance();
 		lstEmploye = instanceControleur.getListEmploye();
+		String  enteteParticipant[] = {"Nom", "État"};
+		JTable table;
+		Employe element;
+		String nom, prenom;
+	    DefaultTableModel tableModel = new DefaultTableModel(enteteParticipant,2);
+	    table = new JTable(tableModel);
 		for (int i = 0; i < lstEmploye.size(); i++) {
-		    Employe element = lstEmploye.get(i);
-		    String nom = element.getNom();
-		    String prenom = element.getPrenom();
+		    element = lstEmploye.get(i);
+		    nom = element.getNom();
+		    prenom = element.getPrenom();
 		    Object[] nomComplet = {prenom,nom};
-		    tableEmployes[i] = nomComplet;
+		    tableModel.addRow(nomComplet);
 		}
-		return tableEmployes;
-		
+		return table;
 	}
+	
 }
