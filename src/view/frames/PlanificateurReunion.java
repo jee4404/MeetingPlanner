@@ -130,7 +130,15 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    if (src == btCreerReunion) {
 	    	FenetreReunion fenReunion = new FenetreReunion();
 	    } else if (src == btModifier) {
-	    	FenetreReunion fenReunion = new FenetreReunion();
+	     	if (tableau1.getSelectedRows().length != 1) {
+	    		// Veuillez sélectionner une seule rangée
+	    	} else {
+	    		FenetreReunion fenReunion = new FenetreReunion();
+	    		// ***** à faire *****
+	    		fenReunion.setDateReunionField(tableau1.getValueAt(tableau1.getSelectedRow(), 1).toString());
+	    		fenReunion.setSujetReunionField(tableau1.getValueAt(tableau1.getSelectedRow(), 0).toString());
+	    	
+	    	}
 	    } else if (src == btAnnuler) {
 	    	// ... perform action for btAnnuler
 	    } else if ((src == btFermer1) || (src == btFermer2)) {

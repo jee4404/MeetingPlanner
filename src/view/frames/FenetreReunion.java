@@ -90,14 +90,17 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    // Heure du début de la réunion
 	    this.debutReunionLabel = new JLabel("Heure :");
 	    this.debutReunionLabel.setPreferredSize(dim100);
-	    this.debutReunionCBox = new JComboBox();
+	    String debLabels[] = { "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"};
+	    this.debutReunionCBox = new JComboBox(debLabels);
 	    this.debutReunionCBox.setPreferredSize(dim100);
 	    
 	    // Durée de la réunion
 	    this.dureeReunionLabel = new JLabel("Durée :");
 	    this.dureeReunionLabel.setPreferredSize(dim50);
-	    this.dureeReunionCBox = new JComboBox();
+	    String durLabels[] = { "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30", "9:00"};
+	    this.dureeReunionCBox = new JComboBox(durLabels);
 	    this.dureeReunionCBox.setPreferredSize(dim100);
+	    
 	    
 	    // Choix du nombre de participants
         this.nombreParticipantsLabel = new JLabel("Nb de participants :");
@@ -193,12 +196,27 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    	FenetreEquipement fenEquipement = new FenetreEquipement();
 	    } else if (src == btFermer) {
 	    	this.setVisible(false);
-	    }else if (src == btSave) {
+	    } else if (src == btSave) {
 	    	// ... perform action for btFermer
 	    }
-	    
-	    
-	    
-	    
-}
+	    }
+		
+	public void setDateReunionField(String s){
+		this.dateReunionField.setText(s);
+	}
+
+	public void setDebutReunionField(String s){
+		// this.debutReunionCBox.setText(s);
+	}
+
+	public void setSujetReunionField(String s){
+		this.sujetReunionField.setText(s);
+	}
+
+	public void setLocalReunionField(String s){
+		this.localReunionField.setEditable(true);
+		this.localReunionField.setText(s);
+		this.localReunionField.setEditable(false);
+	}
+
 }

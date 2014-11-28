@@ -67,7 +67,16 @@ public class FenetreChoixLocal extends JFrame implements ActionListener{
 			// TODO Auto-generated method stub
 		    Object src = evt.getSource();
 		    if (src == btConfirmer) {
+		     	if (tableauLocaux.getSelectedRows().length != 1) {
+		    		// Veuillez sélectionner une seule rangée
+		    	} else {
+		    		// FenetreReunion fenReunion = new FenetreReunion();
+		    		// ***** à faire *****
+		    		// fenReunion.setLocalReunionField(tableauLocaux.getValueAt(tableauLocaux.getSelectedRow(), 1).toString());
 		    	this.setVisible(false);
+		    	
+		    	}
+		    	
 		    } 
 		    
 	}
