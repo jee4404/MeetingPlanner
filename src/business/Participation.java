@@ -36,6 +36,11 @@ public class Participation {
         this.participationConfirmee = participationConfirmee;
     }
 
+    public Integer getId()
+    {
+        return this.id;
+    }
+
     public Participant getParticipant()
     {
         return this.participant;
