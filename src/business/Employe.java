@@ -68,4 +68,9 @@ public class Employe {
         this.courriel = courriel;
     }
 
+    public String getNomComplet()
+    {
+        return this.prenom + " " + this.nom;
+    }
+
 }
