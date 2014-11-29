@@ -7,6 +7,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,8 +71,16 @@ public class EmployeDBManager {
         this.daoEmploye.update(employe);
     }
     
-    public List<Employe> trouverTousEmployes() throws  SQLException
+    public List<Employe> trouverTousEmployes()
     {
-    	return this.daoEmploye.queryForAll();
+        try
+        {
+            return this.daoEmploye.queryForAll();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        return new ArrayList<Employe>();
     }
 }
