@@ -1,7 +1,6 @@
 package business;
 
-import dbmanager.EquipementDBManager;
-import dbmanager.ReservationDBManager;
+import dbmanager.ReservationEquipementDBManager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
  * Created by Rémy on 2014-11-27.
  */
 public class ListeEquipement {
-    private List<Reservation> reservations;
+    private List<ReservationEquipement> reservationEquipements;
     private Reunion reunion;
 
     public ListeEquipement(){}
@@ -18,21 +17,27 @@ public class ListeEquipement {
     public ListeEquipement(Reunion reunion) throws SQLException
     {
         this.reunion = reunion;
+        this.reservationEquipements = null;
+    }
 
-        // init liste des réservations
-        this.reservations = ReservationDBManager.getInstance().trouverEquipementsParReunion(reunion.getId());
+    public ListeEquipement(Reunion reunion, List<ReservationEquipement> reservationEquipements)
+    {
+        this.reunion = reunion;
+        this.reservationEquipements = reservationEquipements;
     }
 
     // TODO : il faut ajouter la ligne en base, mais ou ? :)
-    public void ajouterReservation(Reservation reservation)
+    // TODO : dans le controleur, monsieur
+    public void ajouterReservation(ReservationEquipement reservationEquipement)
     {
-        this.reservations.add(reservation);
+        this.reservationEquipements.add(reservationEquipement);
     }
 
     // TODO : il faut supprimer la ligne en base, mais ou ? :)
-    public void enleverReservation(Reservation reservation)
+    // TODO : dans le controleur, monsieur
+    public void enleverReservation(ReservationEquipement reservationEquipement)
     {
-        this.reservations.remove(reservation);
+        this.reservationEquipements.remove(reservationEquipement);
     }
 
     public Reunion getReunion()
@@ -40,9 +45,9 @@ public class ListeEquipement {
         return this.reunion;
     }
 
-    public List<Reservation> getReservations()
+    public List<ReservationEquipement> getReservationEquipements()
     {
-        return this.reservations;
+        return this.reservationEquipements;
     }
 
     public void setReunion(Reunion reunion)
@@ -50,8 +55,8 @@ public class ListeEquipement {
         this.reunion = reunion;
     }
 
-    public void setReservations(List<Reservation> reservations)
+    public void setReservationEquipements(List<ReservationEquipement> reservationEquipements)
     {
-        this.reservations = reservations;
+        this.reservationEquipements = reservationEquipements;
     }
 }
