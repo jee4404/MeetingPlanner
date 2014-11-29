@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by Rémy on 2014-11-27.
  */
 @DatabaseTable(tableName = "reservation")
-public class Reservation {
+public class ReservationEquipement {
     @DatabaseField(generatedId = true, canBeNull = false )
     private Integer id;
 
@@ -17,9 +17,9 @@ public class Reservation {
     @DatabaseField(foreign = true, useGetSet = true)
     private Equipement equipement;
 
-    public Reservation(){}
+    public ReservationEquipement(){}
 
-    public Reservation(Reunion reunion, Equipement equipement)
+    public ReservationEquipement(Reunion reunion, Equipement equipement)
     {
         this.reunion = reunion;
         this.equipement = equipement;
