@@ -17,112 +17,114 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import business.Employe;
+import business.ListeParticipations;
+import business.Participant;
+import business.Participation;
 import controleurs.ControleurParticipant;
 import dbmanager.EmployeDBManager;
 import view.components.*;
+import view.tablemodels.ListeEmployeTableModel;
+import view.tablemodels.ListeParticipationsTableModel;
+
 /**
  * @author Marie Desaulniers
  */
 public class FenetreParticipants extends JFrame implements ActionListener {
-	  private JPanel pan;
-	  private Bouton btAjouter, btRetirer, btFermer;
-	  private JTable tableau, lstEmployes;
-	  private JScrollPane listeParticipants, listeEmployes;;
-	  private JLabel lbParticipants,lbEmployes;
-	  private Object[][] tableEmployes;
+    private JPanel pan;
+    private Bouton btAjouter, btRetirer, btFermer;
+    private JTable tableau, lstEmployes;
+    private JScrollPane listeParticipants, listeEmployes;;
+    private JLabel lbParticipants,lbEmployes;
+    private Object[][] tableEmployes;
 
-	  public FenetreParticipants(){                
-		    this.setTitle("Participants");
-		    this.setSize(580, 250);
-		    this.setResizable(false);
-		    this.setLocationRelativeTo(null);               
-		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    this.pan = new JPanel();
-		    this.setContentPane(pan);
-		    this.pan.setLayout(new GridBagLayout());
-		    GridBagConstraints gc = new GridBagConstraints();
-		    
-		    // Création des composants
-			 this.btAjouter = new Bouton("Ajouter <<", 100, 25);
-			 this.btRetirer = new Bouton("Retirer >>", 100, 25);
-			 this.btFermer = new Bouton("Fermer", 100, 25);
-			 this.lbParticipants = new JLabel("Participants");
-			 this.lbEmployes = new JLabel("Employés");
-		    
-		    //Le tableau des participants
-		    Object[][] tableParticipants = {
-		      {"Jean Augé", "accepté"},
-		      {"Mireille Bédard", "décliné"},
-		      {"Chang Choi", "en attente" },
-		      {"Jimmy Giacona", "en attente"},
-		      {"Noëlla Hétu","accepté"},
+    public FenetreParticipants()
+    {
+        this.setTitle("Participants");
+        this.setSize(580, 250);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.pan = new JPanel();
+        this.setContentPane(pan);
+        this.pan.setLayout(new GridBagLayout());
+        GridBagConstraints gc = new GridBagConstraints();
 
-		    };
-		    String  enteteParticipant[] = {"Nom", "État"};
-		    tableau = new JTable(tableParticipants, enteteParticipant);
+        // Création des composants
+        this.btAjouter = new Bouton("Ajouter <<", 100, 25);
+        this.btRetirer = new Bouton("Retirer >>", 100, 25);
+        this.btFermer = new Bouton("Fermer", 100, 25);
+        this.lbParticipants = new JLabel("Participants");
+        this.lbEmployes = new JLabel("Employés");
 
-		    lstEmployes = getTableEmployes();
-		    listeParticipants = new ListeDeroulante(tableau,200,150);
-		    listeEmployes = new ListeDeroulante(lstEmployes,200,150);
+        //Le tableau des participants
+        tableau = new JTable();
 
-		    // Positionnement des composants sur la grille (boutons et tableau)
-		    gc.insets = new Insets(5, 5, 3, 3);
-		    gc.gridx=0;		gc.gridy=0;
-			pan.add(lbParticipants, gc);
-			gc.gridx=2;		gc.gridy=0;
-			pan.add(lbEmployes, gc);
-			gc.gridx=1;		gc.gridy=1;
-			pan.add(btAjouter, gc);
-			gc.gridx=1;		gc.gridy=2;
-			pan.add(btRetirer, gc);
-			gc.gridx=1;		gc.gridy=4;
-			gc.anchor = GridBagConstraints.PAGE_END;
-			pan.add(btFermer, gc);
-		    gc.gridx=0;		gc.gridy=1;
-			gc.gridheight = 4;
-		    pan.add(listeParticipants,gc);
-		    gc.gridx=2;		gc.gridy=1;
-			gc.gridheight = 4;
-			pan.add(listeEmployes,gc);
-			this.setVisible(true);
-			
-		    btAjouter.addActionListener(this);
-		    btRetirer.addActionListener(this);
-		    btFermer.addActionListener(this);
+        lstEmployes = getTableEmployes();
+        listeParticipants = new ListeDeroulante(tableau,200,150);
+        listeEmployes = new ListeDeroulante(lstEmployes,200,150);
 
-	  }
+        // Positionnement des composants sur la grille (boutons et tableau)
+        gc.insets = new Insets(5, 5, 3, 3);
+        gc.gridx=0;		gc.gridy=0;
+        pan.add(lbParticipants, gc);
+        gc.gridx=2;		gc.gridy=0;
+        pan.add(lbEmployes, gc);
+        gc.gridx=1;		gc.gridy=1;
+        pan.add(btAjouter, gc);
+        gc.gridx=1;		gc.gridy=2;
+        pan.add(btRetirer, gc);
+        gc.gridx=1;		gc.gridy=4;
+        gc.anchor = GridBagConstraints.PAGE_END;
+        pan.add(btFermer, gc);
+        gc.gridx=0;		gc.gridy=1;
+        gc.gridheight = 4;
+        pan.add(listeParticipants,gc);
+        gc.gridx=2;		gc.gridy=1;
+        gc.gridheight = 4;
+        pan.add(listeEmployes,gc);
+        this.setVisible(true);
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
-	    Object src = evt.getSource();
-	    if (src == btAjouter) {
-	      // ... perform action for btAjouter
-	    } else if (src == btRetirer) {
-		      // ... perform action for btRetirer
-	    } else if (src == btFermer) {
-	    	this.setVisible(false);
-	    }
-	}
-	
-	private JTable getTableEmployes(){
-		List<Employe> lstEmploye = new ArrayList<Employe>();
-		ControleurParticipant instanceControleur = ControleurParticipant.getInstance();
-		lstEmploye = instanceControleur.getListEmploye();
-		String  enteteParticipant[] = {"Nom", "État"};
-		JTable table;
-		Employe element;
-		String nom, prenom;
-	    DefaultTableModel tableModel = new DefaultTableModel(enteteParticipant,2);
-	    table = new JTable(tableModel);
-		for (int i = 0; i < lstEmploye.size(); i++) {
-		    element = lstEmploye.get(i);
-		    nom = element.getNom();
-		    prenom = element.getPrenom();
-		    Object[] nomComplet = {prenom,nom};
-		    tableModel.addRow(nomComplet);
-		}
-		return table;
-	}
-	
+        btAjouter.addActionListener(this);
+        btRetirer.addActionListener(this);
+        btFermer.addActionListener(this);
+    }
+
+    public FenetreParticipants(ListeParticipations listeParticipations)
+    {
+        this();
+        this.tableau = this.getTableParticipants(listeParticipations);
+        this.listeParticipants = new ListeDeroulante(tableau, 200, 150);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evt)
+    {
+        Object src = evt.getSource();
+        if (src == btAjouter)
+        {
+            Object id_participant = this.lstEmployes.getValueAt(this.tableau.getSelectedRow(), 0);
+            ControleurParticipant.getInstance().inviterParticipant(1);
+        }
+        else if (src == btRetirer)
+        {
+
+        }
+        else if (src == btFermer)
+        {
+            this.setVisible(false);
+        }
+    }
+
+    private JTable getTableEmployes(){
+        ListeEmployeTableModel tableModel = new ListeEmployeTableModel();
+        JTable table = new JTable(tableModel);
+        return table;
+    }
+
+    private JTable getTableParticipants(ListeParticipations listeParticipations)
+    {
+        ListeParticipationsTableModel tableModel = new ListeParticipationsTableModel(listeParticipations);
+        JTable table = new JTable(tableModel);
+        return table;
+    }
 }
