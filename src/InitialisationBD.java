@@ -12,11 +12,9 @@ public class InitialisationBD {
 	
 	public static void remplirDBEmploye(){
 		try {
-			
 	        // test orm lite - methode 1, creation objet par constructeur
 	        EmployeDBManager employeDBManager = EmployeDBManager.getInstance();
 	        Employe testEmploye = new Employe("foo", "bar", "foo@bar.com");
-	        employeDBManager.creerEmploye(testEmploye);
 	        Employe testEmploye1 = new Employe("Jean","Auger","AugerJ12@uqo.ca" );
 	        Employe testEmploye2 = new Employe("Mireille","Bédard","BedardM19@uqo.ca");
 	        Employe testEmploye3 = new Employe("Chang","Choi","ChoiC1@uqo.ca");
@@ -26,6 +24,7 @@ public class InitialisationBD {
 	        Employe testEmploye7 = new Employe("Jimmy","Giacona", "GiaconaJ2@uqo.ca");
 	        Employe testEmploye8 = new Employe("Noëlla","Hétu","HetuN4@uqo.ca");
 	        Employe testEmploye9 = new Employe("Zhuang","Ing", "IngZ1@uqo.ca");
+            employeDBManager.creerEmploye(testEmploye);
 	        employeDBManager.creerEmploye(testEmploye1);
 	        employeDBManager.creerEmploye(testEmploye2);
 	        employeDBManager.creerEmploye(testEmploye3);
@@ -35,7 +34,6 @@ public class InitialisationBD {
 	        employeDBManager.creerEmploye(testEmploye7);
 	        employeDBManager.creerEmploye(testEmploye8);
 	        employeDBManager.creerEmploye(testEmploye9);
-	        
 		 }
 	    catch (SQLException ex)
 	    {
@@ -45,8 +43,6 @@ public class InitialisationBD {
 		
 	public static void remplirDBLocal(){
 		try {
-			
-			// test avec classe local
 	        LocalDBManager localDBManager = LocalDBManager.getInstance();
 	        Local testLocal = new Local("0E3C", 20);
 	        localDBManager.creerLocal(testLocal);
@@ -60,8 +56,6 @@ public class InitialisationBD {
 
     public static void remplirDBEquipement(){
     	try {
-			
-			// test avec classe local
 			EquipementDBManager instanceDBEquipement = EquipementDBManager.getInstance();
 	        Equipement testEquip1 = new Equipement();
 	        testEquip1.setTypeEquipement("Projecteur");
