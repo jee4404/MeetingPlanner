@@ -13,27 +13,33 @@ import java.util.List;
 /**
  * Created by Rémy on 2014-11-19.
  */
-public class ListeParticipants {
+public class ListeParticipations {
     private List<Participation> participations;
     private Reunion reunion;
 
-    public ListeParticipants(){}
+    public ListeParticipations(){}
 
-    public ListeParticipants(Reunion reunion) throws SQLException
+    public ListeParticipations(Reunion reunion) throws SQLException
     {
         this.reunion = reunion;
+        this.participations = null;
+    }
 
-        // init liste des participations
-        this.participations = ParticipationDBManager.getInstance().trouverParticipationParReunion(reunion.getId());
+    public ListeParticipations(Reunion reunion, List<Participation> participations)
+    {
+        this.reunion = reunion;
+        this.participations = participations;
     }
 
     // TODO : il faut ajouter la ligne de participation en base
+    // TODO : a faire dans le controleur
     public void ajouterParticipation(Participation participation)
     {
         this.participations.add(participation);
     }
 
     // TODO : il faut supprimer la ligne de participation en base
+    // TODO : a faire dans le controleur
     public void enleverParticipation(Participation participation)
     {
         this.participations.remove(participation);
@@ -44,7 +50,7 @@ public class ListeParticipants {
         return this.reunion;
     }
 
-    public List<Participation> getParticipants()
+    public List<Participation> getParticipations()
     {
         return this.participations;
     }
