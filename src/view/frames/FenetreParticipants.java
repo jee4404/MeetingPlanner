@@ -1,27 +1,13 @@
 package view.frames;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import business.Employe;
 import business.ListeParticipations;
-import business.Participant;
-import business.Participation;
 import controleurs.ControleurParticipant;
-import dbmanager.EmployeDBManager;
 import view.components.*;
 import view.tablemodels.ListeEmployeTableModel;
 import view.tablemodels.ListeParticipationsTableModel;
@@ -32,12 +18,15 @@ import view.tablemodels.ListeParticipationsTableModel;
 public class FenetreParticipants extends JFrame implements ActionListener {
     private JPanel pan;
     private Bouton btAjouter, btRetirer, btFermer;
-    private JTable tableau, lstEmployes;
-    private JScrollPane listeParticipants, listeEmployes;;
-    private JLabel lbParticipants,lbEmployes;
+    private JTable lstParticipants, lstEmployes;
+    private JScrollPane listeParticipants, listeEmployes;
     private Object[][] tableEmployes;
 
-    public FenetreParticipants()
+    // table model
+    private ListeParticipationsTableModel participationsTableModel;
+    private ListeEmployeTableModel employeTableModel;
+
+    public FenetreParticipants(ListeParticipations listeParticipations)
     {
         this.setTitle("Participants");
         this.setSize(580, 250);
@@ -53,15 +42,16 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         this.btAjouter = new Bouton("Ajouter <<", 100, 25);
         this.btRetirer = new Bouton("Retirer >>", 100, 25);
         this.btFermer = new Bouton("Fermer", 100, 25);
-        this.lbParticipants = new JLabel("Participants");
-        this.lbEmployes = new JLabel("Employés");
+        JLabel lbParticipants = new JLabel("Participants");
+        JLabel lbEmployes = new JLabel("Employés");
 
         //Le tableau des participants
-        tableau = new JTable();
+        this.lstParticipants = this.getTableParticipants(listeParticipations);
+        this.listeParticipants = new ListeDeroulante(lstParticipants, 200, 150);
 
-        lstEmployes = getTableEmployes();
-        listeParticipants = new ListeDeroulante(tableau,200,150);
-        listeEmployes = new ListeDeroulante(lstEmployes,200,150);
+        // le tableau des employes
+        this.lstEmployes = this.getTableEmployes();
+        this.listeEmployes = new ListeDeroulante(lstEmployes,200,150);
 
         // Positionnement des composants sur la grille (boutons et tableau)
         gc.insets = new Insets(5, 5, 3, 3);
@@ -89,21 +79,15 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         btFermer.addActionListener(this);
     }
 
-    public FenetreParticipants(ListeParticipations listeParticipations)
-    {
-        this();
-        this.tableau = this.getTableParticipants(listeParticipations);
-        this.listeParticipants = new ListeDeroulante(tableau, 200, 150);
-    }
-
     @Override
     public void actionPerformed(ActionEvent evt)
     {
         Object src = evt.getSource();
         if (src == btAjouter)
         {
-            Object id_participant = this.lstEmployes.getValueAt(this.tableau.getSelectedRow(), 0);
-            ControleurParticipant.getInstance().inviterParticipant(1);
+            Object id_employe = this.lstEmployes.getValueAt(this.lstEmployes.getSelectionModel().getMinSelectionIndex(), 0);
+            ControleurParticipant.getInstance().inviterParticipant( (Integer)id_employe );
+            this.participationsTableModel.fireTableDataChanged();
         }
         else if (src == btRetirer)
         {
@@ -116,15 +100,16 @@ public class FenetreParticipants extends JFrame implements ActionListener {
     }
 
     private JTable getTableEmployes(){
-        ListeEmployeTableModel tableModel = new ListeEmployeTableModel();
-        JTable table = new JTable(tableModel);
+        this.employeTableModel = new ListeEmployeTableModel();
+        JTable table = new JTable(this.employeTableModel);
         return table;
     }
 
     private JTable getTableParticipants(ListeParticipations listeParticipations)
     {
-        ListeParticipationsTableModel tableModel = new ListeParticipationsTableModel(listeParticipations);
-        JTable table = new JTable(tableModel);
+        this.participationsTableModel = new ListeParticipationsTableModel(listeParticipations);
+        JTable table = new JTable(this.participationsTableModel);
+        table.setCellSelectionEnabled(true);
         return table;
     }
 }

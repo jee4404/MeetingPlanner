@@ -66,7 +66,7 @@ public class ListeEmployeTableModel extends AbstractTableModel {
         String retVal = "";
         switch (columnIndex){
             case 0:
-                retVal = "id employé";
+                retVal = "Code Employé";
             break;
 
             case 1:
