@@ -87,7 +87,13 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    this.recurrenceCBox = new JCheckBox("Récurrence");
 	    this.recurrenceFoisLabel = new JLabel("Nombre de récurrence :");
 	    this.recurrenceFoisLabel.setPreferredSize(dim50);
-        this.recurrenceReunionSpinner = new JSpinner();
+	    
+	    // Configuration du JPinner pour le nombre d'occurences
+	    Integer minOcc = new Integer(1);
+	    Integer maxOcc = new Integer(50);
+	    Integer stepOcc = new Integer(1);
+	    SpinnerNumberModel modelOcc = new SpinnerNumberModel(minOcc, minOcc, maxOcc, stepOcc);
+        this.recurrenceReunionSpinner = new JSpinner(modelOcc);
         this.recurrenceReunionSpinner.setPreferredSize(dim50);
         recurrenceReunionSpinner.setEnabled(false);
         this.recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
@@ -110,7 +116,13 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    // Choix du nombre de participants
         this.nombreParticipantsLabel = new JLabel("Nb de participants :");
         this.nombreParticipantsLabel.setPreferredSize(new Dimension(125,25));
-        this.nbParticipantsSpinner = new JSpinner();
+        
+	    // Configuration du JPinner pour le nombre d'occurences
+	    Integer minParticipant = new Integer(2);
+	    Integer maxParticipant = new Integer(50);
+	    Integer stepParticipant = new Integer(1);
+	    SpinnerNumberModel modelParticipant = new SpinnerNumberModel(minParticipant, minParticipant, maxParticipant, stepParticipant);
+        this.nbParticipantsSpinner = new JSpinner(modelParticipant);
         this.nbParticipantsSpinner.setPreferredSize(dim50);
         this.nbParticipantsSpinner.setEditor(new JSpinner.NumberEditor(this.nbParticipantsSpinner));
         
@@ -233,5 +245,6 @@ public class FenetreReunion extends JFrame implements ActionListener{
 		this.localReunionField.setText(s);
 		this.localReunionField.setEditable(false);
 	}
+	
 
 }
