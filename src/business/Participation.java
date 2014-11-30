@@ -11,10 +11,10 @@ public class Participation {
     @DatabaseField(generatedId = true, canBeNull = false )
     private Integer id;
 
-    @DatabaseField(foreign = true, useGetSet = true)
+    @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Participant participant;
 
-    @DatabaseField(foreign = true, useGetSet = true)
+    @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Reunion reunion;
 
     @DatabaseField
@@ -22,7 +22,6 @@ public class Participation {
 
     public Participation()
     {
-        this.id = 0;
         this.participant = null;
         this.reunion = null;
         this.participationConfirmee = false;
@@ -30,12 +29,16 @@ public class Participation {
 
     public Participation(Participant participant, Reunion reunion, boolean participationConfirmee)
     {
-        this.id = 0;
         this.participant = participant;
         this.reunion = reunion;
         this.participationConfirmee = participationConfirmee;
     }
 
+    public Participation(Participant participant, Reunion reunion)
+    {
+        this.participant = participant;
+        this.reunion = reunion;
+    }
     public Integer getId()
     {
         return this.id;
