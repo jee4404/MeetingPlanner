@@ -2,6 +2,8 @@ package view.frames;
 
 import javax.swing.*;
 
+import controleurs.ControleurEquipement;
+import dbmanager.EquipementDBManager;
 import view.components.*;
 
 import java.awt.*;
@@ -22,7 +24,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
     private JSpinner nbParticipantsSpinner, recurrenceReunionSpinner;
     private Bouton btLocal, btParticipants,btEquip,btFermer,btSave;
     private JCheckBox recurrenceCBox;
-
+    
     public FenetreReunion()
     {
     	// Configuration de la fenêtre
@@ -64,6 +66,8 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    GridBagConstraints gcBD = new GridBagConstraints();
 	    
 	    // Création des composants
+	    
+	    // dimensions standards
 	    Dimension dim50 = new Dimension(50,25);
 	    Dimension dim100 = new Dimension(100,25);
 	    
@@ -85,6 +89,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    this.recurrenceFoisLabel.setPreferredSize(dim50);
         this.recurrenceReunionSpinner = new JSpinner();
         this.recurrenceReunionSpinner.setPreferredSize(dim50);
+        recurrenceReunionSpinner.setEnabled(false);
         this.recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
 	    
 	    // Heure du début de la réunion
@@ -181,7 +186,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
         btEquip.addActionListener(this);
         btFermer.addActionListener(this);
         btSave.addActionListener(this);
-
+ 	   	recurrenceCBox.addActionListener(this);
 
     }
 	@Override
@@ -191,15 +196,25 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    if (src == btLocal) {
 	    	FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
 	    } else if (src == btParticipants) {
-	    	FenetreParticipants fenParticipants = new FenetreParticipants();
+	    	
+	    	//FenetreParticipants fenParticipants = new FenetreParticipants();
 	    } else if (src == btEquip) {
-	    	FenetreEquipement fenEquipement = new FenetreEquipement();
+	    	ControleurEquipement.getInstance().choisirEquipement();
+	    	//FenetreEquipement fenEquipement = new FenetreEquipement();
 	    } else if (src == btFermer) {
 	    	this.setVisible(false);
 	    } else if (src == btSave) {
 	    	// ... perform action for btFermer
+	    }else if (src == recurrenceCBox) {
+	    	Boolean cbox = recurrenceCBox.isSelected();
+	    	if (cbox == false){
+	    		recurrenceReunionSpinner.setEnabled(false);
+	    	} else {
+	    		recurrenceReunionSpinner.setEnabled(true);
+	    	}
 	    }
-	    }
+	    
+	}
 		
 	public void setDateReunionField(String s){
 		this.dateReunionField.setText(s);
