@@ -1,6 +1,7 @@
 package dbmanager;
 
 import business.Participation;
+import business.Reunion;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
@@ -73,5 +74,10 @@ public class ParticipationDBManager {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("reunion_id", idReunion);
         return this.daoParticipations.queryForFieldValues(queryParams);
+    }
+
+    public Participation trouverParticipantionParReunionParticipant(int idReunion, int idParticipant) throws SQLException
+    {
+        return this.daoParticipations.queryBuilder().where().eq("reunion_id", idReunion).and().eq("participant_id", idParticipant).queryForFirst();
     }
 }
