@@ -85,13 +85,15 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         Object src = evt.getSource();
         if (src == btAjouter)
         {
-            Object id_employe = this.lstEmployes.getValueAt(this.lstEmployes.getSelectionModel().getMinSelectionIndex(), 0);
-            ControleurParticipant.getInstance().inviterParticipant( (Integer)id_employe );
+            Object idEmploye = this.lstEmployes.getValueAt(this.lstEmployes.getSelectionModel().getMinSelectionIndex(), 0);
+            ControleurParticipant.getInstance().inviterParticipant( (Integer)idEmploye );
             this.participationsTableModel.fireTableDataChanged();
         }
         else if (src == btRetirer)
         {
-
+            Object idParticipation = this.lstParticipants.getValueAt(this.lstParticipants.getSelectionModel().getMinSelectionIndex(), 0);
+            ControleurParticipant.getInstance().retirerParticipation( (Integer)idParticipation );
+            this.participationsTableModel.fireTableDataChanged();
         }
         else if (src == btFermer)
         {

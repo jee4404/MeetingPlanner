@@ -40,9 +40,17 @@ public class ListeParticipations {
 
     // TODO : il faut supprimer la ligne de participation en base
     // TODO : a faire dans le controleur
-    public void enleverParticipation(Participation participation)
+    public void enleverParticipation(int idParticipation)
     {
-        this.participations.remove(participation);
+        for(int i = 0; i < this.participations.size(); i++)
+        {
+            int tmpParticipationId = this.participations.get(i).getId();
+            if( idParticipation == tmpParticipationId )
+            {
+                this.participations.remove(i);
+                break;
+            }
+        }
     }
 
     public Reunion getReunion()

@@ -56,13 +56,13 @@ public class ControleurParticipant {
         }
     }
 
-    public void inviterParticipant(int id_employe)
+    public void inviterParticipant(int idEmploye)
     {
         try {
             // fetcher participant
-            Participant participant = ParticipantDBManager.getInstance().trouverParticipant(id_employe);
+            Participant participant = ParticipantDBManager.getInstance().trouverParticipant(idEmploye);
             if(participant == null)
-                throw new RuntimeException("employé spécifié introuvable ("+id_employe+")");
+                throw new RuntimeException("employé spécifié introuvable ("+idEmploye+")");
 
             // test si participation existe déja
             Participation participation = ParticipationDBManager.getInstance().trouverParticipantionParReunionParticipant(this.reunion.getId(), participant.getId());
@@ -78,6 +78,29 @@ public class ControleurParticipant {
 
             // mettre liste participation à jour
             this.listeParticipations.ajouterParticipation(participation);
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        catch (RuntimeException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void retirerParticipation(int idParticipation)
+    {
+        try {
+            Participation participation = ParticipationDBManager.getInstance().trouverParticipantion(idParticipation);
+            if(participation == null)
+                throw new RuntimeException("participation introuvable");
+
+            // retirer la participation de la liste de participation
+            this.listeParticipations.enleverParticipation(participation.getId());
+
+            // retirer la participation de la base de donnée
+            ParticipationDBManager.getInstance().supprimerParticipation(participation);
         }
         catch (SQLException ex)
         {
