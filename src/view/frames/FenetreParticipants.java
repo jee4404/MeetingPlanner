@@ -13,14 +13,14 @@ import view.tablemodels.ListeEmployeTableModel;
 import view.tablemodels.ListeParticipationsTableModel;
 
 /**
- * @author Marie Desaulniers
+ * @author Marie
+ * @author Rémy
  */
 public class FenetreParticipants extends JFrame implements ActionListener {
     private JPanel pan;
     private Bouton btAjouter, btRetirer, btFermer;
-    private JTable lstParticipants, lstEmployes;
+    private JTable tblParticipants, tblEmployes;
     private JScrollPane listeParticipants, listeEmployes;
-    private Object[][] tableEmployes;
 
     // table model
     private ListeParticipationsTableModel participationsTableModel;
@@ -46,12 +46,12 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         JLabel lbEmployes = new JLabel("Employés");
 
         //Le tableau des participants
-        this.lstParticipants = this.getTableParticipants(listeParticipations);
-        this.listeParticipants = new ListeDeroulante(lstParticipants, 200, 150);
+        this.tblParticipants = this.getTableParticipants(listeParticipations);
+        this.listeParticipants = new ListeDeroulante(tblParticipants, 200, 150);
 
         // le tableau des employes
-        this.lstEmployes = this.getTableEmployes();
-        this.listeEmployes = new ListeDeroulante(lstEmployes,200,150);
+        this.tblEmployes = this.getTableEmployes();
+        this.listeEmployes = new ListeDeroulante(tblEmployes,200,150);
 
         // Positionnement des composants sur la grille (boutons et tableau)
         gc.insets = new Insets(5, 5, 3, 3);
@@ -85,13 +85,13 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         Object src = evt.getSource();
         if (src == btAjouter)
         {
-            Object idEmploye = this.lstEmployes.getValueAt(this.lstEmployes.getSelectionModel().getMinSelectionIndex(), 0);
+            Object idEmploye = this.tblEmployes.getValueAt(this.tblEmployes.getSelectionModel().getMinSelectionIndex(), 0);
             ControleurParticipant.getInstance().inviterParticipant( (Integer)idEmploye );
             this.participationsTableModel.fireTableDataChanged();
         }
         else if (src == btRetirer)
         {
-            Object idParticipation = this.lstParticipants.getValueAt(this.lstParticipants.getSelectionModel().getMinSelectionIndex(), 0);
+            Object idParticipation = this.tblParticipants.getValueAt(this.tblParticipants.getSelectionModel().getMinSelectionIndex(), 0);
             ControleurParticipant.getInstance().retirerParticipation( (Integer)idParticipation );
             this.participationsTableModel.fireTableDataChanged();
         }

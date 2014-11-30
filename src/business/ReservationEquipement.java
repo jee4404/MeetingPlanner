@@ -19,7 +19,7 @@ public class ReservationEquipement {
 
     public ReservationEquipement(){}
 
-    public ReservationEquipement(Reunion reunion, Equipement equipement)
+    public ReservationEquipement(Equipement equipement, Reunion reunion)
     {
         this.reunion = reunion;
         this.equipement = equipement;

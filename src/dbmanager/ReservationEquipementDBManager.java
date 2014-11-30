@@ -1,6 +1,8 @@
 package dbmanager;
 
+import business.Participation;
 import business.ReservationEquipement;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
@@ -72,5 +74,10 @@ public class ReservationEquipementDBManager {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("reunion_id", idReunion);
         return this.classDao.queryForFieldValues(queryParams);
+    }
+    
+    public ReservationEquipement trouverReservationParReunionEquipement(int idReunion, int idEquipement) throws SQLException
+    {
+        return this.classDao.queryBuilder().where().eq("reunion_id", idReunion).and().eq("equipement_id", idEquipement).queryForFirst();
     }
 }

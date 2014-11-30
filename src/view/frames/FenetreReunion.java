@@ -2,13 +2,17 @@ package view.frames;
 
 import javax.swing.*;
 
+import business.Reunion;
 import controleurs.ControleurEquipement;
+import controleurs.ControleurParticipant;
 import dbmanager.EquipementDBManager;
+import dbmanager.ReunionDBManager;
 import view.components.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * Created by Rémy on 2014-11-18.
@@ -208,15 +212,27 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    if (src == btLocal) {
 	    	FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
 	    } else if (src == btParticipants) {
-	    	
-	    	//FenetreParticipants fenParticipants = new FenetreParticipants();
+	    	try {
+				ControleurParticipant.getInstance().afficherInviterParticipants(ReunionDBManager.getInstance().trouverReunion(1));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    } else if (src == btEquip) {
-	    	ControleurEquipement.getInstance().choisirEquipement();
+	    	Reunion reunion1;
+			try {
+				reunion1 = ReunionDBManager.getInstance().trouverReunion(1);
+				ControleurEquipement.getInstance().choisirEquipement(reunion1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
 	    	//FenetreEquipement fenEquipement = new FenetreEquipement();
 	    } else if (src == btFermer) {
 	    	this.setVisible(false);
 	    } else if (src == btSave) {
-	    	// ... perform action for btFermer
+	    	// ... perform action for btSave
 	    }else if (src == recurrenceCBox) {
 	    	Boolean cbox = recurrenceCBox.isSelected();
 	    	if (cbox == false){

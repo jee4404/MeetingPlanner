@@ -18,9 +18,12 @@ import javax.swing.table.DefaultTableModel;
 
 import business.Employe;
 import business.Equipement;
+import business.ListeEquipement;
 import controleurs.ControleurEquipement;
 import controleurs.ControleurParticipant;
 import view.components.*;
+import view.tablemodels.ListeEquipementReserveTableModel;
+import view.tablemodels.ListeEquipementTableModel;
 
 /**
  * @author Marie Desaulniers
@@ -29,11 +32,14 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 
 	  private JPanel pan = new JPanel();
 	  private Bouton btAjouter,btRetirer,btFermer;
-	  private JTable tableau,tableauDispo;
-	  private JScrollPane listeEquipement,listeEquipmentDispo;
+	  private JTable tblEquipReserve,tblEquipDispo;
+	  private JScrollPane spListeEquipementReserve,spListeEquipmentDispo;
 	  private JLabel lbEquipment,lbEquipmentDispo;
+	    // table model
+	  private ListeEquipementTableModel equipementTableModel;
+	  private ListeEquipementReserveTableModel equipementReserveTableModel;
 	  
-	  public FenetreEquipement(){                
+	  public FenetreEquipement(ListeEquipement listeEquipement){               
 		    this.setTitle("Équipement");
 		    this.setSize(580, 250);
 		    this.setResizable(false);
@@ -50,20 +56,14 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 			this.lbEquipment = new JLabel("Équipement requis");
 			this.lbEquipmentDispo = new JLabel("Équipement disponible");
 			
-		    //Le tableau des équipements
-		    String  entete[] = {"Type", "Quantité"};
-		    Object[][] data = {
-		      {"Projecteur", "1"},
-		      {"Ordinateur portable", "3"},
-		      {"Tableau blanc", "1"},
-		      {"Tableau feuille", "2"},
-		      {"Écran", "1"},
-		      {"Micros", "2"},
-		    };
-		    this.tableau = new JTable(data, entete);
-		    this.tableauDispo= getTableEquipement();
-		    this.listeEquipement = new ListeDeroulante(tableau,200,150);
-		    this.listeEquipmentDispo = new ListeDeroulante(tableauDispo,200,150);
+
+	        //Le tableau des équipement réservés
+	        this.tblEquipReserve = this.getTableEquipementReserve(listeEquipement);
+	        this.spListeEquipementReserve = new ListeDeroulante(tblEquipReserve,200,150);
+			
+		    //Le tableau des équipements disponibles
+		    this.tblEquipDispo= getTableEquipement();
+		    this.spListeEquipmentDispo = new ListeDeroulante(tblEquipDispo,200,150);
 		    
 		    // Positionnement des composants sur la grille (boutons et tableau)
 		    gcEqp.insets = new Insets(5, 5, 3, 3);
@@ -80,10 +80,10 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 			pan.add(btFermer, gcEqp);
 			gcEqp.gridx=0;		gcEqp.gridy=1;
 			gcEqp.gridheight = 4;
-		    pan.add(listeEquipement,gcEqp);
+		    pan.add(spListeEquipementReserve,gcEqp);
 		    gcEqp.gridx=2; gcEqp.gridy=1;
 		    gcEqp.gridheight = 4;
-		    pan.add(listeEquipmentDispo, gcEqp);
+		    pan.add(spListeEquipmentDispo, gcEqp);
 			this.setVisible(true);
 			
 			btAjouter.addActionListener(this);
@@ -93,18 +93,22 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-			// TODO Auto-generated method stub
+
 		    Object src = evt.getSource();
 		    if (src == btAjouter) {
-		      // ... perform action for btAjouter
+		    	Object idEquipement = this.tblEquipDispo.getValueAt(this.tblEquipDispo.getSelectionModel().getMinSelectionIndex(), 0);
+		         ControleurEquipement.getInstance().reserverEquipement( (Integer)idEquipement );
+		         this.equipementReserveTableModel.fireTableDataChanged();
 		    } else if (src == btRetirer) {
-			      // ... perform action for btRetirer
+		    	  /*Object idReservation = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 0);
+		          ControleurParticipant.getInstance().retirerEquipement( (Integer)idReservation );
+		          this.equipementReserveTableModel.fireTableDataChanged();*/
 		    } else if (src == btFermer) {
 		    	this.setVisible(false);
 		    }
 		    
 	}
-		private JTable getTableEquipement(){
+		/*private JTable getTableEquipement(){
 			List<Equipement> lstEquipement = new ArrayList<Equipement>();
 			ControleurEquipement instanceControleur = ControleurEquipement.getInstance();
 			lstEquipement = instanceControleur.getListEquipement();
@@ -121,6 +125,17 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 			    tableModel.addRow(typeEquipement);
 			}
 			return table;
-		}
+		}*/
 		
+		  private JTable getTableEquipement(){
+		        this.equipementTableModel = new ListeEquipementTableModel();
+		        JTable table = new JTable(this.equipementTableModel);
+		        return table;
+		    }
+		  
+		  private JTable getTableEquipementReserve(ListeEquipement listeEquipement){
+			  this.equipementReserveTableModel = new ListeEquipementReserveTableModel(listeEquipement);
+			  JTable table = new JTable(this.equipementReserveTableModel);
+			  return table;
+		  }
 }
