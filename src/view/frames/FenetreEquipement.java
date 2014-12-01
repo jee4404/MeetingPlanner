@@ -107,35 +107,31 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    	this.setVisible(false);
 		    }
 		    
-	}
-		/*private JTable getTableEquipement(){
-			List<Equipement> lstEquipement = new ArrayList<Equipement>();
-			ControleurEquipement instanceControleur = ControleurEquipement.getInstance();
-			lstEquipement = instanceControleur.getListEquipement();
-			String  enteteEquipement[] = {"Type"};
-			JTable table;
-			Equipement element;
-			String type;
-		    DefaultTableModel tableModel = new DefaultTableModel(enteteEquipement,1);
-		    table = new JTable(tableModel);
-			for (int i = 0; i < lstEquipement.size(); i++) {
-			    element = lstEquipement.get(i);
-			    type = element.getTypeEquipement();
-			    Object[] typeEquipement = {type};
-			    tableModel.addRow(typeEquipement);
-			}
-			return table;
-		}*/
-		
+		}
+
 		  private JTable getTableEquipement(){
 		        this.equipementTableModel = new ListeEquipementTableModel();
 		        JTable table = new JTable(this.equipementTableModel);
+		        // colonne du equipementID invisible
+		        table.getColumnModel().getColumn(0).setMinWidth(0);
+				table.getColumnModel().getColumn(0).setMaxWidth(0);
+				table.getColumnModel().getColumn(0).setWidth(0);
 		        return table;
 		    }
 		  
 		  private JTable getTableEquipementReserve(ListeEquipement listeEquipement){
 			  this.equipementReserveTableModel = new ListeEquipementReserveTableModel(listeEquipement);
 			  JTable table = new JTable(this.equipementReserveTableModel);
+			  // colonnes de equipementId et reservationId invisibles
+			  table.getColumnModel().getColumn(0).setMinWidth(0);
+			  table.getColumnModel().getColumn(0).setMaxWidth(0);
+			  table.getColumnModel().getColumn(0).setWidth(0);
+			  table.getColumnModel().getColumn(1).setMinWidth(0);
+			  table.getColumnModel().getColumn(1).setMaxWidth(0);
+			  table.getColumnModel().getColumn(1).setWidth(0);
+			  // largeur de la colonne quantité
+			  table.getColumnModel().getColumn(3).setMinWidth(20);
+			  table.getColumnModel().getColumn(3).setMaxWidth(40);
 			  return table;
 		  }
 }
