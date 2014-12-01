@@ -35,9 +35,19 @@ public class ListeEquipement {
 
     // TODO : il faut supprimer la ligne en base, mais ou ? :)
     // TODO : dans le controleur, monsieur
-    public void enleverReservation(ReservationEquipement reservationEquipement)
+    public void enleverReservation(int idReservation)
     {
-        this.reservationEquipements.remove(reservationEquipement);
+        //this.reservationEquipements.remove(reservationEquipement);
+        
+        for(int i = 0; i < this.reservationEquipements.size(); i++)
+        {
+            int tmpReservationId = this.reservationEquipements.get(i).getId();
+            if( idReservation == tmpReservationId )
+            {
+                this.reservationEquipements.remove(i);
+                break;
+            }
+        }
     }
 
     public Reunion getReunion()

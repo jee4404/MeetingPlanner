@@ -16,15 +16,21 @@ public class ReservationEquipement {
 
     @DatabaseField(foreign = true, useGetSet = true)
     private Equipement equipement;
+    
+    private int qtReserve;
 
     public ReservationEquipement(){}
 
-    public ReservationEquipement(Equipement equipement, Reunion reunion)
+    public ReservationEquipement(Equipement equipement, Reunion reunion, int qtReserve)
     {
         this.reunion = reunion;
         this.equipement = equipement;
+        this.qtReserve = qtReserve;
     }
-
+    public Integer getId()
+    {
+        return this.id;
+    }
     public Reunion getReunion()
     {
         return this.reunion;
@@ -33,6 +39,10 @@ public class ReservationEquipement {
     public Equipement getEquipement()
     {
         return this.equipement;
+    }
+    
+    public int getQuantite(){
+    	return this.qtReserve;
     }
 
     public void setReunion(Reunion reunion)
@@ -43,5 +53,8 @@ public class ReservationEquipement {
     public void setEquipement(Equipement equipement)
     {
         this.equipement = equipement;
+    }
+    public void setQuantite(int qt){
+    	this.qtReserve = qt;
     }
 }

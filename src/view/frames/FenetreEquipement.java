@@ -100,9 +100,9 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		         ControleurEquipement.getInstance().reserverEquipement( (Integer)idEquipement );
 		         this.equipementReserveTableModel.fireTableDataChanged();
 		    } else if (src == btRetirer) {
-		    	  /*Object idReservation = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 0);
-		          ControleurParticipant.getInstance().retirerEquipement( (Integer)idReservation );
-		          this.equipementReserveTableModel.fireTableDataChanged();*/
+		    	  Object idReservation = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 0);
+		    	  ControleurEquipement.getInstance().retirerEquipement( (Integer)idReservation );
+		          this.equipementReserveTableModel.fireTableDataChanged();
 		    } else if (src == btFermer) {
 		    	this.setVisible(false);
 		    }

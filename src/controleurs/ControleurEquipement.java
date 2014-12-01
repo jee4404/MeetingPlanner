@@ -76,13 +76,36 @@ public class ControleurEquipement {
 	                throw new RuntimeException("cet équipement a déjà été réservé");
 
 	            // creer réservation
-	            reservationEquip = new ReservationEquipement(equipement, this.reunion );
+	            reservationEquip = new ReservationEquipement(equipement, this.reunion,1);
 
 	            // persister participation
 	            ReservationEquipementDBManager.getInstance().creerReservation(reservationEquip);
 
 	            // mettre liste participation à jour
 	            this.listeEquipReserve.ajouterReservation(reservationEquip);
+	        }
+	        catch (SQLException ex)
+	        {
+	            System.out.println(ex.getMessage());
+	        }
+	        catch (RuntimeException ex)
+	        {
+	            System.out.println(ex.getMessage());
+	        }
+	    }
+	    
+	    public void retirerEquipement(int idReservation)
+	    {
+	        try {
+	            ReservationEquipement reservation = ReservationEquipementDBManager.getInstance().trouverReservation(idReservation);
+	            if(reservation == null)
+	                throw new RuntimeException("reservation introuvable");
+
+	            // retirer la participation de la liste de participation
+	            this.listeEquipReserve.enleverReservation(reservation.getId());
+
+	            // retirer la participation de la base de donnée
+	            ReservationEquipementDBManager.getInstance().supprimerReservation(reservation);
 	        }
 	        catch (SQLException ex)
 	        {
