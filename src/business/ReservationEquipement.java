@@ -11,13 +11,14 @@ public class ReservationEquipement {
     @DatabaseField(generatedId = true, canBeNull = false )
     private Integer id;
 
-    @DatabaseField(foreign = true, useGetSet = true)
+    @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Reunion reunion;
 
-    @DatabaseField(foreign = true, useGetSet = true)
+    @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Equipement equipement;
     
-    private int qtReserve;
+    @DatabaseField(canBeNull = false, useGetSet = true)
+    private Integer quantite;
 
     public ReservationEquipement(){}
 
@@ -25,7 +26,7 @@ public class ReservationEquipement {
     {
         this.reunion = reunion;
         this.equipement = equipement;
-        this.qtReserve = qtReserve;
+        this.quantite = qtReserve;
     }
     public Integer getId()
     {
@@ -41,8 +42,8 @@ public class ReservationEquipement {
         return this.equipement;
     }
     
-    public int getQuantite(){
-    	return this.qtReserve;
+    public Integer getQuantite(){
+    	return this.quantite;
     }
 
     public void setReunion(Reunion reunion)
@@ -54,7 +55,7 @@ public class ReservationEquipement {
     {
         this.equipement = equipement;
     }
-    public void setQuantite(int qt){
-    	this.qtReserve = qt;
+    public void setQuantite(Integer qt){
+    	this.quantite = qt;
     }
 }

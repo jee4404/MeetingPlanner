@@ -53,7 +53,7 @@ public class ControleurEquipement {
 	        try {
 	            this.setReunion(reunion);
 	            this.setListeEquipement(new ListeEquipement(reunion));
-	            this.listeEquipReserve.setReservationEquipements(ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion(reunion.getId()));
+	            this.listeEquipReserve.setReservationEquipements(ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion((int)reunion.getId()));
 	            this.fenetreEquipement = new FenetreEquipement(this.listeEquipReserve);
 	        }
 	        catch(SQLException ex)
