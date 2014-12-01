@@ -14,7 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
+import business.Employe;
 import view.components.*;
+import view.tablemodels.ListeMesReunionsTableModel;
 /**
  * @author Marie Desaulniers
  * Interface graphique principale du planificateur de réunion
@@ -25,10 +27,10 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	private JTabbedPane onglet;
 	private JPanel panMesReunions, panMesInvitations;
 	private Bouton btCreerReunion, btModifier,btAnnuler, btFermer1, btFermer2, btAccepter,btRefuser;
-	private JTable tableau1,tableau2;
+	private JTable tableauReunions,tableauParticipations;
 	private ListeDeroulante listeReunion1, listeReunion2;
 
-	public PlanificateurReunion(){
+	public PlanificateurReunion(Employe employe){
 		// Configuration de la fenêtre
 		this.setTitle("Accueil");
 		this.setSize(500, 250);
@@ -55,25 +57,11 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		onglet.addTab("Mes invitations",panMesInvitations);
 		this.getContentPane().add(onglet);
 
-		// Données du tableau des réunions
-		String  enteteReunion[] = {"Sujet", "Date","Heure"};
-		Object[][] dataReunion = {
-				{"Projet XYZ", "14-11-2014", "15:30"},
-				{"Recrutement", "31-11-2014", "13:00"},
-				{"Entrevue 1", "02-12-2014", "9:00"},
-				{"Entrevue 2", "02-12-2014", "10:00"},
-				{"Entrevue 3", "02-12-2014", "13:00"},
-				{"Entrevue 4", "02-12-2014", "14:00"},
-				{"Revue candidats", "03-12-2014", "10:00"},
-				{"Projet A", "10-12-2014", "11:00"},
-				{"Projet B", "12-12-2014", "14:00"}
-		};
-
-		//Construction des tableaux
-		tableau1 = new JTable(dataReunion, enteteReunion);
-		tableau2 = new JTable(dataReunion, enteteReunion);
-		listeReunion1 = new ListeDeroulante(tableau1,300, 150);
-		listeReunion2 = new ListeDeroulante(tableau2,300, 150);
+		//Construction des tableaux mes reunions et mes participations
+		tableauReunions = new JTable(new ListeMesReunionsTableModel(employe));
+		tableauParticipations = new JTable();
+		listeReunion1 = new ListeDeroulante(tableauReunions, 300, 150);
+		listeReunion2 = new ListeDeroulante(tableauParticipations, 300, 150);
 		
 		// Onglet MesReunion
 		panMesReunions.setLayout(new GridBagLayout());
@@ -120,32 +108,35 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    btFermer2.addActionListener(this);
 	    btAccepter.addActionListener(this);
 	    btRefuser.addActionListener(this);
-	  }
-	
+    }
 	
 	@Override
-	public void actionPerformed(ActionEvent evt) {
+	public void actionPerformed(ActionEvent evt)
+	{
 		// TODO Auto-generated method stub
 	    Object src = evt.getSource();
-	    if (src == btCreerReunion) {
+	    if (src == btCreerReunion)
+	    {
 	    	FenetreReunion fenReunion = new FenetreReunion();
-	    } else if (src == btModifier) {
-	     	if (tableau1.getSelectedRows().length != 1) {
-	    		// Veuillez sélectionner une seule rangée
-	    	} else {
-	    		FenetreReunion fenReunion = new FenetreReunion();
-	    		// ***** à faire *****
-	    		fenReunion.setDateReunionField(tableau1.getValueAt(tableau1.getSelectedRow(), 1).toString());
-	    		fenReunion.setSujetReunionField(tableau1.getValueAt(tableau1.getSelectedRow(), 0).toString());
-	    	
-	    	}
-	    } else if (src == btAnnuler) {
+	    } 
+	    else if (src == btModifier)
+	    {
+	     	
+	    } 
+	    else if (src == btAnnuler)
+	    {
 	    	// ... perform action for btAnnuler
-	    } else if ((src == btFermer1) || (src == btFermer2)) {
+	    } 
+	    else if ((src == btFermer1) || (src == btFermer2))
+	    {
 	    	this.setVisible(false);
-	    } else if (src == btAccepter) {
+	    } 
+	    else if (src == btAccepter)
+	    {
 	    	// ... perform action for btAccepter
-	    } else if (src == btRefuser) {
+	    }
+	    else if (src == btRefuser)
+	    {
 	    	FenetreMotifRefus fenMotif = new FenetreMotifRefus();
 	    }
 	}

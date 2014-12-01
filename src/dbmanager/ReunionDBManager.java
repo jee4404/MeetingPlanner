@@ -1,12 +1,14 @@
 package dbmanager;
 
 import business.Reunion;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 /**
  * Created by Rémy on 2014-11-13.
  * Les DBManager permettent les opérations CRUD sur les objets
@@ -61,5 +63,10 @@ public class ReunionDBManager {
     public void supprimerReunion(Reunion reunion) throws SQLException
     {
         this.daoReunion.delete(reunion);
+    }
+    
+    public List<Reunion> trouverReunionParOrganisateur(Integer idOrganisateur) throws SQLException
+    {
+    	return this.daoReunion.queryBuilder().where().eq("organisateur_id", idOrganisateur).query();
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controleurs.ControleurAcceuil;
 import view.components.Bouton;
 /**
  * @author Marie Desaulniers
@@ -58,7 +59,7 @@ public class FenetreLogin extends JFrame implements ActionListener {
 			// TODO Auto-generated method stub
 		    Object src = evt.getSource();
 		    if (src == btOuvrirSession) {
-		    	PlanificateurReunion fenPlanReunion = new PlanificateurReunion();
+		    	ControleurAcceuil.getInstance().login(this.tfCourriel.getText());
 		    } 
 		}
 }

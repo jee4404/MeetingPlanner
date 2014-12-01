@@ -1,6 +1,7 @@
 package dbmanager;
 
 import business.Employe;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
@@ -8,6 +9,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -82,5 +84,10 @@ public class EmployeDBManager {
             System.out.println(ex.getMessage());
         }
         return new ArrayList<Employe>();
+    }
+    
+    public Employe trouverEmployeParCourriel(String courriel) throws SQLException
+    {
+    	return this.daoEmploye.queryBuilder().where().eq("courriel", courriel).queryForFirst();
     }
 }

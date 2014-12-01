@@ -26,19 +26,23 @@ public class Reunion {
     @DatabaseField(useGetSet = true, canBeNull = false)
     private boolean estRecurente;
 
-    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
+    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Local local;
 
-    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true)
+    @DatabaseField(canBeNull = true, foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Organisateur organisateur;
+    
+    @DatabaseField(canBeNull = false, useGetSet = true)
+    private String sujet;
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
     * */
     public Reunion(){}
 
-    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
+    public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
     {
+    	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
@@ -46,8 +50,9 @@ public class Reunion {
         this.organisateur = organisateur;
     }
 
-    public Reunion(Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
+    public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
     {
+    	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
@@ -94,6 +99,11 @@ public class Reunion {
         return this.organisateur;
     }
 
+    public String getSujet()
+    {
+    	return this.sujet;
+    }
+    
     public void setDateReunion(Date dateReunion)
     {
         this.dateReunion = dateReunion;
@@ -117,5 +127,10 @@ public class Reunion {
     public void setOrganisateur(Organisateur organisateur)
     {
         this.organisateur = organisateur;
+    }
+    
+    public void setSujet(String sujet)
+    {
+    	this.sujet = sujet;
     }
 }
