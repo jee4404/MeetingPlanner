@@ -16,6 +16,7 @@ import javax.swing.JTable;
 
 import business.Employe;
 import view.components.*;
+import view.tablemodels.ListeMesParticipationsTableModel;
 import view.tablemodels.ListeMesReunionsTableModel;
 /**
  * @author Marie Desaulniers
@@ -58,8 +59,9 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		this.getContentPane().add(onglet);
 
 		//Construction des tableaux mes reunions et mes participations
-		tableauReunions = new JTable(new ListeMesReunionsTableModel(employe));
-		tableauParticipations = new JTable();
+		tableauReunions = getListeMesReunions(employe);
+        tableauParticipations = getListeMesParticipations(employe);
+
 		listeReunion1 = new ListeDeroulante(tableauReunions, 300, 150);
 		listeReunion2 = new ListeDeroulante(tableauParticipations, 300, 150);
 		
@@ -140,4 +142,27 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    	FenetreMotifRefus fenMotif = new FenetreMotifRefus();
 	    }
 	}
+
+    private JTable getListeMesParticipations(Employe employe)
+    {
+        JTable table = new JTable(new ListeMesParticipationsTableModel(employe));
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        table.getColumnModel().getColumn(1).setPreferredWidth(120);
+        table.getColumnModel().getColumn(2).setPreferredWidth(20);
+        return table;
+    }
+
+    private JTable getListeMesReunions(Employe employe)
+    {
+        JTable table = new JTable(new ListeMesReunionsTableModel(employe));
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        table.getColumnModel().getColumn(1).setPreferredWidth(180);
+        return table;
+    }
 }
