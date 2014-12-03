@@ -80,4 +80,9 @@ public class ParticipationDBManager {
     {
         return this.daoParticipations.queryBuilder().where().eq("reunion_id", idReunion).and().eq("participant_id", idParticipant).queryForFirst();
     }
+
+    public List<Participation> trouverParticipationParParticipant(int idParticipant) throws SQLException
+    {
+        return this.daoParticipations.queryBuilder().where().eq("participant_id", idParticipant).query();
+    }
 }
