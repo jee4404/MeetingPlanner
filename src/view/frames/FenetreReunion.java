@@ -5,31 +5,30 @@ import javax.swing.*;
 import business.Reunion;
 import controleurs.ControleurEquipement;
 import controleurs.ControleurParticipant;
-import dbmanager.EquipementDBManager;
-import dbmanager.ReunionDBManager;
+import controleurs.ControleurPlanifierReunion;
 import view.components.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Rémy on 2014-11-18.
  * Modified by Marie on 2014-11-23
  */
 public class FenetreReunion extends JFrame implements ActionListener{
-	private JPanel panPrincipal,panGauche, panDroit,panHautDroit, panBasDroit;
     private JTextField sujetReunionField,dateReunionField,localReunionField;
-    private JLabel sujetReunionLabel, dateReunionLabel,
-        debutReunionLabel, recurrenceFoisLabel,
-        nombreParticipantsLabel, dureeReunionLabel;
-    private JComboBox debutReunionCBox,dureeReunionCBox;
-    private JSpinner nbParticipantsSpinner, recurrenceReunionSpinner;
+    private JSpinner recurrenceReunionSpinner, nbParticipantsSpinner;
     private Bouton btLocal, btParticipants,btEquip,btFermer,btSave;
     private JCheckBox recurrenceCBox;
-    
-    public FenetreReunion()
+    private JComboBox debutReunionCBox, dureeReunionCBox;
+
+    private Reunion reunion;
+    private boolean choixRecurrence;
+
+    public FenetreReunion(Reunion reunion)
     {
     	// Configuration de la fenêtre
         this.setTitle("Planifier une réunion");
@@ -39,34 +38,34 @@ public class FenetreReunion extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Configuration des panneaux
-        this.panPrincipal = new JPanel();
-        this.panGauche  = new JPanel();
-        this.panDroit = new JPanel();
-        this.panHautDroit = new JPanel();
-        this.panBasDroit = new JPanel();
+        JPanel panPrincipal = new JPanel();
+        JPanel panGauche  = new JPanel();
+        JPanel panDroit = new JPanel();
+        JPanel panHautDroit = new JPanel();
+        JPanel panBasDroit = new JPanel();
         
         // Panneau principal
         this.setContentPane(panPrincipal);
-        this.panPrincipal.setLayout(new BorderLayout());
+        panPrincipal.setLayout(new BorderLayout());
         panPrincipal.add(panGauche, BorderLayout.WEST);
         panPrincipal.add(panDroit,BorderLayout.EAST);
         
         // Panneau gauche
-	    this.panGauche.setLayout(new GridBagLayout());
+	    panGauche.setLayout(new GridBagLayout());
 	    GridBagConstraints gcG = new GridBagConstraints();
-	    this.panGauche.setBorder(BorderFactory.createTitledBorder("Paramètres de la réunion"));
+	    panGauche.setBorder(BorderFactory.createTitledBorder("Paramètres de la réunion"));
 	    
 	    // Panneau droit
-	    this.panDroit.setLayout(new BorderLayout());
-	    this.panDroit.add(panHautDroit,BorderLayout.NORTH);
-	    this.panDroit.add(panBasDroit,BorderLayout.SOUTH);
+	    panDroit.setLayout(new BorderLayout());
+	    panDroit.add(panHautDroit,BorderLayout.NORTH);
+	    panDroit.add(panBasDroit,BorderLayout.SOUTH);
 	    
 	    // Panneau haut droit
-	    this.panHautDroit.setLayout(new GridBagLayout());
+	    panHautDroit.setLayout(new GridBagLayout());
 	    GridBagConstraints gcHD = new GridBagConstraints();
 	    
 	    // Panneau bas droit
-	    this.panBasDroit.setLayout(new GridBagLayout());
+	    panBasDroit.setLayout(new GridBagLayout());
 	    GridBagConstraints gcBD = new GridBagConstraints();
 	    
 	    // Création des composants
@@ -76,21 +75,21 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    Dimension dim100 = new Dimension(100,25);
 	    
 	    // Sujet réunion
-	    this.sujetReunionLabel = new JLabel("Sujet :");
-	    this.sujetReunionLabel.setPreferredSize(dim50);
-	    this.sujetReunionField = new JTextField();
-	    this.sujetReunionField.setPreferredSize(new Dimension(260,25));
+	    JLabel sujetReunionLabel = new JLabel("Sujet :");
+        sujetReunionLabel.setPreferredSize(dim50);
+        sujetReunionField = new JTextField();
+        sujetReunionField.setPreferredSize(new Dimension(260,25));
 	    
 	    // Date de la réunion
-	    this.dateReunionLabel = new JLabel("Date :");
-	    this.dateReunionLabel.setPreferredSize(dim50);
-	    this.dateReunionField= new JTextField();
-	    this.dateReunionField.setPreferredSize(dim100);
+        JLabel dateReunionLabel = new JLabel("Date :");
+	    dateReunionLabel.setPreferredSize(dim50);
+	    dateReunionField= new JTextField();
+	    dateReunionField.setPreferredSize(dim100);
 	    
 	    // Choix du nombre d'occurence de la réunion
 	    this.recurrenceCBox = new JCheckBox("Récurrence");
-	    this.recurrenceFoisLabel = new JLabel("Nombre de récurrence :");
-	    this.recurrenceFoisLabel.setPreferredSize(dim50);
+        JLabel recurrenceFoisLabel = new JLabel("Nombre de récurrence :");
+        recurrenceFoisLabel.setPreferredSize(dim50);
 	    
 	    // Configuration du JPinner pour le nombre d'occurences
 	    Integer minOcc = new Integer(1);
@@ -103,32 +102,32 @@ public class FenetreReunion extends JFrame implements ActionListener{
         this.recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
 	    
 	    // Heure du début de la réunion
-	    this.debutReunionLabel = new JLabel("Heure :");
-	    this.debutReunionLabel.setPreferredSize(dim100);
+        JLabel debutReunionLabel = new JLabel("Heure :");
+	    debutReunionLabel.setPreferredSize(dim100);
 	    String debLabels[] = { "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"};
 	    this.debutReunionCBox = new JComboBox(debLabels);
-	    this.debutReunionCBox.setPreferredSize(dim100);
+	    debutReunionCBox.setPreferredSize(dim100);
 	    
 	    // Durée de la réunion
-	    this.dureeReunionLabel = new JLabel("Durée :");
-	    this.dureeReunionLabel.setPreferredSize(dim50);
+        JLabel dureeReunionLabel = new JLabel("Durée :");
+	    dureeReunionLabel.setPreferredSize(dim50);
 	    String durLabels[] = { "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30", "9:00"};
-	    this.dureeReunionCBox = new JComboBox(durLabels);
-	    this.dureeReunionCBox.setPreferredSize(dim100);
+        dureeReunionCBox = new JComboBox(durLabels);
+	    dureeReunionCBox.setPreferredSize(dim100);
 	    
 	    
 	    // Choix du nombre de participants
-        this.nombreParticipantsLabel = new JLabel("Nb de participants :");
-        this.nombreParticipantsLabel.setPreferredSize(new Dimension(125,25));
+        JLabel nombreParticipantsLabel = new JLabel("Nb de participants :");
+        nombreParticipantsLabel.setPreferredSize(new Dimension(125,25));
         
 	    // Configuration du JPinner pour le nombre d'occurences
 	    Integer minParticipant = new Integer(2);
 	    Integer maxParticipant = new Integer(50);
 	    Integer stepParticipant = new Integer(1);
 	    SpinnerNumberModel modelParticipant = new SpinnerNumberModel(minParticipant, minParticipant, maxParticipant, stepParticipant);
-        this.nbParticipantsSpinner = new JSpinner(modelParticipant);
-        this.nbParticipantsSpinner.setPreferredSize(dim50);
-        this.nbParticipantsSpinner.setEditor(new JSpinner.NumberEditor(this.nbParticipantsSpinner));
+        nbParticipantsSpinner = new JSpinner(modelParticipant);
+        nbParticipantsSpinner.setPreferredSize(dim50);
+        nbParticipantsSpinner.setEditor(new JSpinner.NumberEditor(nbParticipantsSpinner));
         
         // Choix du local
         this.btLocal = new Bouton("Choisir local",205,25);
@@ -144,7 +143,6 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
         
 	    // Positionnement des composants sur la grille
-        
         // Panneau de gauche
         gcG.insets = new Insets(5, 5, 3, 3);
 	    gcG.anchor = GridBagConstraints.LINE_START;
@@ -196,7 +194,8 @@ public class FenetreReunion extends JFrame implements ActionListener{
         panBasDroit.add(btFermer,gcBD);
 
         this.setVisible(true);
-        
+
+        // listener boutons
         btLocal.addActionListener(this);
         btParticipants.addActionListener(this);
         btEquip.addActionListener(this);
@@ -204,44 +203,63 @@ public class FenetreReunion extends JFrame implements ActionListener{
         btSave.addActionListener(this);
  	   	recurrenceCBox.addActionListener(this);
 
+        // la fenetre connait la réunion pour la passer au controleur
+        this.reunion = reunion;
+
+        this.choixRecurrence = false;
     }
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
 	    Object src = evt.getSource();
-	    if (src == btLocal) {
+	    if (src == btLocal)
+        {
 	    	FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
-	    } else if (src == btParticipants) {
-	    	try {
-				ControleurParticipant.getInstance().afficherInviterParticipants(ReunionDBManager.getInstance().trouverReunion(1));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    } else if (src == btEquip) {
-	    	Reunion reunion1;
-			try {
-				reunion1 = ReunionDBManager.getInstance().trouverReunion(1);
-				ControleurEquipement.getInstance().choisirEquipement(reunion1);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	
-	    	//FenetreEquipement fenEquipement = new FenetreEquipement();
-	    } else if (src == btFermer) {
+	    }
+        else if (src == btParticipants)
+        {
+	    	ControleurParticipant.getInstance().afficherInviterParticipants(this.reunion);
+	    }
+        else if (src == btEquip)
+        {
+            ControleurEquipement.getInstance().choisirEquipement(this.reunion);
+	    }
+        else if (src == btFermer)
+        {
 	    	this.setVisible(false);
-	    } else if (src == btSave) {
-	    	// ... perform action for btSave
-	    }else if (src == recurrenceCBox) {
+	    }
+        else if (src == btSave)
+        {
+            try
+            {
+                // TODO faire les check des champs obligatoires, sujet, date, heure...
+
+                // get les valeurs du formulaire et initialise l'objet reunion
+                this.reunion.setSujet(this.sujetReunionField.getText());
+                this.reunion.setEstRecurente(this.choixRecurrence);
+                this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
+
+                ControleurPlanifierReunion.getInstance().creerReunion(reunion);
+                // TODO affichage d'une boite de confirmation ?
+            }
+            catch(ParseException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
+	    }
+        else if (src == recurrenceCBox)
+        {
 	    	Boolean cbox = recurrenceCBox.isSelected();
 	    	if (cbox == false){
 	    		recurrenceReunionSpinner.setEnabled(false);
+                choixRecurrence = false;
 	    	} else {
 	    		recurrenceReunionSpinner.setEnabled(true);
+                choixRecurrence = true;
 	    	}
 	    }
-	    
 	}
 		
 	public void setDateReunionField(String s){

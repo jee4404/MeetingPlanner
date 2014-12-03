@@ -1,20 +1,18 @@
 package view.frames;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import business.Employe;
+import controleurs.ControleurPlanifierReunion;
 import view.components.*;
 import view.tablemodels.ListeMesParticipationsTableModel;
 import view.tablemodels.ListeMesReunionsTableModel;
@@ -30,6 +28,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	private Bouton btCreerReunion, btModifier,btAnnuler, btFermer1, btFermer2, btAccepter,btRefuser;
 	private JTable tableauReunions,tableauParticipations;
 	private ListeDeroulante listeReunion1, listeReunion2;
+    private Employe employeConnecte;
 
 	public PlanificateurReunion(Employe employe){
 		// Configuration de la fenêtre
@@ -50,7 +49,6 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		btFermer2 = new Bouton("Fermer", btWidth, btHeight);
 		btAccepter = new Bouton("Accepter", btWidth, btHeight);
 		btRefuser = new Bouton("Refuser", btWidth, btHeight);
-		
 
 		// Configuration des onglets
 		onglet = new JTabbedPane();
@@ -102,7 +100,8 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		panMesInvitations.add(listeReunion2,gc2);
 		
 		this.setVisible(true);
-		
+
+        // listener boutons
 	    btCreerReunion.addActionListener(this);
 	    btModifier.addActionListener(this);
 	    btAnnuler.addActionListener(this);
@@ -110,6 +109,9 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    btFermer2.addActionListener(this);
 	    btAccepter.addActionListener(this);
 	    btRefuser.addActionListener(this);
+
+        // set employe connecte
+        this.employeConnecte = employe;
     }
 	
 	@Override
@@ -119,7 +121,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    Object src = evt.getSource();
 	    if (src == btCreerReunion)
 	    {
-	    	FenetreReunion fenReunion = new FenetreReunion();
+            ControleurPlanifierReunion.getInstance().afficheCreerReunion(this.employeConnecte);
 	    } 
 	    else if (src == btModifier)
 	    {
@@ -141,6 +143,10 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    {
 	    	FenetreMotifRefus fenMotif = new FenetreMotifRefus();
 	    }
+        else if (src == btFermer1 || src == btFermer2 )
+        {
+            // fermer le programme
+        }
 	}
 
     private JTable getListeMesParticipations(Employe employe)

@@ -60,6 +60,7 @@ public class FenetreLogin extends JFrame implements ActionListener {
 		    Object src = evt.getSource();
 		    if (src == btOuvrirSession) {
 		    	ControleurAcceuil.getInstance().login(this.tfCourriel.getText());
+                this.setVisible(false);
 		    } 
 		}
 }
