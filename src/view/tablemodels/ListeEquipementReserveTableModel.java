@@ -54,7 +54,11 @@ public class ListeEquipementReserveTableModel extends AbstractTableModel {
 	    @Override
 	    public boolean isCellEditable(int rowIndex, int columnIndex)
 	    {
+	    	if (columnIndex == 3){
+	    		return true;
+	    	} else {
 	        return false;
+	    	}
 	    }
 
 	 public String getColumnName(int columnIndex)

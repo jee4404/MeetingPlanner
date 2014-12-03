@@ -104,6 +104,9 @@ public class FenetreParticipants extends JFrame implements ActionListener {
     private JTable getTableEmployes(){
         this.employeTableModel = new ListeEmployeTableModel();
         JTable table = new JTable(this.employeTableModel);
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setWidth(0);
         return table;
     }
 
@@ -112,6 +115,12 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         this.participationsTableModel = new ListeParticipationsTableModel(listeParticipations);
         JTable table = new JTable(this.participationsTableModel);
         table.setCellSelectionEnabled(true);
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+     	table.getColumnModel().getColumn(0).setMaxWidth(0);
+     	table.getColumnModel().getColumn(0).setWidth(0);
+     	table.getColumnModel().getColumn(1).setMinWidth(0);
+     	table.getColumnModel().getColumn(1).setMaxWidth(0);
+     	table.getColumnModel().getColumn(1).setWidth(0);
         return table;
     }
 }

@@ -78,10 +78,10 @@ public class ControleurEquipement {
 	            // creer réservation
 	            reservationEquip = new ReservationEquipement(equipement, this.reunion,1);
 
-	            // persister participation
+	            // persister réservation
 	            ReservationEquipementDBManager.getInstance().creerReservation(reservationEquip);
 
-	            // mettre liste participation à jour
+	            // mettre liste réservation à jour
 	            this.listeEquipReserve.ajouterReservation(reservationEquip);
 	        }
 	        catch (SQLException ex)
@@ -117,23 +117,4 @@ public class ControleurEquipement {
 	        }
 	    }
 
-	   /* Obtenir les équipements de la base de donnée.
-	   public List<Equipement> getListEquipement(){
-		EquipementDBManager instanceDBEquipement = EquipementDBManager.getInstance();
-		List<Equipement> lstEquipement = new ArrayList<Equipement>();
-		try {
-			lstEquipement = instanceDBEquipement.trouverTousEquipements();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return lstEquipement;
-	   }*/
-	   
-	   /*public void choisirEquipement(Reunion reunion){
-		   List<Equipement> listeEquipement = new ArrayList<Equipement>();
-		   listeEquipement = this.getListEquipement();
-		   
-		   
-	   }*/
 	}
