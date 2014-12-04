@@ -6,7 +6,6 @@ import java.util.List;
 
 import view.frames.FenetreEquipement;
 import view.frames.FenetreParticipants;
-import view.frames.FenetreQuantiteEquip;
 import business.Equipement;
 import business.ListeEquipement;
 import business.ListeParticipations;
