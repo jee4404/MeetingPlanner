@@ -22,11 +22,11 @@ public class ReservationEquipement {
 
     public ReservationEquipement(){}
 
-    public ReservationEquipement(Equipement equipement, Reunion reunion, int qtReserve)
+    public ReservationEquipement(Equipement equipement, Reunion reunion, int quantite)
     {
         this.reunion = reunion;
         this.equipement = equipement;
-        this.quantite = qtReserve;
+        this.quantite = quantite;
     }
     public Integer getId()
     {
@@ -55,7 +55,7 @@ public class ReservationEquipement {
     {
         this.equipement = equipement;
     }
-    public void setQuantite(Integer qt){
-    	this.quantite = qt;
+    public void setQuantite(Integer quantite){
+    	this.quantite = quantite;
     }
 }
