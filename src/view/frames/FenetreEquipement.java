@@ -113,8 +113,8 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 
 		    Object src = evt.getSource();
 		    if (src == btAjouter) {
-		    	//FenetreQuantiteEquip fenetreQuantiteEquip = new FenetreQuantiteEquip(this,true);
-		    	 String qt = JOptionPane.showInputDialog(this, "Quantité");
+		    	Object[] possibleQt = {"1", "2", "3", "4","5"};
+		    	String qt = (String) JOptionPane.showInputDialog(this, "Quantité requise", "Quantité", JOptionPane.INFORMATION_MESSAGE, null, possibleQt, possibleQt[0] );
 		    	 Object idEquipement = this.tblEquipDispo.getValueAt(this.tblEquipDispo.getSelectionModel().getMinSelectionIndex(), 0);
 		         ControleurEquipement.getInstance().reserverEquipement( (Integer)idEquipement, Integer.parseInt(qt));
 		         this.equipementReserveTableModel.fireTableDataChanged();
