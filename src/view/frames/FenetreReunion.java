@@ -120,7 +120,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
         JLabel nombreParticipantsLabel = new JLabel("Nb de participants :");
         nombreParticipantsLabel.setPreferredSize(new Dimension(125,25));
         
-	    // Configuration du JPinner pour le nombre d'occurences
+	    // Configuration du JPinner pour le nombre de participants
 	    Integer minParticipant = new Integer(2);
 	    Integer maxParticipant = new Integer(50);
 	    Integer stepParticipant = new Integer(1);
