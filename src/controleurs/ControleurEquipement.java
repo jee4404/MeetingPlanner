@@ -6,6 +6,7 @@ import java.util.List;
 
 import view.frames.FenetreEquipement;
 import view.frames.FenetreParticipants;
+import view.frames.FenetreQuantiteEquip;
 import business.Equipement;
 import business.ListeEquipement;
 import business.ListeParticipations;
@@ -61,7 +62,7 @@ public class ControleurEquipement {
 	            System.out.println(ex.getMessage());
 	        }
 	    }
-	    public void reserverEquipement(int idEquipement)
+	    public void reserverEquipement(int idEquipement, int qtEquipement)
 	    {
 	        try {
 	            // fetcher equipement
@@ -76,7 +77,7 @@ public class ControleurEquipement {
 	                throw new RuntimeException("cet équipement a déjà été réservé");
 
 	            // creer réservation
-	            reservationEquip = new ReservationEquipement(equipement, this.reunion,1);
+	            reservationEquip = new ReservationEquipement(equipement, this.reunion,qtEquipement);
 
 	            // persister réservation
 	            ReservationEquipementDBManager.getInstance().creerReservation(reservationEquip);

@@ -9,12 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import business.Employe;
 import business.Equipement;
@@ -28,16 +35,18 @@ import view.tablemodels.ListeEquipementTableModel;
 /**
  * @author Marie Desaulniers
  */
-public class FenetreEquipement extends JFrame implements ActionListener {
+public class FenetreEquipement extends JFrame implements ActionListener,TableModelListener {
 
 	  private JPanel pan = new JPanel();
 	  private Bouton btAjouter,btRetirer,btFermer;
-	  private JTable tblEquipReserve,tblEquipDispo;
+	  private JTable tblEquipDispo,tblEquipReserve;
 	  private JScrollPane spListeEquipementReserve,spListeEquipmentDispo;
 	  private JLabel lbEquipment,lbEquipmentDispo;
+	  private JSpinner spinnerQtEquipement;
 	    // table model
 	  private ListeEquipementTableModel equipementTableModel;
 	  private ListeEquipementReserveTableModel equipementReserveTableModel;
+	  
 	  
 	  public FenetreEquipement(ListeEquipement listeEquipement){               
 		    this.setTitle("Équipement");
@@ -56,6 +65,11 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 			this.lbEquipment = new JLabel("Équipement requis");
 			this.lbEquipmentDispo = new JLabel("Équipement disponible");
 			
+			// spinner pour le choix de la quantité d'équipement
+			SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 30, 1);
+			spinnerQtEquipement = new JSpinner(sModel);
+			
+			
 
 	        //Le tableau des équipement réservés
 	        this.tblEquipReserve = this.getTableEquipementReserve(listeEquipement);
@@ -64,6 +78,7 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    //Le tableau des équipements disponibles
 		    this.tblEquipDispo= getTableEquipement();
 		    this.spListeEquipmentDispo = new ListeDeroulante(tblEquipDispo,200,150);
+		    
 		    
 		    // Positionnement des composants sur la grille (boutons et tableau)
 		    gcEqp.insets = new Insets(5, 5, 3, 3);
@@ -86,9 +101,11 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    pan.add(spListeEquipmentDispo, gcEqp);
 			this.setVisible(true);
 			
-			btAjouter.addActionListener(this);
-			btRetirer.addActionListener(this);
-			btFermer.addActionListener(this);
+			this.btAjouter.addActionListener(this);
+			this.btRetirer.addActionListener(this);
+			this.btFermer.addActionListener(this);
+			this.tblEquipReserve.getModel().addTableModelListener(this);
+			
 	  }
 
 		@Override
@@ -96,8 +113,10 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 
 		    Object src = evt.getSource();
 		    if (src == btAjouter) {
-		    	Object idEquipement = this.tblEquipDispo.getValueAt(this.tblEquipDispo.getSelectionModel().getMinSelectionIndex(), 0);
-		         ControleurEquipement.getInstance().reserverEquipement( (Integer)idEquipement );
+		    	//FenetreQuantiteEquip fenetreQuantiteEquip = new FenetreQuantiteEquip(this,true);
+		    	 String qt = JOptionPane.showInputDialog(this, "Quantité");
+		    	 Object idEquipement = this.tblEquipDispo.getValueAt(this.tblEquipDispo.getSelectionModel().getMinSelectionIndex(), 0);
+		         ControleurEquipement.getInstance().reserverEquipement( (Integer)idEquipement, Integer.parseInt(qt));
 		         this.equipementReserveTableModel.fireTableDataChanged();
 		    } else if (src == btRetirer) {
 		    	  Object idReservation = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 0);
@@ -107,6 +126,18 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 		    	this.setVisible(false);
 		    }
 		    
+		}
+		
+		@Override
+		public void tableChanged(TableModelEvent e) {
+			// Lire la nouvelle quantité
+			 int row = e.getFirstRow();
+		     int column = e.getColumn();
+		     TableModel model = (TableModel)e.getSource();
+		     String columnName = model.getColumnName(column);
+		     Object quantite = model.getValueAt(row, column);
+		     JOptionPane msg = new JOptionPane(quantite);
+
 		}
 
 		  private JTable getTableEquipement(){
@@ -134,4 +165,6 @@ public class FenetreEquipement extends JFrame implements ActionListener {
 			  table.getColumnModel().getColumn(3).setMaxWidth(40);
 			  return table;
 		  }
+
+	
 }
