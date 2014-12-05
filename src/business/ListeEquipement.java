@@ -1,8 +1,4 @@
 package business;
-
-import dbmanager.ReservationEquipementDBManager;
-
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,7 +10,7 @@ public class ListeEquipement {
 
     public ListeEquipement(){}
 
-    public ListeEquipement(Reunion reunion) throws SQLException
+    public ListeEquipement(Reunion reunion)
     {
         this.reunion = reunion;
         this.reservationEquipements = null;
@@ -37,8 +33,6 @@ public class ListeEquipement {
     // TODO : dans le controleur, monsieur
     public void enleverReservation(int idReservation)
     {
-        //this.reservationEquipements.remove(reservationEquipement);
-        
         for(int i = 0; i < this.reservationEquipements.size(); i++)
         {
             int tmpReservationId = this.reservationEquipements.get(i).getId();
