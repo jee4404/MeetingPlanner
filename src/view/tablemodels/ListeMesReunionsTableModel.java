@@ -1,31 +1,15 @@
 package view.tablemodels;
-
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-
-import dbmanager.OrganisateurDBManager;
-import dbmanager.ReunionDBManager;
-import business.Employe;
 import business.Reunion;
-import business.Organisateur;
 
 public class ListeMesReunionsTableModel extends AbstractTableModel {
-	private Organisateur organisateur;
 	private List<Reunion> reunionsOrganisees;
 	
-	public ListeMesReunionsTableModel(Employe employe)
+	public ListeMesReunionsTableModel(List<Reunion> reunionsOrganisees)
 	{
-		try {
-			this.organisateur = OrganisateurDBManager.getInstance().trouverOrganisateur(employe.getId());
-			this.reunionsOrganisees = ReunionDBManager.getInstance().trouverReunionParOrganisateur(organisateur.getId());
-		} 
-		catch (SQLException e) 
-		{
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
+		this.reunionsOrganisees = reunionsOrganisees;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package controleurs;
 
 import java.sql.SQLException;
 
+import business.SessionManager;
 import view.frames.PlanificateurReunion;
 import dbmanager.EmployeDBManager;
 import business.Employe;
@@ -20,25 +21,26 @@ public class ControleurAcceuil {
 	      return controleurAcceuil;
 	   }
 
-	   public void login(String courriel)
-	   {
-		   try
-		   {
-			   Employe employe = EmployeDBManager.getInstance().trouverEmployeParCourriel(courriel);
-			   
-			   // teste si employe trouve
-			   if(employe == null)
-				   throw new RuntimeException("Cette adresse courriel n'existe pas");
-			   
-			   PlanificateurReunion planificateurReunion = new PlanificateurReunion(employe);
-		   }
-		   catch (SQLException e)
-		   {
-			   e.printStackTrace();
-		   }
-		   catch (RuntimeException e)
-		   {
-			   System.out.println(e.getMessage());
-		   }
-	   }
+        public void login(String courriel)
+        {
+            try
+            {
+                Employe employe = EmployeDBManager.getInstance().trouverEmployeParCourriel(courriel);
+
+                // teste si employe trouve
+                if(employe == null)
+                   throw new RuntimeException("Cette adresse courriel n'existe pas");
+
+                SessionManager.getInstance().initManager(employe);
+                PlanificateurReunion planificateurReunion = new PlanificateurReunion();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+            catch (RuntimeException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
 	}

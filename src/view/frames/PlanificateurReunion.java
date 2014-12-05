@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import business.Employe;
+import business.SessionManager;
 import controleurs.ControleurPlanifierReunion;
 import view.components.*;
 import view.tablemodels.ListeMesParticipationsTableModel;
@@ -30,7 +31,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	private ListeDeroulante listeReunion1, listeReunion2;
     private Employe employeConnecte;
 
-	public PlanificateurReunion(Employe employe){
+	public PlanificateurReunion(){
 		// Configuration de la fenêtre
 		this.setTitle("Accueil");
 		this.setSize(500, 250);
@@ -57,8 +58,8 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		this.getContentPane().add(onglet);
 
 		//Construction des tableaux mes reunions et mes participations
-		tableauReunions = getListeMesReunions(employe);
-        tableauParticipations = getListeMesParticipations(employe);
+		tableauReunions = getListeMesReunions();
+        tableauParticipations = getListeMesParticipations();
 
 		listeReunion1 = new ListeDeroulante(tableauReunions, 300, 150);
 		listeReunion2 = new ListeDeroulante(tableauParticipations, 300, 150);
@@ -109,9 +110,6 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    btFermer2.addActionListener(this);
 	    btAccepter.addActionListener(this);
 	    btRefuser.addActionListener(this);
-
-        // set employe connecte
-        this.employeConnecte = employe;
     }
 	
 	@Override
@@ -121,7 +119,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    Object src = evt.getSource();
 	    if (src == btCreerReunion)
 	    {
-            ControleurPlanifierReunion.getInstance().afficheCreerReunion(this.employeConnecte);
+            ControleurPlanifierReunion.getInstance().afficheCreerReunion();
 	    } 
 	    else if (src == btModifier)
 	    {
@@ -149,9 +147,9 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
         }
 	}
 
-    private JTable getListeMesParticipations(Employe employe)
+    private JTable getListeMesParticipations()
     {
-        JTable table = new JTable(new ListeMesParticipationsTableModel(employe));
+        JTable table = new JTable(SessionManager.getInstance().getListeMesParticipationsTableModel());
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -161,9 +159,9 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
         return table;
     }
 
-    private JTable getListeMesReunions(Employe employe)
+    private JTable getListeMesReunions()
     {
-        JTable table = new JTable(new ListeMesReunionsTableModel(employe));
+        JTable table = new JTable(SessionManager.getInstance().getListeMesReunionsTableModel());
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);

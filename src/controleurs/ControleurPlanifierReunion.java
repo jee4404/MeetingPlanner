@@ -2,6 +2,7 @@ package controleurs;
 
 import business.Employe;
 import business.Reunion;
+import business.SessionManager;
 import dbmanager.OrganisateurDBManager;
 import dbmanager.ReunionDBManager;
 import view.frames.FenetreReunion;
@@ -18,13 +19,13 @@ public class ControleurPlanifierReunion {
 	      return controleurPlanifierReunion;
 	   }
 
-    public void afficheCreerReunion(Employe employeConnecte)
+    public void afficheCreerReunion()
     {
         try
         {
             Reunion reunion = new Reunion();
             // TODO cast employe -> organisateur plus élégant
-            reunion.setOrganisateur(OrganisateurDBManager.getInstance().trouverOrganisateur(employeConnecte.getId()));
+            reunion.setOrganisateur(OrganisateurDBManager.getInstance().trouverOrganisateur(SessionManager.getInstance().getEmploye().getId()));
             FenetreReunion fenetreReunion = new FenetreReunion(reunion);
         }
         catch (SQLException ex)
@@ -37,7 +38,13 @@ public class ControleurPlanifierReunion {
     {
         try
         {
+            // on persiste la reunion en base de données
             ReunionDBManager.getInstance().creerReunion(reunion);
+            // on notifie la liste "mes reunions" qu'une nouvelle reunion est disponible
+            // il faut ajouter la reunion a la liste sur laquelle est lié le table model
+            // ensuite on notifie que la source de donnée a changée
+            SessionManager.getInstance().getListeMesReunions().add(reunion);
+            SessionManager.getInstance().getListeMesReunionsTableModel().fireTableDataChanged();
         }
         catch (SQLException ex)
         {

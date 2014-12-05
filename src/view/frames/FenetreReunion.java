@@ -240,9 +240,9 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
-
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
                 // TODO affichage d'une boite de confirmation ?
+
             }
             catch(ParseException ex)
             {

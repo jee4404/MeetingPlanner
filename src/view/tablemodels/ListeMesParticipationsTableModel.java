@@ -1,11 +1,7 @@
 package view.tablemodels;
 
-import business.Employe;
 import business.Participation;
-import dbmanager.ParticipationDBManager;
-
 import javax.swing.table.AbstractTableModel;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,16 +10,9 @@ import java.util.List;
 public class ListeMesParticipationsTableModel extends AbstractTableModel {
     private List<Participation> participations;
 
-    public ListeMesParticipationsTableModel(Employe employe)
+    public ListeMesParticipationsTableModel(List<Participation> participations)
     {
-        try
-        {
-            this.participations = ParticipationDBManager.getInstance().trouverParticipationParParticipant(employe.getId());
-        }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        this.participations = participations;
     }
 
     @Override
