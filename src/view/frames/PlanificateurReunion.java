@@ -5,6 +5,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -119,11 +120,30 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    Object src = evt.getSource();
 	    if (src == btCreerReunion)
 	    {
-            ControleurPlanifierReunion.getInstance().afficheCreerReunion();
+            try
+            {
+                ControleurPlanifierReunion.getInstance().afficheCreerReunion();
+            }
+            catch(SQLException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
 	    } 
 	    else if (src == btModifier)
 	    {
-	     	
+            try
+            {
+                int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+                ControleurPlanifierReunion.getInstance().afficheModifierReunion(idReunion);
+            }
+            catch (SQLException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
+            catch (RuntimeException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
 	    } 
 	    else if (src == btAnnuler)
 	    {

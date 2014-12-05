@@ -69,4 +69,9 @@ public class ReunionDBManager {
     {
     	return this.daoReunion.queryBuilder().where().eq("organisateur_id", idOrganisateur).query();
     }
+
+    public void updateReunion(Reunion reunion) throws SQLException
+    {
+        this.daoReunion.update(reunion);
+    }
 }

@@ -11,6 +11,8 @@ import view.components.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -77,17 +79,27 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    // Sujet réunion
 	    JLabel sujetReunionLabel = new JLabel("Sujet :");
         sujetReunionLabel.setPreferredSize(dim50);
-        sujetReunionField = new JTextField();
+        sujetReunionField = new JTextField(reunion.getSujet());
         sujetReunionField.setPreferredSize(new Dimension(260,25));
 	    
 	    // Date de la réunion
         JLabel dateReunionLabel = new JLabel("Date :");
 	    dateReunionLabel.setPreferredSize(dim50);
-	    dateReunionField= new JTextField();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateReunionFieldValue = reunion.getDateReunion() != null ? dateFormat.format(reunion.getDateReunion()) : "";
+        dateReunionField = new JTextField(dateReunionFieldValue);
+
 	    dateReunionField.setPreferredSize(dim100);
 	    
 	    // Choix du nombre d'occurence de la réunion
-	    this.recurrenceCBox = new JCheckBox("Récurrence");
+        if(reunion.getEstRecurente()) {
+            this.choixRecurrence = true;
+        }
+        else {
+            this.choixRecurrence = false;
+        }
+
+	    this.recurrenceCBox = new JCheckBox("Récurrence", this.choixRecurrence);
         JLabel recurrenceFoisLabel = new JLabel("Nombre de récurrence :");
         recurrenceFoisLabel.setPreferredSize(dim50);
 	    
@@ -96,11 +108,11 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    Integer maxOcc = new Integer(50);
 	    Integer stepOcc = new Integer(1);
 	    SpinnerNumberModel modelOcc = new SpinnerNumberModel(minOcc, minOcc, maxOcc, stepOcc);
-        this.recurrenceReunionSpinner = new JSpinner(modelOcc);
-        this.recurrenceReunionSpinner.setPreferredSize(dim50);
+        recurrenceReunionSpinner = new JSpinner(modelOcc);
+        recurrenceReunionSpinner.setPreferredSize(dim50);
         recurrenceReunionSpinner.setEnabled(false);
-        this.recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
-	    
+        recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
+
 	    // Heure du début de la réunion
         JLabel debutReunionLabel = new JLabel("Heure :");
 	    debutReunionLabel.setPreferredSize(dim100);
@@ -128,7 +140,10 @@ public class FenetreReunion extends JFrame implements ActionListener{
         nbParticipantsSpinner = new JSpinner(modelParticipant);
         nbParticipantsSpinner.setPreferredSize(dim50);
         nbParticipantsSpinner.setEditor(new JSpinner.NumberEditor(nbParticipantsSpinner));
-        
+
+        if(reunion.getNbParticipants() > 2)
+            nbParticipantsSpinner.setValue(reunion.getNbParticipants());
+
         // Choix du local
         this.btLocal = new Bouton("Choisir local",205,25);
         this.localReunionField = new JTextField();
@@ -141,7 +156,6 @@ public class FenetreReunion extends JFrame implements ActionListener{
         this.btFermer = new Bouton("Fermer", 150,25);
         this.btSave = new Bouton("Enregistrer",150,25);
 
-        
 	    // Positionnement des composants sur la grille
         // Panneau de gauche
         gcG.insets = new Insets(5, 5, 3, 3);
@@ -205,9 +219,8 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
         // la fenetre connait la réunion pour la passer au controleur
         this.reunion = reunion;
-
-        this.choixRecurrence = false;
     }
+
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
@@ -233,7 +246,6 @@ public class FenetreReunion extends JFrame implements ActionListener{
             try
             {
                 // TODO faire les check des champs obligatoires, sujet, date, heure...
-
                 // get les valeurs du formulaire et initialise l'objet reunion
                 this.reunion.setSujet(this.sujetReunionField.getText());
                 this.reunion.setEstRecurente(this.choixRecurrence);
@@ -242,9 +254,12 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
                 // TODO affichage d'une boite de confirmation ?
-
             }
             catch(ParseException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
+            catch(SQLException ex)
             {
                 System.out.println(ex.getMessage());
             }

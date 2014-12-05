@@ -1,6 +1,5 @@
 package controleurs;
 
-import business.Employe;
 import business.Reunion;
 import business.SessionManager;
 import dbmanager.OrganisateurDBManager;
@@ -19,24 +18,22 @@ public class ControleurPlanifierReunion {
 	      return controleurPlanifierReunion;
 	   }
 
-    public void afficheCreerReunion()
+    public void afficheCreerReunion() throws SQLException
     {
-        try
-        {
-            Reunion reunion = new Reunion();
-            // TODO cast employe -> organisateur plus élégant
-            reunion.setOrganisateur(OrganisateurDBManager.getInstance().trouverOrganisateur(SessionManager.getInstance().getEmploye().getId()));
-            FenetreReunion fenetreReunion = new FenetreReunion(reunion);
-        }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        Reunion reunion = new Reunion();
+        // TODO cast employe -> organisateur plus élégant
+        reunion.setOrganisateur(OrganisateurDBManager.getInstance().trouverOrganisateur(SessionManager.getInstance().getEmploye().getId()));
+        FenetreReunion fenetreReunion = new FenetreReunion(reunion);
     }
 
-    public void creerReunion(Reunion reunion)
+    public void creerReunion(Reunion reunion) throws SQLException
     {
-        try
+        //teste si la reunion existe en base, on update
+        if(reunion.getId() != null )
+        {
+            ReunionDBManager.getInstance().updateReunion(reunion);
+        }
+        else // sinon on crée
         {
             // on persiste la reunion en base de données
             ReunionDBManager.getInstance().creerReunion(reunion);
@@ -46,9 +43,15 @@ public class ControleurPlanifierReunion {
             SessionManager.getInstance().getListeMesReunions().add(reunion);
             SessionManager.getInstance().getListeMesReunionsTableModel().fireTableDataChanged();
         }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+    }
+
+    public void afficheModifierReunion(int idReunion) throws SQLException, RuntimeException
+    {
+        Reunion reunion = ReunionDBManager.getInstance().trouverReunion(idReunion);
+
+        if(reunion == null)
+            throw new RuntimeException("reunion introuvable");
+
+        FenetreReunion fenetreReunion = new FenetreReunion(reunion);
     }
 }
