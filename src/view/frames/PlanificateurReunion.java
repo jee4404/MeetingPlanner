@@ -8,12 +8,14 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import business.Employe;
 import business.SessionManager;
+import controleurs.ControleurParticipant;
 import controleurs.ControleurPlanifierReunion;
 import view.components.*;
 import view.tablemodels.ListeMesParticipationsTableModel;
@@ -27,7 +29,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L; 
 	private JTabbedPane onglet;
 	private JPanel panMesReunions, panMesInvitations;
-	private Bouton btCreerReunion, btModifier,btAnnuler, btFermer1, btFermer2, btAccepter,btRefuser;
+	private Bouton btCreerReunion, btModifier,btAnnuler, btFermer1, btFermer2, btAccepter,btDecliner;
 	private JTable tableauReunions,tableauParticipations;
 	private ListeDeroulante listeReunion1, listeReunion2;
     private Employe employeConnecte;
@@ -50,7 +52,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		btFermer1 = new Bouton("Fermer", btWidth, btHeight);
 		btFermer2 = new Bouton("Fermer", btWidth, btHeight);
 		btAccepter = new Bouton("Accepter", btWidth, btHeight);
-		btRefuser = new Bouton("Refuser", btWidth, btHeight);
+		btDecliner = new Bouton("Décliner", btWidth, btHeight);
 
 		// Configuration des onglets
 		onglet = new JTabbedPane();
@@ -93,7 +95,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 		gc2.gridx=1;	gc2.gridy=0;
 		panMesInvitations.add(btAccepter, gc2);
 		gc2.gridx=1;	gc2.gridy=1;
-		panMesInvitations.add(btRefuser, gc2);
+		panMesInvitations.add(btDecliner, gc2);
 		gc2.gridx=1;	gc2.gridy=3;
 		gc2.anchor = GridBagConstraints.PAGE_END;
 		panMesInvitations.add(btFermer2, gc2);
@@ -110,7 +112,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    btFermer1.addActionListener(this);
 	    btFermer2.addActionListener(this);
 	    btAccepter.addActionListener(this);
-	    btRefuser.addActionListener(this);
+	    btDecliner.addActionListener(this);
     }
 	
 	@Override
@@ -133,7 +135,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    {
             try
             {
-                int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+                int idReunion = (Integer) tableauParticipations.getValueAt(tableauParticipations.getSelectionModel().getMinSelectionIndex(), 0);
                 ControleurPlanifierReunion.getInstance().afficheModifierReunion(idReunion);
             }
             catch (SQLException ex)
@@ -153,18 +155,18 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	    {
 	    	this.setVisible(false);
 	    } 
-	    else if (src == btAccepter)
-	    {
-	    	// ... perform action for btAccepter
+	    else if (src == btAccepter){
+	       int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+	       int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
+	       ControleurParticipant.getInstance().repondreInvitation(idReunion,idEmploye,true,"");
 	    }
-	    else if (src == btRefuser)
+	    else if (src == btDecliner)
 	    {
-	    	FenetreMotifRefus fenMotif = new FenetreMotifRefus();
+	    	String motif = (String) JOptionPane.showInputDialog(this, "Motif refus", "Motif", JOptionPane.INFORMATION_MESSAGE);
+		    int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+		    int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
+		    ControleurParticipant.getInstance().repondreInvitation(idReunion,idEmploye,false,motif);
 	    }
-        else if (src == btFermer1 || src == btFermer2 )
-        {
-            // fermer le programme
-        }
 	}
 
     private JTable getListeMesParticipations()

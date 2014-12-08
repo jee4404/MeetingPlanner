@@ -19,12 +19,16 @@ public class Participation {
 
     @DatabaseField
     private boolean participationConfirmee;
+    
+    @DatabaseField
+    private String motif;
 
     public Participation()
     {
         this.participant = null;
         this.reunion = null;
         this.participationConfirmee = false;
+        this.motif = "";
     }
 
     public Participation(Participant participant, Reunion reunion, boolean participationConfirmee)
@@ -72,5 +76,10 @@ public class Participation {
     public void setParticipationConfirmee(boolean participationConfirmee)
     {
         this.participationConfirmee = participationConfirmee;
+    }
+    
+    public void setMotif(String motif)
+    {
+    	this.motif = motif;
     }
 }

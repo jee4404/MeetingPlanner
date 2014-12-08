@@ -111,4 +111,18 @@ public class ControleurParticipant {
             System.out.println(ex.getMessage());
         }
     }
+
+    public void repondreInvitation(int idReunion, int idEmploye, boolean rep, String motif){
+    	  try {
+			Participation participation = ParticipationDBManager.getInstance().trouverParticipantionParReunionParticipant(idReunion, idEmploye);
+			participation.setParticipationConfirmee(rep);
+			participation.setMotif(motif);
+			ParticipationDBManager.getInstance().actualiserParticipation(participation);
+    	} 
+    	catch (SQLException ex) 
+    	{
+    		System.out.println(ex.getMessage());
+		};
+    	
+    }
 }

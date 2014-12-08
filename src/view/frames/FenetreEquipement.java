@@ -125,7 +125,6 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 		    } else if (src == btFermer) {
 		    	this.setVisible(false);
 		    }
-		    
 		}
 		
 		@Override
