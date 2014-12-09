@@ -1,17 +1,14 @@
 package view.tablemodels;
 
 import business.AnnuaireEmployes;
-import business.Employe;
 import business.SessionManager;
-import dbmanager.EmployeDBManager;
 
 import javax.swing.table.AbstractTableModel;
 
-import java.sql.SQLException;
-import java.util.List;
+
 
 /**
- * Created by Rémy on 2014-11-29.
+ * Created by Rémy on 2014-11-29
  */
 public class ListeEmployeTableModel extends AbstractTableModel {
     private AnnuaireEmployes annuaireEmployes;
