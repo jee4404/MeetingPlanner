@@ -17,7 +17,7 @@ public class Participation {
     @DatabaseField(useGetSet = true)
     private int idReunion;
 
-    @DatabaseField
+    @DatabaseField(useGetSet = true)
     private boolean participationConfirmee;
     
     @DatabaseField
@@ -53,7 +53,7 @@ public class Participation {
         return this.participant;
     }
 
-    public int getReunion()
+    public int getIdReunion()
     {
         return this.idReunion;
     }
@@ -68,7 +68,7 @@ public class Participation {
         this.participant = participant;
     }
 
-    public void setReunion(int idReunion)
+    public void setIdReunion(int idReunion)
     {
         this.idReunion = idReunion;
     }

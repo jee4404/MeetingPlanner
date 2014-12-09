@@ -45,13 +45,24 @@ public class ControleurPlanifierReunion {
         }
     }
 
-    public void afficheModifierReunion(int idReunion) throws SQLException, RuntimeException
+    public void afficheModifierReunion(int idReunion)
     {
-        Reunion reunion = ReunionDBManager.getInstance().trouverReunion(idReunion);
+        try
+        {
+            Reunion reunion = ReunionDBManager.getInstance().trouverReunion(idReunion);
 
-        if(reunion == null)
-            throw new RuntimeException("reunion introuvable");
+            if (reunion == null)
+                throw new RuntimeException("reunion introuvable");
 
-        FenetreReunion fenetreReunion = new FenetreReunion(reunion);
+            FenetreReunion fenetreReunion = new FenetreReunion(reunion);
+        }
+        catch(SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        catch(RuntimeException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 }

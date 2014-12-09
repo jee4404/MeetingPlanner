@@ -133,19 +133,8 @@ public class FenetrePlanificateurReunion extends JFrame implements ActionListene
 	    } 
 	    else if (src == btModifier)
 	    {
-            try
-            {
-                int idReunion = (Integer) tableauParticipations.getValueAt(tableauParticipations.getSelectionModel().getMinSelectionIndex(), 0);
-                ControleurPlanifierReunion.getInstance().afficheModifierReunion(idReunion);
-            }
-            catch (SQLException ex)
-            {
-                System.out.println(ex.getMessage());
-            }
-            catch (RuntimeException ex)
-            {
-                System.out.println(ex.getMessage());
-            }
+            int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+            ControleurPlanifierReunion.getInstance().afficheModifierReunion(idReunion);
 	    } 
 	    else if (src == btAnnuler)
 	    {

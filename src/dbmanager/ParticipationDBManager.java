@@ -75,13 +75,13 @@ public class ParticipationDBManager {
     public List<Participation> trouverParticipationParReunion(Integer idReunion) throws SQLException
     {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
-        queryParams.put("reunion_id", idReunion);
+        queryParams.put("idReunion", idReunion);
         return this.daoParticipations.queryForFieldValues(queryParams);
     }
 
     public Participation trouverParticipantionParReunionParticipant(int idReunion, int idParticipant) throws SQLException
     {
-        return this.daoParticipations.queryBuilder().where().eq("reunion_id", idReunion).and().eq("participant_id", idParticipant).queryForFirst();
+        return this.daoParticipations.queryBuilder().where().eq("idReunion", idReunion).and().eq("participant_id", idParticipant).queryForFirst();
     }
 
     public List<Participation> trouverParticipationParParticipant(int idParticipant) throws SQLException
@@ -96,7 +96,7 @@ public class ParticipationDBManager {
     	
     	if (mesParticipations.size() > 0) {
     		for(int i=0;i<mesParticipations.size();i++){
-    			Reunion reunion = ReunionDBManager.getInstance().trouverReunion(mesParticipations.get(i).getReunion());
+    			Reunion reunion = ReunionDBManager.getInstance().trouverReunion(mesParticipations.get(i).getIdReunion());
     			mesInvitations.add(new Object[]{reunion,mesParticipations.get(i)});
     		}
     	}

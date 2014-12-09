@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class SessionManager {
     private static SessionManager instance;
-
     private Employe employe;
     private ListeMesReunionsTableModel listeMesReunionsTableModel;
     private ListeMesParticipationsTableModel listeMesParticipationsTableModel;
@@ -34,21 +33,21 @@ public class SessionManager {
 
     private SessionManager()
     {
-		try {
-			List<Employe> lstEmployes = EmployeDBManager.getInstance().trouverTousEmployes();
-			List<Equipement> lstEquipement = EquipementDBManager.getInstance().trouverTousEquipements();
-			List<Local> lstLocaux = LocalDBManager.getInstance().trouverTousLocaux();
-	        annuaireEmployes = new AnnuaireEmployes(lstEmployes);
-	        inventaireEquipement = new InventaireEquipement(lstEquipement);
-	        poolLocaux = new PoolLocaux(lstLocaux);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-        
-
+        try
+        {
+            List<Employe> lstEmployes = EmployeDBManager.getInstance().trouverTousEmployes();
+            List<Equipement> lstEquipement = EquipementDBManager.getInstance().trouverTousEquipements();
+            List<Local> lstLocaux = LocalDBManager.getInstance().trouverTousLocaux();
+            annuaireEmployes = new AnnuaireEmployes(lstEmployes);
+            inventaireEquipement = new InventaireEquipement(lstEquipement);
+            poolLocaux = new PoolLocaux(lstLocaux);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
-    
     public static SessionManager getInstance()
     {
         if( instance == null )
@@ -57,26 +56,24 @@ public class SessionManager {
         }
         return instance;
     }
-   
 
     public Employe getEmploye()
     {
         return this.employe;
     }
-    
-    
+
     public AnnuaireEmployes getAnnuaireEmployes(){
-    	return annuaireEmployes;
+        return annuaireEmployes;
     }
-    
+
     public InventaireEquipement getInventaireEquipement(){
-    	return inventaireEquipement;
+        return inventaireEquipement;
     }
-    
+
     public PoolLocaux getPoolLocaux(){
-    	return poolLocaux;
+        return poolLocaux;
     }
-    
+
     public ListeMesParticipationsTableModel getListeMesParticipationsTableModel()
     {
         return this.listeMesParticipationsTableModel;
