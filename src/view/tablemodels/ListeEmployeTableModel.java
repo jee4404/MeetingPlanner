@@ -5,7 +5,7 @@ import business.SessionManager;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * Created by Rémy on 2014-11-29.
+ * Created by Rémy on 2014-11-29
  */
 public class ListeEmployeTableModel extends AbstractTableModel {
     private AnnuaireEmployes annuaireEmployes;

@@ -1,24 +1,16 @@
 package view.tablemodels;
 
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-
-import dbmanager.EquipementDBManager;
-import business.Equipement;
+import business.InventaireEquipement;
+import business.SessionManager;
 
 public class ListeEquipementTableModel extends AbstractTableModel  {
-	private List<Equipement> listeEquipement;
+	private InventaireEquipement inventaireEquipement;
 	
 	 public ListeEquipementTableModel()
 	    {
-	        try {
-				this.listeEquipement = EquipementDBManager.getInstance().trouverTousEquipements();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 this.inventaireEquipement = SessionManager.getInstance().getInventaireEquipement();
 	    }
 	@Override
 	public int getColumnCount() {
@@ -29,7 +21,7 @@ public class ListeEquipementTableModel extends AbstractTableModel  {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return this.listeEquipement.size();
+		return this.inventaireEquipement.getLstEquipement().size();
 	}
 
 	  @Override
@@ -38,15 +30,15 @@ public class ListeEquipementTableModel extends AbstractTableModel  {
 	        Object retVal = null;
 	        switch (columnIndex){
 	            default:
-	                retVal = this.listeEquipement.get(rowIndex);
+	                retVal = this.inventaireEquipement.getLstEquipement().get(rowIndex);
 	            break;
 
 	            case 0:
-	                retVal = this.listeEquipement.get(rowIndex).getId();
+	                retVal = this.inventaireEquipement.getLstEquipement().get(rowIndex).getId();
 	            break;
 
 	            case 1:
-	                retVal = this.listeEquipement.get(rowIndex).getTypeEquipement();
+	                retVal = this.inventaireEquipement.getLstEquipement().get(rowIndex).getTypeEquipement();
 	            break;
 	        }
 	        return retVal;
