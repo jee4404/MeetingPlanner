@@ -14,8 +14,8 @@ public class Participation {
     @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Participant participant;
 
-    @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
-    private Reunion reunion;
+    @DatabaseField(useGetSet = true)
+    private int idReunion;
 
     @DatabaseField
     private boolean participationConfirmee;
@@ -26,22 +26,22 @@ public class Participation {
     public Participation()
     {
         this.participant = null;
-        this.reunion = null;
+        this.idReunion = 0;
         this.participationConfirmee = false;
         this.motif = "";
     }
 
-    public Participation(Participant participant, Reunion reunion, boolean participationConfirmee)
+    public Participation(Participant participant, int idReunion, boolean participationConfirmee)
     {
         this.participant = participant;
-        this.reunion = reunion;
+        this.idReunion = idReunion;
         this.participationConfirmee = participationConfirmee;
     }
 
-    public Participation(Participant participant, Reunion reunion)
+    public Participation(Participant participant, int idReunion)
     {
         this.participant = participant;
-        this.reunion = reunion;
+        this.idReunion = idReunion;
     }
     public Integer getId()
     {
@@ -53,9 +53,9 @@ public class Participation {
         return this.participant;
     }
 
-    public Reunion getReunion()
+    public int getReunion()
     {
-        return this.reunion;
+        return this.idReunion;
     }
 
     public boolean getParticipationConfirmee()
@@ -68,9 +68,9 @@ public class Participation {
         this.participant = participant;
     }
 
-    public void setReunion(Reunion reunion)
+    public void setReunion(int idReunion)
     {
-        this.reunion = reunion;
+        this.idReunion = idReunion;
     }
 
     public void setParticipationConfirmee(boolean participationConfirmee)

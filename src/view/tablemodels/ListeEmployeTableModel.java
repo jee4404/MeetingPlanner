@@ -1,20 +1,24 @@
 package view.tablemodels;
 
+import business.AnnuaireEmployes;
 import business.Employe;
+import business.SessionManager;
 import dbmanager.EmployeDBManager;
 
 import javax.swing.table.AbstractTableModel;
+
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by Rémy on 2014-11-29.
  */
 public class ListeEmployeTableModel extends AbstractTableModel {
-    private List<Employe> listeEmployes;
+    private AnnuaireEmployes annuaireEmployes;
 
     public ListeEmployeTableModel()
     {
-        this.listeEmployes = EmployeDBManager.getInstance().trouverTousEmployes();
+			this.annuaireEmployes = SessionManager.getInstance().getAnnuaireEmployes();
     }
 
     // la taille de la liste des employes
@@ -22,7 +26,7 @@ public class ListeEmployeTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return this.listeEmployes.size();
+        return this.annuaireEmployes.getLstEmploye().size();
     }
 
     // les listes employes contiennent 2 colonnes :
@@ -39,15 +43,15 @@ public class ListeEmployeTableModel extends AbstractTableModel {
         Object retVal = null;
         switch (columnIndex){
             default:
-                retVal = this.listeEmployes.get(rowIndex);
+                retVal = this.annuaireEmployes.getLstEmploye().get(rowIndex);
             break;
 
             case 0:
-                retVal = this.listeEmployes.get(rowIndex).getId();
+                retVal = this.annuaireEmployes.getLstEmploye().get(rowIndex).getId();
             break;
 
             case 1:
-                retVal = this.listeEmployes.get(rowIndex).getNomComplet();
+                retVal = this.annuaireEmployes.getLstEmploye().get(rowIndex).getNomComplet();
             break;
         }
         return retVal;

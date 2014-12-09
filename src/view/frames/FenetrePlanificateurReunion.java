@@ -24,7 +24,7 @@ import view.tablemodels.ListeMesReunionsTableModel;
  * @author Marie Desaulniers
  * Interface graphique principale du planificateur de réunion
  */
-public class PlanificateurReunion extends JFrame implements ActionListener {
+public class FenetrePlanificateurReunion extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L; 
 	private JTabbedPane onglet;
@@ -34,7 +34,7 @@ public class PlanificateurReunion extends JFrame implements ActionListener {
 	private ListeDeroulante listeReunion1, listeReunion2;
     private Employe employeConnecte;
 
-	public PlanificateurReunion(){
+	public FenetrePlanificateurReunion(){
 		// Configuration de la fenêtre
 		this.setTitle("Accueil");
 		this.setSize(500, 250);

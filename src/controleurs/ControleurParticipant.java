@@ -71,7 +71,7 @@ public class ControleurParticipant {
                 throw new RuntimeException("cet employé a déjà été invité");
 
             // creer participation
-            participation = new Participation(participant, this.reunion );
+            participation = new Participation(participant, this.reunion.getId() );
 
             // persister participation
             ParticipationDBManager.getInstance().creerParticipation(participation);

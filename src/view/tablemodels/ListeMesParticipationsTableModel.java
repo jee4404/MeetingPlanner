@@ -1,23 +1,26 @@
 package view.tablemodels;
 
 import business.Participation;
+import business.Reunion;
+
 import javax.swing.table.AbstractTableModel;
+
 import java.util.List;
 
 /**
  * Created by Rémy on 2014-12-02.
  */
 public class ListeMesParticipationsTableModel extends AbstractTableModel {
-    private List<Participation> participations;
+    private List<Object[]> mesInvitations;
 
-    public ListeMesParticipationsTableModel(List<Participation> participations)
+    public ListeMesParticipationsTableModel(List<Object[]> mesInvitations)
     {
-        this.participations = participations;
+        this.mesInvitations = mesInvitations;
     }
 
     @Override
     public int getRowCount() {
-        return this.participations.size();
+        return this.mesInvitations.size();
     }
 
     @Override
@@ -28,19 +31,20 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object retVal = null;
-
+        Participation tmpPart = (Participation)this.mesInvitations.get(rowIndex)[1];
+        Reunion tmpReunion = (Reunion)this.mesInvitations.get(rowIndex)[0];
         switch (columnIndex)
         {
             case 0:
-                retVal = this.participations.get(rowIndex).getId();
+            	retVal = tmpPart.getId();
                 break;
 
             case 1:
-                retVal = this.participations.get(rowIndex).getReunion().getSujet();
+                retVal = tmpReunion.getSujet();
                 break;
 
             case 2:
-                if( this.participations.get(rowIndex).getParticipationConfirmee() )
+                if( tmpPart.getParticipationConfirmee())
                 {
                     retVal = "oui";
                 }

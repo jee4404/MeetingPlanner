@@ -1,5 +1,8 @@
 package business;
 
+import dbmanager.EmployeDBManager;
+import dbmanager.EquipementDBManager;
+import dbmanager.LocalDBManager;
 import dbmanager.ParticipationDBManager;
 import dbmanager.ReunionDBManager;
 import view.tablemodels.ListeMesParticipationsTableModel;
@@ -24,12 +27,28 @@ public class SessionManager {
     private ListeMesReunionsTableModel listeMesReunionsTableModel;
     private ListeMesParticipationsTableModel listeMesParticipationsTableModel;
     private List<Reunion> listeMesReunions;
+    private List<Reunion> listMesInvitations;
+    private AnnuaireEmployes annuaireEmployes;
+    private InventaireEquipement inventaireEquipement;
+    private PoolLocaux poolLocaux;
 
     private SessionManager()
     {
+		try {
+			List<Employe> lstEmployes = EmployeDBManager.getInstance().trouverTousEmployes();
+			List<Equipement> lstEquipement = EquipementDBManager.getInstance().trouverTousEquipements();
+			List<Local> lstLocaux = LocalDBManager.getInstance().trouverTousLocaux();
+	        annuaireEmployes = new AnnuaireEmployes(lstEmployes);
+	        inventaireEquipement = new InventaireEquipement(lstEquipement);
+	        poolLocaux = new PoolLocaux(lstLocaux);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
 
     }
 
+    
     public static SessionManager getInstance()
     {
         if( instance == null )
@@ -38,12 +57,26 @@ public class SessionManager {
         }
         return instance;
     }
+   
 
     public Employe getEmploye()
     {
         return this.employe;
     }
-
+    
+    
+    public AnnuaireEmployes getAnnuaireEmployes(){
+    	return annuaireEmployes;
+    }
+    
+    public InventaireEquipement getInventaireEquipement(){
+    	return inventaireEquipement;
+    }
+    
+    public PoolLocaux getPoolLocaux(){
+    	return poolLocaux;
+    }
+    
     public ListeMesParticipationsTableModel getListeMesParticipationsTableModel()
     {
         return this.listeMesParticipationsTableModel;
@@ -83,7 +116,7 @@ public class SessionManager {
     {
         getInstance().setEmploye(employe);
         getInstance().setListeMesReunions(ReunionDBManager.getInstance().trouverReunionParOrganisateur(employe.getId()));
-        getInstance().setListeMesParticipationsTableModel(new ListeMesParticipationsTableModel(ParticipationDBManager.getInstance().trouverParticipationParParticipant(employe.getId())));
+        getInstance().setListeMesParticipationsTableModel(new ListeMesParticipationsTableModel(ParticipationDBManager.getInstance().trouverMesInvitations(employe.getId())));
         getInstance().setListeMesReunionsTableModel(new ListeMesReunionsTableModel(SessionManager.getInstance().getListeMesReunions()));
     }
 }

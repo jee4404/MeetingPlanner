@@ -2,12 +2,15 @@ package dbmanager;
 
 import business.Participation;
 import business.Reunion;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.lang.reflect.Array;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,5 +87,19 @@ public class ParticipationDBManager {
     public List<Participation> trouverParticipationParParticipant(int idParticipant) throws SQLException
     {
         return this.daoParticipations.queryBuilder().where().eq("participant_id", idParticipant).query();
+    }
+    
+    public List<Object[]> trouverMesInvitations(int idEmploye) throws SQLException
+    {
+    	List<Participation> mesParticipations = this.daoParticipations.queryBuilder().where().eq("participant_id", idEmploye).query();
+    	List<Object[]> mesInvitations = new ArrayList<Object[]>();
+    	
+    	if (mesParticipations.size() > 0) {
+    		for(int i=0;i<mesParticipations.size();i++){
+    			Reunion reunion = ReunionDBManager.getInstance().trouverReunion(mesParticipations.get(i).getReunion());
+    			mesInvitations.add(new Object[]{reunion,mesParticipations.get(i)});
+    		}
+    	}
+    	return mesInvitations;
     }
 }

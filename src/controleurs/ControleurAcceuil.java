@@ -3,7 +3,7 @@ package controleurs;
 import java.sql.SQLException;
 
 import business.SessionManager;
-import view.frames.PlanificateurReunion;
+import view.frames.FenetrePlanificateurReunion;
 import dbmanager.EmployeDBManager;
 import business.Employe;
 
@@ -32,7 +32,7 @@ public class ControleurAcceuil {
                    throw new RuntimeException("Cette adresse courriel n'existe pas");
 
                 SessionManager.getInstance().initManager(employe);
-                PlanificateurReunion planificateurReunion = new PlanificateurReunion();
+                FenetrePlanificateurReunion planificateurReunion = new FenetrePlanificateurReunion();
             }
             catch (SQLException e)
             {
