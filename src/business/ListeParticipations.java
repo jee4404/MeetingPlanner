@@ -1,5 +1,6 @@
 package business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,31 +8,22 @@ import java.util.List;
  */
 public class ListeParticipations {
     private List<Participation> participations;
-    private Reunion reunion;
 
-    public ListeParticipations(){}
-
-    public ListeParticipations(Reunion reunion)
+    public ListeParticipations()
     {
-        this.reunion = reunion;
-        this.participations = null;
+        this.participations = new ArrayList<Participation>();
     }
 
-    public ListeParticipations(Reunion reunion, List<Participation> participations)
+    public ListeParticipations(List<Participation> participations)
     {
-        this.reunion = reunion;
         this.participations = participations;
     }
 
-    // TODO : il faut ajouter la ligne de participation en base
-    // TODO : a faire dans le controleur
     public void ajouterParticipation(Participation participation)
     {
         this.participations.add(participation);
     }
 
-    // TODO : il faut supprimer la ligne de participation en base
-    // TODO : a faire dans le controleur
     public void enleverParticipation(int idParticipation)
     {
         for(int i = 0; i < this.participations.size(); i++)
@@ -45,20 +37,9 @@ public class ListeParticipations {
         }
     }
 
-    public Reunion getReunion()
-    {
-        return this.reunion;
-    }
-
     public List<Participation> getParticipations()
     {
         return this.participations;
-    }
-
-    // TODO : il faut mettre la ligne de participation en base à jour
-    public void setReunion(Reunion reunion)
-    {
-        this.reunion = reunion;
     }
 
     // ne devrait pas être utilié

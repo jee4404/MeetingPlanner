@@ -21,7 +21,7 @@ public class AnnuaireEmployes {
         {
             if( this.lstEmploye.get(i).getId() == idEmploye)
             {
-                retVal = (Participant) this.lstEmploye.get(i);
+                retVal = this.lstEmploye.get(i).getParticipant();
             }
         }
         return retVal;

@@ -8,7 +8,6 @@ import view.frames.FenetreParticipants;
 
 public class ControleurParticipant {
     private static ControleurParticipant controleurParticipant = new ControleurParticipant();
-    private ListeParticipations listeParticipations;
     private Reunion reunion;
 
     /* A private Constructor prevents any other
@@ -16,7 +15,6 @@ public class ControleurParticipant {
     */
     private ControleurParticipant()
     {
-        this.listeParticipations = null;
         this.reunion = null;
     }
 
@@ -26,11 +24,6 @@ public class ControleurParticipant {
         return controleurParticipant;
     }
 
-    public void setListeParticipations(ListeParticipations listeParticipations)
-    {
-        this.listeParticipations = listeParticipations;
-    }
-
     public void setReunion(Reunion reunion)
     {
         this.reunion = reunion;
@@ -38,29 +31,23 @@ public class ControleurParticipant {
 
     public void afficherInviterParticipants(Reunion reunion)
     {
-        try {
-            this.setReunion(reunion);
-            this.setListeParticipations(new ListeParticipations(reunion));
-            this.listeParticipations.setParticipations(ParticipationDBManager.getInstance().trouverParticipationParReunion(reunion.getId()));
-            FenetreParticipants fenetreParticipants = new FenetreParticipants(this.listeParticipations);
-        }
-        catch(SQLException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        this.setReunion(reunion);
+        FenetreParticipants fenetreParticipants = new FenetreParticipants(reunion.getListeParticipations());
     }
 
-    public void inviterParticipant(int idEmploye)
+    public void inviterParticipant(Integer idEmploye)
     {
         try {
             // fetcher participant
-            Participant participant = ParticipantDBManager.getInstance().trouverParticipant(idEmploye);
+            // TODO il faut le trouver dans le catalogue pour éviter un select sql
+            //Participant participant = ParticipantDBManager.getInstance().trouverParticipant(idEmploye);
+            Participant participant = SessionManager.getInstance().getAnnuaireEmployes().getParticipant(idEmploye);
 
             if(participant == null)
                 throw new RuntimeException("employé spécifié introuvable ("+idEmploye+")");
 
             // test si participation existe déja
-            Participation participation = this.listeParticipations.trouverParticipationParIDParticipant(idEmploye);
+            Participation participation = this.reunion.getListeParticipations().trouverParticipationParIDParticipant(idEmploye);
 
             if( participation != null)
                 throw new RuntimeException("cet employé a déjà été invité");
@@ -69,27 +56,23 @@ public class ControleurParticipant {
             participation = new Participation(participant, this.reunion.getId() );
 
             // mettre liste participation à jour
-            this.listeParticipations.ajouterParticipation(participation);
+            this.reunion.getListeParticipations().ajouterParticipation(participation);
         }
         catch (RuntimeException ex)
         {
-            System.out.println(ex.getMessage());
-        }
-        catch(SQLException ex)
-        {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
     public void retirerParticipation(int idParticipation)
     {
         try {
-            Participation participation = this.listeParticipations.trouverParticipationParID(idParticipation);
+            Participation participation = this.reunion.getListeParticipations().trouverParticipationParID(idParticipation);
             if(participation == null)
                 throw new RuntimeException("participation introuvable");
 
             // retirer la participation de la liste de participation
-            this.listeParticipations.enleverParticipation(participation.getId());
+            this.reunion.getListeParticipations().enleverParticipation(participation.getId());
         }
         catch (RuntimeException ex)
         {

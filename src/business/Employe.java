@@ -68,9 +68,20 @@ public class Employe {
         this.courriel = courriel;
     }
 
+    // :( never call -- used for participants and organisater
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
+
     public String getNomComplet()
     {
         return this.prenom + " " + this.nom;
     }
 
+    // methode de cast... TODO : plus élégant ?
+    public Participant getParticipant()
+    {
+        return new Participant(this);
+    }
 }
