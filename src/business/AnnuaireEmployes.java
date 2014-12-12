@@ -1,5 +1,6 @@
 package business;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnnuaireEmployes {
 	private List<Employe> lstEmploye;
@@ -16,14 +17,6 @@ public class AnnuaireEmployes {
 
     public Participant getParticipant(int idEmploye)
     {
-        Participant retVal = null;
-        for(int i = 0; i < this.lstEmploye.size(); i++)
-        {
-            if( this.lstEmploye.get(i).getId() == idEmploye)
-            {
-                retVal = this.lstEmploye.get(i).getParticipant();
-            }
-        }
-        return retVal;
+        return this.lstEmploye.stream().filter(e -> e.getId() == idEmploye).findFirst().get().getParticipant();
     }
 }

@@ -26,6 +26,7 @@ public class ListeParticipations {
 
     public void enleverParticipation(int idParticipation)
     {
+        //this.participations.stream().filter( p -> p.getId() == idParticipation).peek(this.participations::remove);
         for(int i = 0; i < this.participations.size(); i++)
         {
             int tmpParticipationId = this.participations.get(i).getId();
@@ -50,32 +51,12 @@ public class ListeParticipations {
 
     public Participation trouverParticipationParID(int idParticipation)
     {
-        Participation retVal = null;
-        for(int i = 0; i < this.participations.size(); i++)
-        {
-            int tmpParticipationId = this.participations.get(i).getId();
-            if( idParticipation == tmpParticipationId )
-            {
-                retVal = this.participations.get(i);
-                break;
-            }
-        }
-        return retVal;
+        return this.participations.stream().filter( p -> p.getId() == idParticipation).findFirst().orElse(new Participation());
     }
 
     public Participation trouverParticipationParIDParticipant(int idParticipant)
     {
-        Participation retVal = null;
-        for(int i = 0; i < this.participations.size(); i++)
-        {
-            int tmpParticipantID = this.participations.get(i).getParticipant().getId();
-            if( idParticipant == tmpParticipantID )
-            {
-                retVal = this.participations.get(i);
-                break;
-            }
-        }
-        return retVal;
+        return this.participations.stream().filter( p -> p.getParticipant().getId() == idParticipant).findFirst().orElse(new Participation());
     }
 
 

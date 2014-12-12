@@ -38,9 +38,6 @@ public class ControleurParticipant {
     public void inviterParticipant(Integer idEmploye)
     {
         try {
-            // fetcher participant
-            // TODO il faut le trouver dans le catalogue pour éviter un select sql
-            //Participant participant = ParticipantDBManager.getInstance().trouverParticipant(idEmploye);
             Participant participant = SessionManager.getInstance().getAnnuaireEmployes().getParticipant(idEmploye);
 
             if(participant == null)
@@ -49,7 +46,7 @@ public class ControleurParticipant {
             // test si participation existe déja
             Participation participation = this.reunion.getListeParticipations().trouverParticipationParIDParticipant(idEmploye);
 
-            if( participation != null)
+            if( participation.getParticipant() != null )
                 throw new RuntimeException("cet employé a déjà été invité");
 
             // creer participation
