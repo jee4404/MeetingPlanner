@@ -22,7 +22,8 @@ import java.util.List;
  * Modified by Marie on 2014-11-23
  */
 public class FenetreReunion extends JFrame implements ActionListener{
-    private JTextField sujetReunionField,dateReunionField,localReunionField;
+    private JTextField sujetReunionField,localReunionField;
+    private JFormattedTextField dateReunionField;
     private JSpinner recurrenceReunionSpinner, nbParticipantsSpinner;
     private Bouton btLocal, btParticipants,btEquip,btFermer,btSave;
     private JCheckBox recurrenceCBox;
@@ -87,10 +88,11 @@ public class FenetreReunion extends JFrame implements ActionListener{
         JLabel dateReunionLabel = new JLabel("Date :");
 	    dateReunionLabel.setPreferredSize(dim50);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String dateReunionFieldValue = reunion.getDateReunion() != null ? dateFormat.format(reunion.getDateReunion()) : "";
-        dateReunionField = new JTextField(dateReunionFieldValue);
+        dateReunionField = new JFormattedTextField(dateFormat);
+        dateReunionField.setPreferredSize(dim100);
+        dateReunionField.setText(reunion.getDateReunion() != null ? dateFormat.format(reunion.getDateReunion()) : ""); 
 
-	    dateReunionField.setPreferredSize(dim100);
+	    
 	    
 	    // Choix du nombre d'occurence de la réunion
         if(reunion.getEstRecurente()) {
@@ -267,6 +269,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setEstRecurente(this.choixRecurrence);
                 this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
                 this.btParticipants.setEnabled(true);
