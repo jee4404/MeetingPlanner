@@ -6,7 +6,7 @@ package conf;
  */
 public class Configuration {
     // cet attribut doit pointer vers le répertoire db à la racine de votre projet
-    public static final String dbLocation = "C:\\Users\\Marie\\Workspace\\MeetingPlanner\\db";
+    public static final String dbLocation = "db";
     // cet attribut est le même pour tout le monde
-    public static final String dbURL = "jdbc:sqlite:"+dbLocation+"\\meetingplanner";
+    public static final String dbURL = "jdbc:sqlite:"+dbLocation+"/meetingPlanner";
 }
