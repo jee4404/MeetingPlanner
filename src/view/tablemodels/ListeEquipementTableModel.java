@@ -1,26 +1,27 @@
 package view.tablemodels;
 
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+
 import business.InventaireEquipement;
 import business.SessionManager;
 
 public class ListeEquipementTableModel extends AbstractTableModel  {
 	private InventaireEquipement inventaireEquipement;
 	
-	 public ListeEquipementTableModel()
-	    {
+	public ListeEquipementTableModel()
+	{
 		 this.inventaireEquipement = SessionManager.getInstance().getInventaireEquipement();
-	    }
+	}
+	 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return this.inventaireEquipement.getLstEquipement().size();
 	}
 

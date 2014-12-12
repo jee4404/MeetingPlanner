@@ -42,11 +42,9 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 	  private JTable tblEquipDispo,tblEquipReserve;
 	  private JScrollPane spListeEquipementReserve,spListeEquipmentDispo;
 	  private JLabel lbEquipment,lbEquipmentDispo;
-	  private JSpinner spinnerQtEquipement;
 	    // table model
 	  private ListeEquipementTableModel equipementTableModel;
 	  private ListeEquipementReserveTableModel equipementReserveTableModel;
-	  
 	  
 	  public FenetreEquipement(ListeEquipement listeEquipement){               
 		    this.setTitle("Équipement");
@@ -66,9 +64,8 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 			this.lbEquipmentDispo = new JLabel("Équipement disponible");
 			
 			// spinner pour le choix de la quantité d'équipement
-			SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 30, 1);
-			spinnerQtEquipement = new JSpinner(sModel);
-			
+			//SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 30, 1);
+			//spinnerQtEquipement = new JSpinner(sModel);
 			
 
 	        //Le tableau des équipement réservés
@@ -78,7 +75,6 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 		    //Le tableau des équipements disponibles
 		    this.tblEquipDispo= getTableEquipement();
 		    this.spListeEquipmentDispo = new ListeDeroulante(tblEquipDispo,200,150);
-		    
 		    
 		    // Positionnement des composants sur la grille (boutons et tableau)
 		    gcEqp.insets = new Insets(5, 5, 3, 3);
@@ -100,7 +96,7 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
 		    gcEqp.gridheight = 4;
 		    pan.add(spListeEquipmentDispo, gcEqp);
 			this.setVisible(true);
-			
+
 			this.btAjouter.addActionListener(this);
 			this.btRetirer.addActionListener(this);
 			this.btFermer.addActionListener(this);

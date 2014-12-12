@@ -2,9 +2,12 @@ package controleurs;
 
 import business.Reunion;
 import business.SessionManager;
+import business.Local;
 import dbmanager.OrganisateurDBManager;
 import dbmanager.ReunionDBManager;
 import view.frames.FenetreReunion;
+
+import java.util.List;
 import java.sql.SQLException;
 
 public class ControleurPlanifierReunion {
@@ -64,5 +67,10 @@ public class ControleurPlanifierReunion {
         {
             System.out.println(ex.getMessage());
         }
+    }
+    //public List<Local> getLstLocauxDispos(Date date,Time heure, Time durée,int nbParticipants){
+    public List<Local> getLstLocauxDispos(int nbParticipants){
+    	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
+    	return lstLocauxDispo;
     }
 }

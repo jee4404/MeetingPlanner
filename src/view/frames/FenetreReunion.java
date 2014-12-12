@@ -3,6 +3,7 @@ package view.frames;
 import javax.swing.*;
 
 import business.Reunion;
+import business.Local;
 import controleurs.ControleurEquipement;
 import controleurs.ControleurParticipant;
 import controleurs.ControleurPlanifierReunion;
@@ -12,9 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by Rémy on 2014-11-18.
@@ -131,6 +132,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    // Choix du nombre de participants
         JLabel nombreParticipantsLabel = new JLabel("Nb de participants :");
         nombreParticipantsLabel.setPreferredSize(new Dimension(125,25));
+
         
 	    // Configuration du JPinner pour le nombre de participants
 	    Integer minParticipant = new Integer(2);
@@ -146,13 +148,16 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
         // Choix du local
         this.btLocal = new Bouton("Choisir local",205,25);
+        this.btLocal.setEnabled(false);
         this.localReunionField = new JTextField();
         this.localReunionField.setEditable(false);
         this.localReunionField.setPreferredSize(new Dimension(150,25));
         
         // Boutons
         this.btParticipants = new Bouton("Inviter participants",150,25);;
+        this.btParticipants.setEnabled(false);
         this.btEquip = new Bouton("Ajouter équipement",150,25);
+        this.btEquip.setEnabled(false);
         this.btFermer = new Bouton("Fermer", 150,25);
         this.btSave = new Bouton("Enregistrer",150,25);
 
@@ -227,7 +232,18 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    Object src = evt.getSource();
 	    if (src == btLocal)
         {
-	    	FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
+	    	int nbParticipants = (int) this.nbParticipantsSpinner.getValue();
+	    	//ControleurPlanifierReunion.getInstance().getLstLocauxDispos(date,heure,durée,nbParticipants);
+	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(nbParticipants);
+	    	if (lstLocauxDispo.isEmpty()){
+	    		JOptionPane.showMessageDialog(this, "Aucun local disponible","allo",JOptionPane.ERROR_MESSAGE);
+	    	} else {
+	    		Object[] codesLocaux = lstLocauxDispo.stream().map(local -> local.getCode()).toArray();
+	    		String codeLocal = (String) JOptionPane.showInputDialog(this, "Locaux disponibles", "Locaux", JOptionPane.INFORMATION_MESSAGE, null, codesLocaux, codesLocaux[0]);
+	    		this.reunion.setLocal(lstLocauxDispo.stream().filter(local -> local.getCode() == codeLocal).findFirst().orElse(new Local()));
+	    		this.localReunionField.setText(codeLocal);
+	    	}
+	    	//FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
 	    }
         else if (src == btParticipants)
         {
@@ -253,6 +269,9 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
+                this.btParticipants.setEnabled(true);
+                this.btEquip.setEnabled(true);
+                this.btLocal.setEnabled(true);
                 // TODO affichage d'une boite de confirmation ?
             }
             catch(ParseException ex)
