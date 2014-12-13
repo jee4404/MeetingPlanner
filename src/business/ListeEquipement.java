@@ -1,4 +1,5 @@
 package business;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ public class ListeEquipement {
 
     public ListeEquipement()
     {
-        this.reservationEquipements = null;
+        this.reservationEquipements = new ArrayList<ReservationEquipement>();
     }
 
     public ListeEquipement(List<ReservationEquipement> reservationEquipements)

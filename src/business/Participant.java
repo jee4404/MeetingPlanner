@@ -9,7 +9,7 @@ import conf.Configuration;
  */
 @DatabaseTable(tableName = "participant")
 public class Participant {
-    @DatabaseField(canBeNull = false, useGetSet = true, id = true)
+    @DatabaseField(canBeNull = false, useGetSet = true)
     private int idEmploye;
     @DatabaseField(canBeNull = false, useGetSet = true)
     private int idReunion;

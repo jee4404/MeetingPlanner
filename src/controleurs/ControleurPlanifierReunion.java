@@ -35,6 +35,11 @@ public class ControleurPlanifierReunion {
         if(reunion.getId() != -1 )
         {
             ReunionDBManager.getInstance().updateReunion(reunion);
+
+            // on met la liste des participants à jour
+            // on commence par supprimer ceux  qui ne sont plus la
+            this.updateParticipants(reunion);
+            this.updateReservationEquipement(reunion);
         }
         else // sinon on crée
         {
@@ -46,11 +51,6 @@ public class ControleurPlanifierReunion {
             SessionManager.getInstance().getListeMesReunions().add(reunion);
             SessionManager.getInstance().getListeMesReunionsTableModel().fireTableDataChanged();
         }
-
-        // on met la liste des participants à jour
-        // on commence par supprimer ceux  qui ne sont plus la
-        this.updateParticipants(reunion);
-        this.updateReservationEquipement(reunion);
     }
 
     public void afficheModifierReunion(int idReunion)
@@ -76,7 +76,7 @@ public class ControleurPlanifierReunion {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     //public List<Local> getLstLocauxDispos(Date date,Time heure, Time durée,int nbParticipants){
     public List<Local> getLstLocauxDispos(int nbParticipants){
     	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
