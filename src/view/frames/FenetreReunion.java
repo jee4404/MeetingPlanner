@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+
 /**
  * Created by Rémy on 2014-11-18.
  * Modified by Marie on 2014-11-23
@@ -31,6 +32,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
     private Reunion reunion;
     private boolean choixRecurrence;
+
 
     public FenetreReunion(Reunion reunion)
     {
@@ -85,13 +87,12 @@ public class FenetreReunion extends JFrame implements ActionListener{
         sujetReunionField.setPreferredSize(new Dimension(260,25));
 	    
 	    // Date de la réunion
-        JLabel dateReunionLabel = new JLabel("Date :");
-	    dateReunionLabel.setPreferredSize(dim50);
+        JLabel dateReunionLabel = new JLabel("Date (jj/mm/aaaa) :");
+	    dateReunionLabel.setPreferredSize(new Dimension(110,25));
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateReunionField = new JFormattedTextField(dateFormat);
         dateReunionField.setPreferredSize(dim100);
         dateReunionField.setText(reunion.getDateReunion() != null ? dateFormat.format(reunion.getDateReunion()) : ""); 
-
 	    
 	    
 	    // Choix du nombre d'occurence de la réunion
