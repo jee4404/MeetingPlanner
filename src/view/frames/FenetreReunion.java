@@ -12,6 +12,7 @@ import view.components.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -127,7 +128,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    // Durée de la réunion
         JLabel dureeReunionLabel = new JLabel("Durée :");
 	    dureeReunionLabel.setPreferredSize(dim50);
-	    String durLabels[] = { "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30", "9:00"};
+	    String durLabels[] = { "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00"};
         dureeReunionCBox = new JComboBox(durLabels);
 	    dureeReunionCBox.setPreferredSize(dim100);
 	    
@@ -238,8 +239,21 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    Object src = evt.getSource();
 	    if (src == btLocal)
         {
+	      try {
 	    	int nbParticipants = (int) this.nbParticipantsSpinner.getValue();
-	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(nbParticipants);
+	    	// conversion de la date, heure et durée de String à Date
+	    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    	String strDateReunion = this.dateReunionField.getText();
+	    	Date dateReunion;
+	    	
+				dateReunion = dateFormat.parse(strDateReunion);
+			
+	    	SimpleDateFormat heureFormat = new SimpleDateFormat("h:mm");
+	    	String strDebutReunion = (String) this.debutReunionCBox.getSelectedItem();
+	    	Date debutReunion = heureFormat.parse(strDebutReunion);
+	    	String strDureeReunion = (String) this.dureeReunionCBox.getSelectedItem();
+	    	Date dureeReunion = heureFormat.parse(strDureeReunion);
+	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(dateReunion,debutReunion,dureeReunion,nbParticipants);
 
 	    	if (lstLocauxDispo.isEmpty()){
 	    		JOptionPane.showMessageDialog(this, "Aucun local disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -251,6 +265,10 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    		this.reunion.setLocal(lstLocauxDispo.stream().filter(local -> local.getCode() == codeLocal).findFirst().orElse(new Local()));
 	    		this.localReunionField.setText(codeLocal);
 	    	}
+	      } catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		  }
 	    }
         else if (src == btParticipants)
         {

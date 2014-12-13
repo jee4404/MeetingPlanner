@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class PlageHoraire {
 	private Date date;
-	private double debut;
+	private Date debut;
 
-	public PlageHoraire(Date date, double debut){
+	public PlageHoraire(Date date, Date debut){
 		this.date = date;
 		this.debut = debut;
 	}
@@ -15,7 +15,7 @@ public class PlageHoraire {
 		return this.date;
 	}
 	
-	public double getDebut(){
+	public Date getDebut(){
 		return this.debut;
 	}
 }

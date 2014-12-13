@@ -21,7 +21,7 @@ public class Calendrier {
 		boolean disponibilite = true;
 		int i,j;
 		Date dateReunion;
-		double debutReunion;
+		Date debutReunion;
 		i = 0;
 		while (disponibilite == true && i < horaireReunion.size()){
 			dateReunion = horaireReunion.get(i).getDate();
@@ -29,7 +29,7 @@ public class Calendrier {
 			j = 0;
 			while (disponibilite == true && j < lstPlageHoraire.size()){
 				if (dateReunion.equals(lstPlageHoraire.get(j).getDate())){
-					if (debutReunion == lstPlageHoraire.get(j).getDebut()){
+					if (debutReunion.equals(lstPlageHoraire.get(j).getDebut())){
 						disponibilite = false;
 					}
 				}
