@@ -10,7 +10,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "reunion")
 public class Reunion {
     @DatabaseField(generatedId = true, canBeNull = false)
-    private Integer id;
+    private int id;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
     private Date dateReunion;
@@ -30,7 +30,7 @@ public class Reunion {
     @DatabaseField(canBeNull = false, useGetSet = true)
     private String sujet;
 
-    private ListeParticipations listeParticipations;
+    private ListeParticipants listeParticipants;
 
     private ListeEquipement listeEquipement;
     /*
@@ -39,12 +39,14 @@ public class Reunion {
     * */
     public Reunion()
     {
+        this.id = -1;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
     {
+        this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
@@ -52,11 +54,12 @@ public class Reunion {
         this.local = null;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
     {
+        this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
@@ -64,10 +67,10 @@ public class Reunion {
         this.local = local;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -111,9 +114,9 @@ public class Reunion {
     	return this.sujet;
     }
 
-    public ListeParticipations getListeParticipations()
+    public ListeParticipants getListeParticipants()
     {
-        return this.listeParticipations;
+        return this.listeParticipants;
     }
 
     public ListeEquipement getListeEquipement()
@@ -156,8 +159,8 @@ public class Reunion {
         this.listeEquipement = listeEquipement;
     }
 
-    public void setListeParticipations(ListeParticipations listeParticipations)
+    public void setListeParticipants(ListeParticipants listeParticipants)
     {
-        this.listeParticipations = listeParticipations;
+        this.listeParticipants = listeParticipants;
     }
 }

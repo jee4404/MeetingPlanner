@@ -1,10 +1,6 @@
 package business;
 
-import dbmanager.EmployeDBManager;
-import dbmanager.EquipementDBManager;
-import dbmanager.LocalDBManager;
-import dbmanager.ParticipationDBManager;
-import dbmanager.ReunionDBManager;
+import dbmanager.*;
 import view.tablemodels.ListeMesParticipationsTableModel;
 import view.tablemodels.ListeMesReunionsTableModel;
 
@@ -113,7 +109,7 @@ public class SessionManager {
     {
         getInstance().setEmploye(employe);
         getInstance().setListeMesReunions(ReunionDBManager.getInstance().trouverReunionParOrganisateur(employe.getId()));
-        getInstance().setListeMesParticipationsTableModel(new ListeMesParticipationsTableModel(ParticipationDBManager.getInstance().trouverMesInvitations(employe.getId())));
+        getInstance().setListeMesParticipationsTableModel(new ListeMesParticipationsTableModel(ParticipantDBManager.getInstance().trouverMesInvitations(employe.getId())));
         getInstance().setListeMesReunionsTableModel(new ListeMesReunionsTableModel(SessionManager.getInstance().getListeMesReunions()));
     }
 }

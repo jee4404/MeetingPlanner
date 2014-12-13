@@ -1,7 +1,8 @@
 package view.tablemodels;
 
-import business.Participation;
+import business.Participant;
 import business.Reunion;
+import conf.Configuration;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -31,12 +32,12 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object retVal = null;
-        Participation tmpPart = (Participation)this.mesInvitations.get(rowIndex)[1];
+        Participant tmpPart = (Participant)this.mesInvitations.get(rowIndex)[1];
         Reunion tmpReunion = (Reunion)this.mesInvitations.get(rowIndex)[0];
         switch (columnIndex)
         {
             case 0:
-            	retVal = tmpPart.getId();
+            	retVal = tmpPart.getIdEmploye();
                 break;
 
             case 1:
@@ -44,12 +45,20 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
                 break;
 
             case 2:
-                if( tmpPart.getParticipationConfirmee())
+                switch (tmpPart.getParticipeReunion())
                 {
-                    retVal = "oui";
+                    case Configuration.PARTICIPE_REUNION_NON:
+                        retVal = "non";
+                        break;
+
+                    case Configuration.PARTICIPE_REUNION_NR:
+                        retVal = "en attente";
+                        break;
+
+                    case Configuration.PARTICIPE_REUNION_OUI:
+                        retVal = "oui";
+                        break;
                 }
-                else
-                    retVal = "non";
                 break;
         }
 
@@ -68,7 +77,7 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
         String retVal = "";
         switch (columnIndex){
             case 0:
-                retVal = "ID Participation";
+                retVal = "ID Participant";
                 break;
 
             case 1:

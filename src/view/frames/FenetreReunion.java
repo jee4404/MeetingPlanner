@@ -151,16 +151,13 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
         // Choix du local
         this.btLocal = new Bouton("Choisir local",205,25);
-        this.btLocal.setEnabled(false);
         this.localReunionField = new JTextField();
         this.localReunionField.setEditable(false);
         this.localReunionField.setPreferredSize(new Dimension(150,25));
         
         // Boutons
-        this.btParticipants = new Bouton("Inviter participants",150,25);;
-        this.btParticipants.setEnabled(false);
+        this.btParticipants = new Bouton("Inviter participants",150,25);
         this.btEquip = new Bouton("Ajouter équipement",150,25);
-        this.btEquip.setEnabled(false);
         this.btFermer = new Bouton("Fermer", 150,25);
         this.btSave = new Bouton("Enregistrer",150,25);
 
@@ -227,26 +224,33 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
         // la fenetre connait la réunion pour la passer au controleur
         this.reunion = reunion;
+
+        // désactiver boutons réunions si la reunion n'a pas été encore sauvée
+        if( this.reunion.getId() == -1 ) {
+            this.btParticipants.setEnabled(false);
+            this.btEquip.setEnabled(false);
+            this.btLocal.setEnabled(false);
+        }
     }
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
 	    Object src = evt.getSource();
 	    if (src == btLocal)
         {
 	    	int nbParticipants = (int) this.nbParticipantsSpinner.getValue();
-	    	//ControleurPlanifierReunion.getInstance().getLstLocauxDispos(date,heure,durée,nbParticipants);
 	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(nbParticipants);
+
 	    	if (lstLocauxDispo.isEmpty()){
-	    		JOptionPane.showMessageDialog(this, "Aucun local disponible","allo",JOptionPane.ERROR_MESSAGE);
-	    	} else {
+	    		JOptionPane.showMessageDialog(this, "Aucun local disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
+	    	}
+            else
+            {
 	    		Object[] codesLocaux = lstLocauxDispo.stream().map(local -> local.getCode()).toArray();
 	    		String codeLocal = (String) JOptionPane.showInputDialog(this, "Locaux disponibles", "Locaux", JOptionPane.INFORMATION_MESSAGE, null, codesLocaux, codesLocaux[0]);
 	    		this.reunion.setLocal(lstLocauxDispo.stream().filter(local -> local.getCode() == codeLocal).findFirst().orElse(new Local()));
 	    		this.localReunionField.setText(codeLocal);
 	    	}
-	    	//FenetreChoixLocal fenChoixLocal = new FenetreChoixLocal();
 	    }
         else if (src == btParticipants)
         {
@@ -270,13 +274,13 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setEstRecurente(this.choixRecurrence);
                 this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
+
+                // autoriser gestion participants - equipements
                 this.btParticipants.setEnabled(true);
                 this.btEquip.setEnabled(true);
                 this.btLocal.setEnabled(true);
-                // TODO affichage d'une boite de confirmation ?
             }
             catch(ParseException ex)
             {

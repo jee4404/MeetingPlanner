@@ -1,21 +1,13 @@
 package controleurs;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import view.frames.FenetreEquipement;
-import view.frames.FenetreParticipants;
 import business.Equipement;
 import business.ListeEquipement;
-import business.ListeParticipations;
-import business.Participant;
-import business.Participation;
 import business.ReservationEquipement;
 import business.Reunion;
 import dbmanager.EquipementDBManager;
-import dbmanager.ParticipantDBManager;
-import dbmanager.ParticipationDBManager;
 import dbmanager.ReservationEquipementDBManager;
 
 public class ControleurEquipement {

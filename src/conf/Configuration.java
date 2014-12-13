@@ -9,4 +9,8 @@ public class Configuration {
     public static final String dbLocation = "db";
     // cet attribut est le même pour tout le monde
     public static final String dbURL = "jdbc:sqlite:"+dbLocation+"/meetingPlanner";
+
+    public static final int PARTICIPE_REUNION_NR = 0;
+    public static final int PARTICIPE_REUNION_OUI = 1;
+    public static final int PARTICIPE_REUNION_NON = 2;
 }

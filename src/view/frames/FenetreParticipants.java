@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import business.ListeParticipations;
+import business.ListeParticipants;
 import controleurs.ControleurParticipant;
 import view.components.*;
 import view.tablemodels.ListeEmployeTableModel;
@@ -26,7 +26,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
     private ListeParticipationsTableModel participationsTableModel;
     private ListeEmployeTableModel employeTableModel;
 
-    public FenetreParticipants(ListeParticipations listeParticipations)
+    public FenetreParticipants(ListeParticipants listeParticipants)
     {
         this.setTitle("Participants");
         this.setSize(580, 250);
@@ -46,7 +46,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         JLabel lbEmployes = new JLabel("Employés");
 
         //Le tableau des participants
-        this.tblParticipants = this.getTableParticipants(listeParticipations);
+        this.tblParticipants = this.getTableParticipants(listeParticipants);
         this.listeParticipants = new ListeDeroulante(tblParticipants, 200, 150);
 
         // le tableau des employes
@@ -68,7 +68,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         pan.add(btFermer, gc);
         gc.gridx=0;		gc.gridy=1;
         gc.gridheight = 4;
-        pan.add(listeParticipants,gc);
+        pan.add(this.listeParticipants,gc);
         gc.gridx=2;		gc.gridy=1;
         gc.gridheight = 4;
         pan.add(listeEmployes,gc);
@@ -91,7 +91,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         }
         else if (src == btRetirer)
         {
-            Object idParticipation = this.tblParticipants.getValueAt(this.tblParticipants.getSelectionModel().getMinSelectionIndex(), 0);
+            Object idParticipation = this.tblParticipants.getValueAt(this.tblParticipants.getSelectionModel().getMinSelectionIndex(), 1);
             ControleurParticipant.getInstance().retirerParticipation( (Integer)idParticipation );
             this.participationsTableModel.fireTableDataChanged();
         }
@@ -110,9 +110,9 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         return table;
     }
 
-    private JTable getTableParticipants(ListeParticipations listeParticipations)
+    private JTable getTableParticipants(ListeParticipants listeParticipants)
     {
-        this.participationsTableModel = new ListeParticipationsTableModel(listeParticipations);
+        this.participationsTableModel = new ListeParticipationsTableModel(listeParticipants);
         JTable table = new JTable(this.participationsTableModel);
         table.setCellSelectionEnabled(true);
         table.getColumnModel().getColumn(0).setMinWidth(0);
