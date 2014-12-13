@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "reservation")
 public class ReservationEquipement {
     @DatabaseField(generatedId = true, canBeNull = false )
-    private Integer id;
+    private int id;
 
     @DatabaseField(foreign = true, useGetSet = true, foreignAutoRefresh = true)
     private Reunion reunion;
@@ -18,20 +18,26 @@ public class ReservationEquipement {
     private Equipement equipement;
     
     @DatabaseField(canBeNull = false, useGetSet = true)
-    private Integer quantite;
+    private int quantite;
 
-    public ReservationEquipement(){}
+    public ReservationEquipement()
+    {
+        this.id = -1;
+    }
 
     public ReservationEquipement(Equipement equipement, Reunion reunion, int quantite)
     {
+        this.id = -1;
         this.reunion = reunion;
         this.equipement = equipement;
         this.quantite = quantite;
     }
-    public Integer getId()
+
+    public int getId()
     {
         return this.id;
     }
+
     public Reunion getReunion()
     {
         return this.reunion;
@@ -42,7 +48,7 @@ public class ReservationEquipement {
         return this.equipement;
     }
     
-    public Integer getQuantite(){
+    public int getQuantite(){
     	return this.quantite;
     }
 
@@ -55,7 +61,8 @@ public class ReservationEquipement {
     {
         this.equipement = equipement;
     }
-    public void setQuantite(Integer quantite){
+
+    public void setQuantite(int quantite){
     	this.quantite = quantite;
     }
 }

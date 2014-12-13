@@ -3,6 +3,7 @@ package controleurs;
 import business.*;
 import dbmanager.OrganisateurDBManager;
 import dbmanager.ParticipantDBManager;
+import dbmanager.ReservationEquipementDBManager;
 import dbmanager.ReunionDBManager;
 import view.frames.FenetreReunion;
 
@@ -48,28 +49,8 @@ public class ControleurPlanifierReunion {
 
         // on met la liste des participants à jour
         // on commence par supprimer ceux  qui ne sont plus la
-        List<Participant> participantsEnBase = ParticipantDBManager.getInstance().trouverParticipantParReunion(reunion.getId());
-        for(int i=0; i < participantsEnBase.size(); i++)
-        {
-            // on teste si le participant en base en encore dans la liste des paritcipant :
-            Participant participantEnBase = participantsEnBase.get(i);
-            if( reunion.getListeParticipants().trouverParticipantParIDEmploye( participantEnBase.getIdEmploye()).getIdEmploye() == -1 )
-            {
-                // le participant n'a pas été trouvé dans la liste des participants de la réunion
-                ParticipantDBManager.getInstance().supprimerParticipant(participantEnBase);
-            }
-        }
-
-        // on ajoute ceux qui ne sont pas en base
-        for(int i = 0; i < reunion.getListeParticipants().getParticipants().size(); i++)
-        {
-            Participant participant = reunion.getListeParticipants().getParticipants().get(i);
-            if( participantsEnBase.stream().filter( p -> p.getIdEmploye() == participant.getIdEmploye()).findFirst().orElse(new Participant()).getIdEmploye() == -1 )
-            {
-                // le participant 'a pas été trouvé en base, on peut donc le créer
-                ParticipantDBManager.getInstance().creerParticipant(participant);
-            }
-        }
+        this.updateParticipants(reunion);
+        this.updateReservationEquipement(reunion);
     }
 
     public void afficheModifierReunion(int idReunion)
@@ -78,7 +59,7 @@ public class ControleurPlanifierReunion {
         {
             Reunion reunion = ReunionDBManager.getInstance().trouverReunion(idReunion);
             reunion.setListeParticipants(new ListeParticipants(ParticipantDBManager.getInstance().trouverParticipantParReunion(idReunion)));
-
+            reunion.setListeEquipement(new ListeEquipement(ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion(idReunion)));
             // TODO : meme chose pour liste equipement
 
             if (reunion == null)
@@ -99,5 +80,55 @@ public class ControleurPlanifierReunion {
     public List<Local> getLstLocauxDispos(int nbParticipants){
     	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
     	return lstLocauxDispo;
+    }
+
+    private void updateParticipants(Reunion reunion) throws SQLException
+    {
+        List<Participant> participantsEnBase = ParticipantDBManager.getInstance().trouverParticipantParReunion(reunion.getId());
+        for (int i = 0; i < participantsEnBase.size(); i++) {
+            // on teste si le participant en base en encore dans la liste des paritcipant :
+            Participant participantEnBase = participantsEnBase.get(i);
+            if (reunion.getListeParticipants().trouverParticipantParIDEmploye(participantEnBase.getIdEmploye()).getIdEmploye() == -1) {
+                // le participant n'a pas été trouvé dans la liste des participants de la réunion
+                ParticipantDBManager.getInstance().supprimerParticipant(participantEnBase);
+            }
+        }
+
+        // on ajoute ceux qui ne sont pas en base
+        for (int i = 0; i < reunion.getListeParticipants().getParticipants().size(); i++) {
+            Participant participant = reunion.getListeParticipants().getParticipants().get(i);
+            if (participantsEnBase.stream().filter(p -> p.getIdEmploye() == participant.getIdEmploye()).findFirst().orElse(new Participant()).getIdEmploye() == -1) {
+                // le participant 'a pas été trouvé en base, on peut donc le créer
+                ParticipantDBManager.getInstance().creerParticipant(participant);
+            }
+        }
+    }
+
+    private void updateReservationEquipement(Reunion reunion) throws SQLException
+    {
+        // mise a jour des réservations d'équipement dans la base
+
+        // on commence par vérifier ceux qui ne sont plus dans la liste de réservation de la réunion
+        // et on les supprime
+        List<ReservationEquipement> reservationsEnBase = ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion(reunion.getId());
+        for( ReservationEquipement reservationEnBase : reservationsEnBase )
+        {
+            if(reunion.getListeEquipement().trouverReservationParIdEquipement(reservationEnBase.getEquipement().getId() ) == null)
+            {
+                // la réservation, na pas été trouvée, elle à été supprimée
+                // on met la base de onnée à jour
+                ReservationEquipementDBManager.getInstance().supprimerReservation(reservationEnBase);
+            }
+        }
+
+        // ensuite, on verifie ceux qui ne sont pas en base mais qui sont dans la liste de réservation
+        for( ReservationEquipement reservationEquipementReunion : reunion.getListeEquipement().getReservationEquipements())
+        {
+            if( reservationEquipementReunion.getId() == -1 )
+            {
+                // la réservation n'a jamais été enregistrée
+                ReservationEquipementDBManager.getInstance().creerReservation(reservationEquipementReunion);
+            }
+        }
     }
 }

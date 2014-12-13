@@ -13,4 +13,9 @@ public class InventaireEquipement {
 	public List<Equipement> getLstEquipement(){
 		return this.lstEquipement;
 	}
+
+    public Equipement trouverEquipementParID(int idEquipement)
+    {
+        return this.lstEquipement.stream().filter(eq -> eq.getId() == idEquipement).findFirst().orElse(new Equipement());
+    }
 }

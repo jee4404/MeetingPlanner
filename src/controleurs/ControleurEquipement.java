@@ -2,111 +2,90 @@ package controleurs;
 
 import java.sql.SQLException;
 
+import business.*;
 import view.frames.FenetreEquipement;
-import business.Equipement;
-import business.ListeEquipement;
-import business.ReservationEquipement;
-import business.Reunion;
-import dbmanager.EquipementDBManager;
 import dbmanager.ReservationEquipementDBManager;
 
 public class ControleurEquipement {
+    private static ControleurEquipement controleurEquipement = new ControleurEquipement();
+    private Reunion reunion;
 
-	   private static ControleurEquipement controleurEquipement = new ControleurEquipement();
-	    private ListeEquipement listeEquipReserve;
-	    private Reunion reunion;
-	    private FenetreEquipement fenetreEquipement;
-	   /* A private Constructor prevents any other 
-	    * class from instantiating.
-	    */
-	   private ControleurEquipement(){
-	        this.listeEquipReserve = null;
-	        this.reunion = null;
-	        this.fenetreEquipement = null;
-	   }
-	   
-	   /* Static 'instance' method */
-	   public static ControleurEquipement getInstance() {
-	      return controleurEquipement;
-	   }
-	    public void setListeEquipement(ListeEquipement listeEquipement)
-	    {
-	        this.listeEquipReserve = listeEquipement;
-	    }
+    private ControleurEquipement()
+    {
+        this.reunion = null;
+    }
 
-	    public void setReunion(Reunion reunion)
-	    {
-	        this.reunion = reunion;
-	    }
-	   
-	    public void choisirEquipement(Reunion reunion)
+    public static ControleurEquipement getInstance()
+    {
+        return controleurEquipement;
+    }
 
-	    {
-	        try {
-	            this.setReunion(reunion);
-	            this.setListeEquipement(new ListeEquipement(reunion));
-	            this.listeEquipReserve.setReservationEquipements(ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion((int)reunion.getId()));
-	            this.fenetreEquipement = new FenetreEquipement(this.listeEquipReserve);
-	        }
-	        catch(SQLException ex)
-	        {
-	            System.out.println(ex.getMessage());
-	        }
-	    }
-	    public void reserverEquipement(int idEquipement, int qtEquipement)
-	    {
-	        try {
-	            // fetcher equipement
-	            Equipement equipement = EquipementDBManager.getInstance().trouverEquipement(idEquipement);
-	            if(equipement == null)
-	                throw new RuntimeException("équipement spécifié introuvable ("+idEquipement+")");
+    public void setReunion(Reunion reunion)
+    {
+        this.reunion = reunion;
+    }
 
-	            // test si reservation existe déja
-	            ReservationEquipement reservationEquip = ReservationEquipementDBManager.getInstance().trouverReservationParReunionEquipement((int)this.reunion.getId(), idEquipement);
+    public void choisirEquipement(Reunion reunion)
+    {
+        try
+        {
+            this.setReunion(reunion);
+            this.reunion.setListeEquipement(new ListeEquipement( ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion(this.reunion.getId())));
+            FenetreEquipement fenetreEquipement = new FenetreEquipement(reunion.getListeEquipement());
+        }
+        catch(SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
 
-	            if( reservationEquip != null)
-	                throw new RuntimeException("cet équipement a déjà été réservé");
+    public void reserverEquipement(int idEquipement, int qtEquipement)
+    {
+        try
+        {
+            Equipement equipement = SessionManager.getInstance().getInventaireEquipement().trouverEquipementParID(idEquipement);
 
-	            // creer réservation
-	            reservationEquip = new ReservationEquipement(equipement, this.reunion,qtEquipement);
+            if(equipement.getId() == -1)
+                throw new RuntimeException("equipement introuvable pour id #"+idEquipement);
 
-	            // persister réservation
-	            ReservationEquipementDBManager.getInstance().creerReservation(reservationEquip);
+            // check si eqt déja ajouté a la liste de reservation
+            ReservationEquipement reservationEquipement = this.reunion.getListeEquipement().trouverReservationParIdEquipement(idEquipement);
 
-	            // mettre liste réservation à jour
-	            this.listeEquipReserve.ajouterReservation(reservationEquip);
-	        }
-	        catch (SQLException ex)
-	        {
-	            System.out.println(ex.getMessage());
-	        }
-	        catch (RuntimeException ex)
-	        {
-	            System.out.println(ex.getMessage());
-	        }
-	    }
-	    
-	    public void retirerEquipement(int idReservation)
-	    {
-	        try {
-	            ReservationEquipement reservation = ReservationEquipementDBManager.getInstance().trouverReservation(idReservation);
-	            if(reservation == null)
-	                throw new RuntimeException("reservation introuvable");
+            if( reservationEquipement != null ) // on a trouvé un doublon de réservation, exception
+                throw new RuntimeException("cet équipement à déja été réservé : "+reservationEquipement.getEquipement().getTypeEquipement());
 
-	            // retirer la participation de la liste de participation
-	            this.listeEquipReserve.enleverReservation(reservation.getId());
+            reservationEquipement = new ReservationEquipement(equipement, this.reunion, qtEquipement);
 
-	            // retirer la participation de la base de donnée
-	            ReservationEquipementDBManager.getInstance().supprimerReservation(reservation);
-	        }
-	        catch (SQLException ex)
-	        {
-	            System.out.println(ex.getMessage());
-	        }
-	        catch (RuntimeException ex)
-	        {
-	            System.out.println(ex.getMessage());
-	        }
-	    }
+            // ajout reservation a la liste de réservation de la réunion en cours d'édition
+            this.reunion.getListeEquipement().ajouterReservation(reservationEquipement);
+        }
+        catch (RuntimeException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
 
-	}
+    public void retirerEquipement(int idReservation)
+    {
+        try
+        {
+            ReservationEquipement reservation = ReservationEquipementDBManager.getInstance().trouverReservation(idReservation);
+            if(reservation == null)
+            throw new RuntimeException("reservation introuvable");
+
+            // retirer la participation de la liste de participation
+            //this.listeEquipReserve.enleverReservation(reservation.getId());
+
+            // retirer la participation de la base de donnée
+            ReservationEquipementDBManager.getInstance().supprimerReservation(reservation);
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        catch (RuntimeException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+}

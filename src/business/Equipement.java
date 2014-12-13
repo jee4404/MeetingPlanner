@@ -9,7 +9,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "equipement")
 public class Equipement {
     @DatabaseField(generatedId = true)
-    private Integer id;
+    private int id;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String typeEquipement;
@@ -17,9 +17,12 @@ public class Equipement {
     @DatabaseField(useGetSet = true, canBeNull = true)
     private String description;
 
-    public Equipement(){}
+    public Equipement()
+    {
+        this.id = -1;
+    }
 
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }

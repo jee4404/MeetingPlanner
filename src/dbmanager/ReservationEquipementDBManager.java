@@ -43,7 +43,7 @@ public class ReservationEquipementDBManager {
         return instance;
     }
 
-    public ReservationEquipement trouverReservation(Integer idReservation) throws SQLException
+    public ReservationEquipement trouverReservation(int idReservation) throws SQLException
     {
         return this.classDao.queryForId(idReservation);
     }
@@ -68,7 +68,7 @@ public class ReservationEquipementDBManager {
         this.classDao.delete(reservationEquipement);
     }
 
-    public List<ReservationEquipement> trouverEquipementsParReunion(Integer idReunion) throws SQLException
+    public List<ReservationEquipement> trouverEquipementsParReunion(int idReunion) throws SQLException
     {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("reunion_id", idReunion);

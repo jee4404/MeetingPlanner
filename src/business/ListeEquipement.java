@@ -6,31 +6,22 @@ import java.util.List;
  */
 public class ListeEquipement {
     private List<ReservationEquipement> reservationEquipements;
-    private Reunion reunion;
 
-    public ListeEquipement(){}
-
-    public ListeEquipement(Reunion reunion)
+    public ListeEquipement()
     {
-        this.reunion = reunion;
         this.reservationEquipements = null;
     }
 
-    public ListeEquipement(Reunion reunion, List<ReservationEquipement> reservationEquipements)
+    public ListeEquipement(List<ReservationEquipement> reservationEquipements)
     {
-        this.reunion = reunion;
         this.reservationEquipements = reservationEquipements;
     }
 
-    // TODO : il faut ajouter la ligne en base, mais ou ? :)
-    // TODO : dans le controleur, monsieur
     public void ajouterReservation(ReservationEquipement reservationEquipement)
     {
         this.reservationEquipements.add(reservationEquipement);
     }
 
-    // TODO : il faut supprimer la ligne en base, mais ou ? :)
-    // TODO : dans le controleur, monsieur
     public void enleverReservation(int idReservation)
     {
         for(int i = 0; i < this.reservationEquipements.size(); i++)
@@ -44,23 +35,18 @@ public class ListeEquipement {
         }
     }
 
-    public Reunion getReunion()
-    {
-        return this.reunion;
-    }
-
     public List<ReservationEquipement> getReservationEquipements()
     {
         return this.reservationEquipements;
     }
 
-    public void setReunion(Reunion reunion)
-    {
-        this.reunion = reunion;
-    }
-
     public void setReservationEquipements(List<ReservationEquipement> reservationEquipements)
     {
         this.reservationEquipements = reservationEquipements;
+    }
+
+    public ReservationEquipement trouverReservationParIdEquipement(int idEquipement)
+    {
+        return this.reservationEquipements.stream().filter(res -> res.getEquipement().getId() == idEquipement).findFirst().orElse(null);
     }
 }
