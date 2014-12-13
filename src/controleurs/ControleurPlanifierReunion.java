@@ -76,6 +76,7 @@ public class ControleurPlanifierReunion {
             System.out.println(ex.getMessage());
         }
     }
+    
     //public List<Local> getLstLocauxDispos(Date date,Time heure, Time durée,int nbParticipants){
     public List<Local> getLstLocauxDispos(int nbParticipants){
     	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);

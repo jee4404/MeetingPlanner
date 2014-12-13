@@ -22,14 +22,13 @@ public class ListeEquipement {
         this.reservationEquipements.add(reservationEquipement);
     }
 
-    public void enleverReservation(int idReservation)
+    public void enleverReservation(int idEquipement)
     {
-        for(int i = 0; i < this.reservationEquipements.size(); i++)
+        for(ReservationEquipement reservationEquipement : this.reservationEquipements)
         {
-            int tmpReservationId = this.reservationEquipements.get(i).getId();
-            if( idReservation == tmpReservationId )
+            if(reservationEquipement.getEquipement().getId() == idEquipement)
             {
-                this.reservationEquipements.remove(i);
+                this.reservationEquipements.remove(reservationEquipement);
                 break;
             }
         }
@@ -48,5 +47,10 @@ public class ListeEquipement {
     public ReservationEquipement trouverReservationParIdEquipement(int idEquipement)
     {
         return this.reservationEquipements.stream().filter(res -> res.getEquipement().getId() == idEquipement).findFirst().orElse(null);
+    }
+
+    public ReservationEquipement trouverReservationParID(int idReservation)
+    {
+        return this.reservationEquipements.stream().filter(res -> res.getId() == idReservation).findFirst().orElse(null);
     }
 }

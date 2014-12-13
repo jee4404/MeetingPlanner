@@ -27,16 +27,8 @@ public class ControleurEquipement {
 
     public void choisirEquipement(Reunion reunion)
     {
-        try
-        {
-            this.setReunion(reunion);
-            this.reunion.setListeEquipement(new ListeEquipement( ReservationEquipementDBManager.getInstance().trouverEquipementsParReunion(this.reunion.getId())));
-            FenetreEquipement fenetreEquipement = new FenetreEquipement(reunion.getListeEquipement());
-        }
-        catch(SQLException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        this.setReunion(reunion);
+        FenetreEquipement fenetreEquipement = new FenetreEquipement(reunion.getListeEquipement());
     }
 
     public void reserverEquipement(int idEquipement, int qtEquipement)
@@ -65,23 +57,16 @@ public class ControleurEquipement {
         }
     }
 
-    public void retirerEquipement(int idReservation)
+    public void retirerEquipement(int idEquipement)
     {
         try
         {
-            ReservationEquipement reservation = ReservationEquipementDBManager.getInstance().trouverReservation(idReservation);
-            if(reservation == null)
-            throw new RuntimeException("reservation introuvable");
+            ReservationEquipement reservationEquipement = this.reunion.getListeEquipement().trouverReservationParIdEquipement(idEquipement);
 
-            // retirer la participation de la liste de participation
-            //this.listeEquipReserve.enleverReservation(reservation.getId());
+            if(reservationEquipement == null)
+                throw new RuntimeException("Réservation introuvable avec id equipement #"+idEquipement);
 
-            // retirer la participation de la base de donnée
-            ReservationEquipementDBManager.getInstance().supprimerReservation(reservation);
-        }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.getMessage());
+            this.reunion.getListeEquipement().enleverReservation(idEquipement);
         }
         catch (RuntimeException ex)
         {

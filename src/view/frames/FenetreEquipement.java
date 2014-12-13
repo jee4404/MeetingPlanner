@@ -109,8 +109,8 @@ public class FenetreEquipement extends JFrame implements ActionListener,TableMod
             this.equipementReserveTableModel.fireTableDataChanged();
         }
         else if (src == btRetirer) {
-            Object idReservation = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 0);
-            ControleurEquipement.getInstance().retirerEquipement( (Integer)idReservation );
+            Object idEquipement = this.tblEquipReserve.getValueAt(this.tblEquipReserve.getSelectionModel().getMinSelectionIndex(), 1);
+            ControleurEquipement.getInstance().retirerEquipement( (Integer)idEquipement );
             this.equipementReserveTableModel.fireTableDataChanged();
         }
         else if (src == btFermer) {
