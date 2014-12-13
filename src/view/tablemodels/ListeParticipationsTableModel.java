@@ -1,6 +1,6 @@
 package view.tablemodels;
 
-import business.ListeParticipations;
+import business.ListeParticipants;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -8,17 +8,17 @@ import javax.swing.table.AbstractTableModel;
  * Created by Rémy on 2014-11-29.
  */
 public class ListeParticipationsTableModel extends AbstractTableModel {
-    private ListeParticipations listeParticipations;
+    private ListeParticipants listeParticipants;
 
-    public ListeParticipationsTableModel(ListeParticipations listeParticipations)
+    public ListeParticipationsTableModel(ListeParticipants listeParticipants)
     {
-        this.listeParticipations = listeParticipations;
+        this.listeParticipants = listeParticipants;
     }
 
     @Override
     public int getRowCount()
     {
-        return this.listeParticipations.getParticipants().size();
+        return this.listeParticipants.getParticipants().size();
     }
 
     // on affiche id_participationm id_employé et nom employé
@@ -36,15 +36,15 @@ public class ListeParticipationsTableModel extends AbstractTableModel {
         switch (columnIndex){
             // id reunion
             case 0:
-                retVal = this.listeParticipations.getParticipants().get(rowIndex).getIdReunion();
+                retVal = this.listeParticipants.getParticipants().get(rowIndex).getIdReunion();
                 break;
             // id employé
             case 1:
-                retVal = this.listeParticipations.getParticipants().get(rowIndex).getIdEmploye();
+                retVal = this.listeParticipants.getParticipants().get(rowIndex).getIdEmploye();
                 break;
             // nom employé
             case 2:
-                retVal = this.listeParticipations.getParticipants().get(rowIndex).getEmploye().getNomComplet();
+                retVal = this.listeParticipants.getParticipants().get(rowIndex).getEmploye().getNomComplet();
                 break;
         }
         return retVal;

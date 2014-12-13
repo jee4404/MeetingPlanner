@@ -53,7 +53,7 @@ public class ControleurPlanifierReunion {
         {
             // on teste si le participant en base en encore dans la liste des paritcipant :
             Participant participantEnBase = participantsEnBase.get(i);
-            if( reunion.getListeParticipations().trouverParticipantParIDEmploye( participantEnBase.getIdEmploye()).getIdEmploye() == -1 )
+            if( reunion.getListeParticipants().trouverParticipantParIDEmploye( participantEnBase.getIdEmploye()).getIdEmploye() == -1 )
             {
                 // le participant n'a pas été trouvé dans la liste des participants de la réunion
                 ParticipantDBManager.getInstance().supprimerParticipant(participantEnBase);
@@ -61,9 +61,9 @@ public class ControleurPlanifierReunion {
         }
 
         // on ajoute ceux qui ne sont pas en base
-        for(int i = 0; i < reunion.getListeParticipations().getParticipants().size(); i++)
+        for(int i = 0; i < reunion.getListeParticipants().getParticipants().size(); i++)
         {
-            Participant participant = reunion.getListeParticipations().getParticipants().get(i);
+            Participant participant = reunion.getListeParticipants().getParticipants().get(i);
             if( participantsEnBase.stream().filter( p -> p.getIdEmploye() == participant.getIdEmploye()).findFirst().orElse(new Participant()).getIdEmploye() == -1 )
             {
                 // le participant 'a pas été trouvé en base, on peut donc le créer
@@ -77,7 +77,7 @@ public class ControleurPlanifierReunion {
         try
         {
             Reunion reunion = ReunionDBManager.getInstance().trouverReunion(idReunion);
-            reunion.setListeParticipations(new ListeParticipations(ParticipantDBManager.getInstance().trouverParticipantParReunion(idReunion)));
+            reunion.setListeParticipants(new ListeParticipants(ParticipantDBManager.getInstance().trouverParticipantParReunion(idReunion)));
 
             // TODO : meme chose pour liste equipement
 

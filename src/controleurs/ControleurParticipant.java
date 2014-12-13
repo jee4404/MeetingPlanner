@@ -31,7 +31,7 @@ public class ControleurParticipant {
     public void afficherInviterParticipants(Reunion reunion)
     {
         this.setReunion(reunion);
-        FenetreParticipants fenetreParticipants = new FenetreParticipants(reunion.getListeParticipations());
+        FenetreParticipants fenetreParticipants = new FenetreParticipants(reunion.getListeParticipants());
     }
 
     public void inviterParticipant(int idEmploye)
@@ -43,7 +43,7 @@ public class ControleurParticipant {
                 throw new RuntimeException("employé spécifié introuvable ("+idEmploye+")");
 
             // test si participation existe déja
-            Participant participant = this.reunion.getListeParticipations().trouverParticipantParIDReunionIDEmploye(idEmploye, this.reunion.getId());
+            Participant participant = this.reunion.getListeParticipants().trouverParticipantParIDReunionIDEmploye(idEmploye, this.reunion.getId());
 
             // le id reunion du participant doit etre -1 car on a trouvé aucun participant donc on renvoit un participant
             // vide, qui par défaut à un id reunion à -1
@@ -54,7 +54,7 @@ public class ControleurParticipant {
             participant = new Participant(this.reunion.getId(), employeParticipant.getNom(), employeParticipant.getPrenom(), employeParticipant.getCourriel(), employeParticipant.getId() );
 
             // mettre liste participant à jour
-            this.reunion.getListeParticipations().ajouterParticipant(participant);
+            this.reunion.getListeParticipants().ajouterParticipant(participant);
         }
         catch (RuntimeException ex)
         {
@@ -66,14 +66,14 @@ public class ControleurParticipant {
     {
         try
         {
-            Participant participant = this.reunion.getListeParticipations().trouverParticipantParIDReunionIDEmploye(idParticipant, this.reunion.getId());
+            Participant participant = this.reunion.getListeParticipants().trouverParticipantParIDReunionIDEmploye(idParticipant, this.reunion.getId());
 
             // si participant non trouvé dans la liste, on renvoit un participant vide avec id = -1 par défaut
             if(participant.getIdEmploye() == -1)
                 throw new RuntimeException("participation introuvable");
 
             // retirer la participation de la liste de participation
-            this.reunion.getListeParticipations().enleverParticipant(participant);
+            this.reunion.getListeParticipants().enleverParticipant(participant);
         }
         catch (RuntimeException ex)
         {

@@ -30,7 +30,7 @@ public class Reunion {
     @DatabaseField(canBeNull = false, useGetSet = true)
     private String sujet;
 
-    private ListeParticipations listeParticipations;
+    private ListeParticipants listeParticipants;
 
     private ListeEquipement listeEquipement;
     /*
@@ -41,7 +41,7 @@ public class Reunion {
     {
         this.id = -1;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
@@ -54,7 +54,7 @@ public class Reunion {
         this.local = null;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
@@ -67,7 +67,7 @@ public class Reunion {
         this.local = local;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
-        this.listeParticipations = new ListeParticipations();
+        this.listeParticipants = new ListeParticipants();
     }
 
     public int getId()
@@ -114,9 +114,9 @@ public class Reunion {
     	return this.sujet;
     }
 
-    public ListeParticipations getListeParticipations()
+    public ListeParticipants getListeParticipants()
     {
-        return this.listeParticipations;
+        return this.listeParticipants;
     }
 
     public ListeEquipement getListeEquipement()
@@ -159,8 +159,8 @@ public class Reunion {
         this.listeEquipement = listeEquipement;
     }
 
-    public void setListeParticipations(ListeParticipations listeParticipations)
+    public void setListeParticipants(ListeParticipants listeParticipants)
     {
-        this.listeParticipations = listeParticipations;
+        this.listeParticipants = listeParticipants;
     }
 }

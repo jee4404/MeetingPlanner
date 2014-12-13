@@ -6,15 +6,15 @@ import java.util.List;
 /**
  * Created by Rémy on 2014-11-19.
  */
-public class ListeParticipations {
+public class ListeParticipants {
     private List<Participant> participants;
 
-    public ListeParticipations()
+    public ListeParticipants()
     {
         this.participants = new ArrayList<Participant>();
     }
 
-    public ListeParticipations(List<Participant> participants)
+    public ListeParticipants(List<Participant> participants)
     {
         this.participants = participants;
     }
