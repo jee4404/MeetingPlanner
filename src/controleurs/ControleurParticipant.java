@@ -104,7 +104,7 @@ public class ControleurParticipant {
                     ParticipantDBManager.getInstance().updateParticipant(participantReunion);
 
                     // notifie table model "mes participations" pour rafrâichir le tableau
-                    SessionManager.getInstance().getListeMesParticipationsTableModel().fireTableDataChanged();
+                    SessionManager.getInstance().getListeMesInvitationsTableModel().fireTableDataChanged();
 
                     break; // sort de la boucle
                 }

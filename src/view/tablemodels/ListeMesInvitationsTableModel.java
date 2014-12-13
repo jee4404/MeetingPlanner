@@ -13,10 +13,10 @@ import java.util.List;
 /**
  * Created by Rémy on 2014-12-02.
  */
-public class ListeMesParticipationsTableModel extends AbstractTableModel {
+public class ListeMesInvitationsTableModel extends AbstractTableModel {
     private List<Reunion> mesInvitations;
 
-    public ListeMesParticipationsTableModel(List<Reunion> mesInvitations)
+    public ListeMesInvitationsTableModel(List<Reunion> mesInvitations)
     {
         this.mesInvitations = mesInvitations;
     }

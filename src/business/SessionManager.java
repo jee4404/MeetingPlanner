@@ -1,7 +1,7 @@
 package business;
 
 import dbmanager.*;
-import view.tablemodels.ListeMesParticipationsTableModel;
+import view.tablemodels.ListeMesInvitationsTableModel;
 import view.tablemodels.ListeMesReunionsTableModel;
 
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class SessionManager {
     private static SessionManager instance;
     private Employe employe;
     private ListeMesReunionsTableModel listeMesReunionsTableModel;
-    private ListeMesParticipationsTableModel listeMesParticipationsTableModel;
+    private ListeMesInvitationsTableModel listeMesInvitationsTableModel;
     private List<Reunion> listeMesReunions;
     private List<Reunion> listeMesInvitations;
     private AnnuaireEmployes annuaireEmployes;
@@ -70,9 +70,9 @@ public class SessionManager {
         return poolLocaux;
     }
 
-    public ListeMesParticipationsTableModel getListeMesParticipationsTableModel()
+    public ListeMesInvitationsTableModel getListeMesInvitationsTableModel()
     {
-        return this.listeMesParticipationsTableModel;
+        return this.listeMesInvitationsTableModel;
     }
 
     public ListeMesReunionsTableModel getListeMesReunionsTableModel()
@@ -95,9 +95,9 @@ public class SessionManager {
         this.employe = employe;
     }
 
-    public void setListeMesParticipationsTableModel(ListeMesParticipationsTableModel listeMesParticipationsTableModel)
+    public void setListeMesInvitationsTableModel(ListeMesInvitationsTableModel listeMesInvitationsTableModel)
     {
-        this.listeMesParticipationsTableModel = listeMesParticipationsTableModel;
+        this.listeMesInvitationsTableModel = listeMesInvitationsTableModel;
     }
 
     public void setListeMesReunionsTableModel(ListeMesReunionsTableModel listeMesReunionsTableModel)
@@ -126,6 +126,6 @@ public class SessionManager {
 
         // reunions auxquelles est invité employe connecte + une reference vers le table model pour le mettre à jour depuis les controleurs
         getInstance().setListeMesInvitations(ParticipantDBManager.getInstance().trouverMesInvitations(employe.getId()));
-        getInstance().setListeMesParticipationsTableModel(new ListeMesParticipationsTableModel(getInstance().getListeMesInvitations()));
+        getInstance().setListeMesInvitationsTableModel(new ListeMesInvitationsTableModel(getInstance().getListeMesInvitations()));
     }
 }

@@ -160,7 +160,7 @@ public class FenetrePlanificateurReunion extends JFrame implements ActionListene
 
     private JTable getListeMesParticipations()
     {
-        JTable table = new JTable(SessionManager.getInstance().getListeMesParticipationsTableModel());
+        JTable table = new JTable(SessionManager.getInstance().getListeMesInvitationsTableModel());
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
