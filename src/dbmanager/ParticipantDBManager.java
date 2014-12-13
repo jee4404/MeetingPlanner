@@ -1,5 +1,6 @@
 package dbmanager;
 
+import business.ListeParticipants;
 import business.Participant;
 import business.Reunion;
 import com.j256.ormlite.dao.Dao;
@@ -83,16 +84,20 @@ public class ParticipantDBManager {
         return this.classDao.queryBuilder().where().eq("idReunion", idReunion).and().eq("idEmploye", idParticipant).queryForFirst();
     }
 
-    public List<Object[]> trouverMesInvitations(int idEmploye) throws SQLException
+    public List<Reunion> trouverMesInvitations(int idEmploye) throws SQLException
     {
+        List<Reunion> mesInvitations = new ArrayList<Reunion>();
         List<Participant> mesParticipations = this.classDao.queryBuilder().where().eq("idEmploye", idEmploye).query();
-        List<Object[]> mesInvitations = new ArrayList<Object[]>();
+        for (Participant participation : mesParticipations)
+        {
+            Reunion reunionInvitee = ReunionDBManager.getInstance().trouverReunion(participation.getIdReunion());
+            if( reunionInvitee == null )
+                throw new SQLException("impossible de trouver l'invitation pour la reunion "+participation.getIdEmploye());
 
-        if (mesParticipations.size() > 0) {
-            for(int i=0;i<mesParticipations.size();i++){
-                Reunion reunion = ReunionDBManager.getInstance().trouverReunion(mesParticipations.get(i).getIdReunion());
-                mesInvitations.add(new Object[]{reunion,mesParticipations.get(i)});
-            }
+            // initialise les liste de participants de chaque reunion - c'est utile pour ajouter / refuser une invitation
+            reunionInvitee.setListeParticipants(new ListeParticipants(getInstance().trouverParticipantParReunion(reunionInvitee.getId())));
+
+            mesInvitations.add(reunionInvitee);
         }
         return mesInvitations;
     }

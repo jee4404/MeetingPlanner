@@ -4,7 +4,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -20,8 +19,6 @@ import controleurs.ControleurAcceuil;
 import controleurs.ControleurParticipant;
 import controleurs.ControleurPlanifierReunion;
 import view.components.*;
-import view.tablemodels.ListeMesParticipationsTableModel;
-import view.tablemodels.ListeMesReunionsTableModel;
 /**
  * @author Marie Desaulniers
  * Interface graphique principale du planificateur de réunion
@@ -148,14 +145,14 @@ public class FenetrePlanificateurReunion extends JFrame implements ActionListene
             ControleurAcceuil.getInstance().exitApplication();
 	    } 
 	    else if (src == btAccepter){
-	       int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+	       int idReunion = (Integer) tableauParticipations.getValueAt(tableauParticipations.getSelectionModel().getMinSelectionIndex(), 0);
 	       int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
 	       ControleurParticipant.getInstance().repondreInvitation(idReunion, idEmploye, Configuration.PARTICIPE_REUNION_OUI, "");
 	    }
 	    else if (src == btDecliner)
 	    {
 	    	String motif = (String) JOptionPane.showInputDialog(this, "Motif refus", "Motif", JOptionPane.INFORMATION_MESSAGE);
-		    int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
+		    int idReunion = (Integer) tableauParticipations.getValueAt(tableauParticipations.getSelectionModel().getMinSelectionIndex(), 0);
 		    int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
 		    ControleurParticipant.getInstance().repondreInvitation(idReunion, idEmploye, Configuration.PARTICIPE_REUNION_NON, motif);
 	    }

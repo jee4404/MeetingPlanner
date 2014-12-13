@@ -49,10 +49,9 @@ public class ReunionDBManager {
         this.daoReunion.create(reunion);
     }
 
-    public Reunion trouverReunion(Integer idReunion) throws SQLException
+    public Reunion trouverReunion(int idReunion) throws SQLException
     {
-        Reunion reunion = this.daoReunion.queryForId(idReunion);
-        return reunion;
+        return this.daoReunion.queryForId(idReunion);
     }
 
     public void actualiserReunion(Reunion reunion) throws SQLException
@@ -65,7 +64,7 @@ public class ReunionDBManager {
         this.daoReunion.delete(reunion);
     }
     
-    public List<Reunion> trouverReunionParOrganisateur(Integer idOrganisateur) throws SQLException
+    public List<Reunion> trouverReunionParOrganisateur(int idOrganisateur) throws SQLException
     {
     	return this.daoReunion.queryBuilder().where().eq("organisateur_id", idOrganisateur).query();
     }

@@ -85,14 +85,31 @@ public class ControleurParticipant {
     {
         try
         {
-	        Participant participant = ParticipantDBManager.getInstance().trouverParticipantParReunionParticipant(idReunion, idEmploye);
-            if( participant == null)
-                throw new RuntimeException("Participant introuvable !");
+	        // update liste mes invitations
+            // TODO : mettre ca dans une méthode, trouver un moyen plus élégant
+            for( Reunion reunionInvitee : SessionManager.getInstance().getListeMesInvitations())
+            {
+                if( reunionInvitee.getId() == idReunion )
+                {
+                    Participant participantReunion = reunionInvitee.getListeParticipants().trouverParticipantParIDEmploye(idEmploye);
+                    if( participantReunion.getIdEmploye() == -1 && participantReunion.getIdReunion() == -1)
+                    {
+                        // on a pas trouvé le participant dans la liste
+                        throw new RuntimeException("participant introuvable pour répondre !");
+                    }
+                    participantReunion.setParticipeReunion(response);
+                    participantReunion.setMotif(motif);
 
-            participant.setParticipeReunion(response);
-            participant.setMotif(motif);
-            ParticipantDBManager.getInstance().updateParticipant(participant);
-    	} 
+                    // update base de donnée
+                    ParticipantDBManager.getInstance().updateParticipant(participantReunion);
+
+                    // notifie table model "mes participations" pour rafrâichir le tableau
+                    SessionManager.getInstance().getListeMesParticipationsTableModel().fireTableDataChanged();
+
+                    break; // sort de la boucle
+                }
+            }
+        }
     	catch (SQLException ex) 
     	{
     		System.out.println(ex.getMessage());

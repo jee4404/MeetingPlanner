@@ -1,7 +1,9 @@
 package view.tablemodels;
 
+import business.ListeParticipants;
 import business.Participant;
 import business.Reunion;
+import business.SessionManager;
 import conf.Configuration;
 
 import javax.swing.table.AbstractTableModel;
@@ -12,9 +14,9 @@ import java.util.List;
  * Created by Rémy on 2014-12-02.
  */
 public class ListeMesParticipationsTableModel extends AbstractTableModel {
-    private List<Object[]> mesInvitations;
+    private List<Reunion> mesInvitations;
 
-    public ListeMesParticipationsTableModel(List<Object[]> mesInvitations)
+    public ListeMesParticipationsTableModel(List<Reunion> mesInvitations)
     {
         this.mesInvitations = mesInvitations;
     }
@@ -32,20 +34,20 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object retVal = null;
-        Participant tmpPart = (Participant)this.mesInvitations.get(rowIndex)[1];
-        Reunion tmpReunion = (Reunion)this.mesInvitations.get(rowIndex)[0];
+        Reunion reunionSelectionnee = this.mesInvitations.get(rowIndex);
+        Participant participant = reunionSelectionnee.getListeParticipants().trouverParticipantParIDEmploye(SessionManager.getInstance().getEmploye().getId());
         switch (columnIndex)
         {
             case 0:
-            	retVal = tmpPart.getIdEmploye();
+            	retVal = reunionSelectionnee.getId();
                 break;
 
             case 1:
-                retVal = tmpReunion.getSujet();
+                retVal = reunionSelectionnee.getSujet();
                 break;
 
             case 2:
-                switch (tmpPart.getParticipeReunion())
+                switch (participant.getParticipeReunion())
                 {
                     case Configuration.PARTICIPE_REUNION_NON:
                         retVal = "non";
@@ -61,7 +63,6 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
                 }
                 break;
         }
-
         return retVal;
     }
 
@@ -77,7 +78,7 @@ public class ListeMesParticipationsTableModel extends AbstractTableModel {
         String retVal = "";
         switch (columnIndex){
             case 0:
-                retVal = "ID Participant";
+                retVal = "ID Réunion";
                 break;
 
             case 1:
