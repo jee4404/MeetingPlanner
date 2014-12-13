@@ -1,15 +1,12 @@
 package business;
-
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 
 /**
  * Created by Rémy on 2014-11-13.
  */
 public class Employe {
     @DatabaseField(generatedId = true, canBeNull = false)
-    private Integer id;
+    private int id;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
     private String nom;
@@ -24,10 +21,22 @@ public class Employe {
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
     * */
-    public Employe(){}
+    public Employe()
+    {
+        this.id = -1;
+    }
 
     public Employe(String nom, String prenom, String courriel)
     {
+        this.id = -1;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.courriel = courriel;
+    }
+
+    public Employe(String nom, String prenom, String courriel, int id)
+    {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.courriel = courriel;
@@ -48,7 +57,7 @@ public class Employe {
         return this.courriel;
     }
 
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }
@@ -68,8 +77,7 @@ public class Employe {
         this.courriel = courriel;
     }
 
-    // :( never call -- used for participants and organisater
-    public void setId(Integer id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -77,11 +85,5 @@ public class Employe {
     public String getNomComplet()
     {
         return this.prenom + " " + this.nom;
-    }
-
-    // methode de cast... TODO : plus élégant ?
-    public Participant getParticipant()
-    {
-        return new Participant(this);
     }
 }

@@ -18,7 +18,7 @@ public class ListeParticipationsTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return this.listeParticipations.getParticipations().size();
+        return this.listeParticipations.getParticipants().size();
     }
 
     // on affiche id_participationm id_employé et nom employé
@@ -34,17 +34,17 @@ public class ListeParticipationsTableModel extends AbstractTableModel {
         Object retVal = null;
 
         switch (columnIndex){
-            // id participation
+            // id reunion
             case 0:
-                retVal = this.listeParticipations.getParticipations().get(rowIndex).getId();
+                retVal = this.listeParticipations.getParticipants().get(rowIndex).getIdReunion();
                 break;
             // id employé
             case 1:
-                retVal = this.listeParticipations.getParticipations().get(rowIndex).getParticipant().getId();
+                retVal = this.listeParticipations.getParticipants().get(rowIndex).getIdEmploye();
                 break;
             // nom employé
             case 2:
-                retVal = this.listeParticipations.getParticipations().get(rowIndex).getParticipant().getNomComplet();
+                retVal = this.listeParticipations.getParticipants().get(rowIndex).getEmploye().getNomComplet();
                 break;
         }
         return retVal;
@@ -63,7 +63,7 @@ public class ListeParticipationsTableModel extends AbstractTableModel {
         String retVal = "";
         switch (columnIndex){
             case 0:
-                retVal = "id participation";
+                retVal = "id reunion";
                 break;
 
             case 1:

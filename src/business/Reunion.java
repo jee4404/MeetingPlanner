@@ -10,7 +10,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "reunion")
 public class Reunion {
     @DatabaseField(generatedId = true, canBeNull = false)
-    private Integer id;
+    private int id;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
     private Date dateReunion;
@@ -39,12 +39,14 @@ public class Reunion {
     * */
     public Reunion()
     {
+        this.id = -1;
         this.listeEquipement = new ListeEquipement();
         this.listeParticipations = new ListeParticipations();
     }
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
     {
+        this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
@@ -57,6 +59,7 @@ public class Reunion {
 
     public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
     {
+        this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
         this.nbParticipants = nbParticipants;
@@ -67,7 +70,7 @@ public class Reunion {
         this.listeParticipations = new ListeParticipations();
     }
 
-    public Integer getId()
+    public int getId()
     {
         return this.id;
     }

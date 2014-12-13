@@ -91,7 +91,7 @@ public class FenetreParticipants extends JFrame implements ActionListener {
         }
         else if (src == btRetirer)
         {
-            Object idParticipation = this.tblParticipants.getValueAt(this.tblParticipants.getSelectionModel().getMinSelectionIndex(), 0);
+            Object idParticipation = this.tblParticipants.getValueAt(this.tblParticipants.getSelectionModel().getMinSelectionIndex(), 1);
             ControleurParticipant.getInstance().retirerParticipation( (Integer)idParticipation );
             this.participationsTableModel.fireTableDataChanged();
         }

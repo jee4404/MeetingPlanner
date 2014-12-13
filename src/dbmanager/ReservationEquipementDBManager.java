@@ -1,6 +1,5 @@
 package dbmanager;
 
-import business.Participation;
 import business.ReservationEquipement;
 
 import com.j256.ormlite.dao.Dao;

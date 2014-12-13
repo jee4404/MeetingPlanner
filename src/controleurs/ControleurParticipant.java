@@ -3,7 +3,6 @@ package controleurs;
 import java.sql.SQLException;
 import business.*;
 import dbmanager.ParticipantDBManager;
-import dbmanager.ParticipationDBManager;
 import view.frames.FenetreParticipants;
 
 public class ControleurParticipant {
@@ -35,25 +34,27 @@ public class ControleurParticipant {
         FenetreParticipants fenetreParticipants = new FenetreParticipants(reunion.getListeParticipations());
     }
 
-    public void inviterParticipant(Integer idEmploye)
+    public void inviterParticipant(int idEmploye)
     {
         try {
-            Participant participant = SessionManager.getInstance().getAnnuaireEmployes().getParticipant(idEmploye);
+            Employe employeParticipant = SessionManager.getInstance().getAnnuaireEmployes().trouverEmploye(idEmploye);
 
-            if(participant == null)
+            if(employeParticipant == null)
                 throw new RuntimeException("employé spécifié introuvable ("+idEmploye+")");
 
             // test si participation existe déja
-            Participation participation = this.reunion.getListeParticipations().trouverParticipationParIDParticipant(idEmploye);
+            Participant participant = this.reunion.getListeParticipations().trouverParticipantParIDReunionIDEmploye(idEmploye, this.reunion.getId());
 
-            if( participation.getParticipant() != null )
+            // le id reunion du participant doit etre -1 car on a trouvé aucun participant donc on renvoit un participant
+            // vide, qui par défaut à un id reunion à -1
+            if( participant.getIdReunion() != -1 )
                 throw new RuntimeException("cet employé a déjà été invité");
 
-            // creer participation
-            participation = new Participation(participant, this.reunion.getId() );
+            // creer participant
+            participant = new Participant(this.reunion.getId(), employeParticipant.getNom(), employeParticipant.getPrenom(), employeParticipant.getCourriel(), employeParticipant.getId() );
 
-            // mettre liste participation à jour
-            this.reunion.getListeParticipations().ajouterParticipation(participation);
+            // mettre liste participant à jour
+            this.reunion.getListeParticipations().ajouterParticipant(participant);
         }
         catch (RuntimeException ex)
         {
@@ -61,15 +62,18 @@ public class ControleurParticipant {
         }
     }
 
-    public void retirerParticipation(int idParticipation)
+    public void retirerParticipation(int idParticipant)
     {
-        try {
-            Participation participation = this.reunion.getListeParticipations().trouverParticipationParID(idParticipation);
-            if(participation == null)
+        try
+        {
+            Participant participant = this.reunion.getListeParticipations().trouverParticipantParIDReunionIDEmploye(idParticipant, this.reunion.getId());
+
+            // si participant non trouvé dans la liste, on renvoit un participant vide avec id = -1 par défaut
+            if(participant.getIdEmploye() == -1)
                 throw new RuntimeException("participation introuvable");
 
             // retirer la participation de la liste de participation
-            this.reunion.getListeParticipations().enleverParticipation(participation.getId());
+            this.reunion.getListeParticipations().enleverParticipant(participant);
         }
         catch (RuntimeException ex)
         {
@@ -77,17 +81,25 @@ public class ControleurParticipant {
         }
     }
 
-    public void repondreInvitation(int idReunion, int idEmploye, boolean rep, String motif){
-    	  try {
-			Participation participation = ParticipationDBManager.getInstance().trouverParticipantionParReunionParticipant(idReunion, idEmploye);
-			participation.setParticipationConfirmee(rep);
-			participation.setMotif(motif);
-			ParticipationDBManager.getInstance().actualiserParticipation(participation);
+    public void repondreInvitation(int idReunion, int idEmploye, int response, String motif)
+    {
+        try
+        {
+	        Participant participant = ParticipantDBManager.getInstance().trouverParticipantParReunionParticipant(idReunion, idEmploye);
+            if( participant == null)
+                throw new RuntimeException("Participant introuvable !");
+
+            participant.setParticipeReunion(response);
+            participant.setMotif(motif);
+            ParticipantDBManager.getInstance().updateParticipant(participant);
     	} 
     	catch (SQLException ex) 
     	{
     		System.out.println(ex.getMessage());
-		};
-    	
+		}
+        catch (RuntimeException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 }

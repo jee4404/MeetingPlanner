@@ -18,7 +18,7 @@ import java.util.List;
  * du type donné via l'orm ormlite
  */
 public class EmployeDBManager {
-    private Dao<Employe, Integer> daoEmploye;
+    private Dao<Employe, Integer> classDao;
     private static EmployeDBManager instance;
 
     private EmployeDBManager()
@@ -27,7 +27,7 @@ public class EmployeDBManager {
         {
             // init le DAO pour orm lite
             ConnectionSource connectionSrouce = DBConnectionSource.getInstance().getConnectionSource();
-            this.daoEmploye = DaoManager.createDao(connectionSrouce, Employe.class);
+            this.classDao = DaoManager.createDao(connectionSrouce, Employe.class);
 
             // cree la table sql employe si elle n'existe pas deja
             TableUtils.createTableIfNotExists(connectionSrouce, Employe.class);
@@ -49,38 +49,38 @@ public class EmployeDBManager {
 
     public void creerEmploye(Employe employe) throws SQLException
     {
-        this.daoEmploye.create(employe);
+        this.classDao.create(employe);
     }
 
-    public Employe trouverEmploye(Integer idEmploye) throws SQLException
+    public Employe trouverEmploye(int idEmploye) throws SQLException
     {
-        Employe employe = this.daoEmploye.queryForId(idEmploye);
+        Employe employe = this.classDao.queryForId(idEmploye);
         return employe;
     }
 
     public void actualiserEmploye(Employe employe) throws SQLException
     {
-        this.daoEmploye.refresh(employe);
+        this.classDao.refresh(employe);
     }
 
     public void supprimerEmploye(Employe employe) throws SQLException
     {
-        this.daoEmploye.delete(employe);
+        this.classDao.delete(employe);
     }
 
     public void updateEmploye(Employe employe) throws SQLException
     {
-        this.daoEmploye.update(employe);
+        this.classDao.update(employe);
     }
     
     public List<Employe> trouverTousEmployes()throws SQLException
     {
-       return this.daoEmploye.queryForAll();
+       return this.classDao.queryForAll();
 
     }
     
     public Employe trouverEmployeParCourriel(String courriel) throws SQLException
     {
-    	return this.daoEmploye.queryBuilder().where().eq("courriel", courriel).queryForFirst();
+    	return this.classDao.queryBuilder().where().eq("courriel", courriel).queryForFirst();
     }
 }

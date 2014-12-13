@@ -7,56 +7,55 @@ import java.util.List;
  * Created by Rémy on 2014-11-19.
  */
 public class ListeParticipations {
-    private List<Participation> participations;
+    private List<Participant> participants;
 
     public ListeParticipations()
     {
-        this.participations = new ArrayList<Participation>();
+        this.participants = new ArrayList<Participant>();
     }
 
-    public ListeParticipations(List<Participation> participations)
+    public ListeParticipations(List<Participant> participants)
     {
-        this.participations = participations;
+        this.participants = participants;
     }
 
-    public void ajouterParticipation(Participation participation)
+    public void ajouterParticipant(Participant participants)
     {
-        this.participations.add(participation);
+        this.participants.add(participants);
     }
 
-    public void enleverParticipation(int idParticipation)
+    public void enleverParticipant(Participant participant)
     {
-        //this.participations.stream().filter( p -> p.getId() == idParticipation).peek(this.participations::remove);
-        for(int i = 0; i < this.participations.size(); i++)
+        //this.participants.stream().filter( p -> p.getId() == participant.getId()).peek(this.participants::remove);
+        for(int i = 0; i < this.participants.size(); i++)
         {
-            int tmpParticipationId = this.participations.get(i).getId();
-            if( idParticipation == tmpParticipationId )
+            int tmpParticipantID = this.participants.get(i).getIdEmploye();
+            if( participant.getIdEmploye() == tmpParticipantID )
             {
-                this.participations.remove(i);
+                this.participants.remove(i);
                 break;
             }
         }
     }
 
-    public List<Participation> getParticipations()
+    public List<Participant> getParticipants()
     {
-        return this.participations;
+        return this.participants;
     }
 
-    // ne devrait pas être utilié
-    public void setParticipations(List<Participation> participations)
+    public void setParticipations(List<Participant> participant)
     {
-        this.participations = participations;
+        this.participants = participant;
     }
 
-    public Participation trouverParticipationParID(int idParticipation)
+    public Participant trouverParticipantParIDEmploye(int idEmploye)
     {
-        return this.participations.stream().filter( p -> p.getId() == idParticipation).findFirst().orElse(new Participation());
+        return this.participants.stream().filter( p -> p.getIdEmploye() == idEmploye).findFirst().orElse(new Participant());
     }
 
-    public Participation trouverParticipationParIDParticipant(int idParticipant)
+    public Participant trouverParticipantParIDReunionIDEmploye(int idEmploye, int idReunion)
     {
-        return this.participations.stream().filter( p -> p.getParticipant().getId() == idParticipant).findFirst().orElse(new Participation());
+        return this.participants.stream().filter( p -> p.getIdEmploye() == idEmploye && p.getIdReunion() == idReunion).findFirst().orElse(new Participant());
     }
 
 

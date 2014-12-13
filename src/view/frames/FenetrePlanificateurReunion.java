@@ -15,6 +15,8 @@ import javax.swing.JTable;
 
 import business.Employe;
 import business.SessionManager;
+import conf.Configuration;
+import controleurs.ControleurAcceuil;
 import controleurs.ControleurParticipant;
 import controleurs.ControleurPlanifierReunion;
 import view.components.*;
@@ -143,18 +145,19 @@ public class FenetrePlanificateurReunion extends JFrame implements ActionListene
 	    else if ((src == btFermer1) || (src == btFermer2))
 	    {
 	    	this.setVisible(false);
+            ControleurAcceuil.getInstance().exitApplication();
 	    } 
 	    else if (src == btAccepter){
 	       int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
 	       int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
-	       ControleurParticipant.getInstance().repondreInvitation(idReunion,idEmploye,true,"");
+	       ControleurParticipant.getInstance().repondreInvitation(idReunion, idEmploye, Configuration.PARTICIPE_REUNION_OUI, "");
 	    }
 	    else if (src == btDecliner)
 	    {
 	    	String motif = (String) JOptionPane.showInputDialog(this, "Motif refus", "Motif", JOptionPane.INFORMATION_MESSAGE);
 		    int idReunion = (Integer) tableauReunions.getValueAt(tableauReunions.getSelectionModel().getMinSelectionIndex(), 0);
 		    int idEmploye = (Integer) SessionManager.getInstance().getEmploye().getId();
-		    ControleurParticipant.getInstance().repondreInvitation(idReunion,idEmploye,false,motif);
+		    ControleurParticipant.getInstance().repondreInvitation(idReunion, idEmploye, Configuration.PARTICIPE_REUNION_NON, motif);
 	    }
 	}
 
