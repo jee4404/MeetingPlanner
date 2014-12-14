@@ -7,6 +7,9 @@ import dbmanager.ReservationEquipementDBManager;
 import dbmanager.ReunionDBManager;
 import view.frames.FenetreReunion;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -77,12 +80,14 @@ public class ControleurPlanifierReunion {
         }
     }
 
-    //public List<Local> getLstLocauxDispos(Date date,Time heure, Time durée,int nbParticipants){
-    public List<Local> getLstLocauxDispos(int nbParticipants){
-    	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
+    public List<Local> getLstLocauxDispos(Date dateReunion,Date heureReunion, Date dureeReunion,int nbParticipants){
+    //public List<Local> getLstLocauxDispos(int nbParticipants){
+    	//List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
+    	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().getLocauxDisponibles(dateReunion,heureReunion,dureeReunion,nbParticipants);
     	return lstLocauxDispo;
     }
 
+    
     private void updateParticipants(Reunion reunion) throws SQLException
     {
         List<Participant> participantsEnBase = ParticipantDBManager.getInstance().trouverParticipantParReunion(reunion.getId());

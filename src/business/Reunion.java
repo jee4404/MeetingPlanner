@@ -16,6 +16,12 @@ public class Reunion {
     private Date dateReunion;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
+    private Date heureReunion;
+    
+    @DatabaseField(useGetSet = true, canBeNull = false)
+    private Date dureeReunion;
+    
+    @DatabaseField(useGetSet = true, canBeNull = false)
     private int nbParticipants;
 
     @DatabaseField(useGetSet = true, canBeNull = false)
@@ -33,6 +39,9 @@ public class Reunion {
     private ListeParticipants listeParticipants;
 
     private ListeEquipement listeEquipement;
+    
+    //private Calendrier calendrier;
+    
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
@@ -44,30 +53,37 @@ public class Reunion {
         this.listeParticipants = new ListeParticipants();
     }
 
-    public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Organisateur organisateur)
+    public Reunion(String sujet, Date dateReunion, Date heureReunion, Date dureeReunion,int nbParticipants, boolean estRecurente, Organisateur organisateur)
     {
         this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
+        this.heureReunion = heureReunion;
+        this.dureeReunion = dureeReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
         this.local = null;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
         this.listeParticipants = new ListeParticipants();
+        //this.calendrier = new Calendrier();
+        //this.setCalendrier(dateReunion, heureReunion, dureeReunion);
     }
 
-    public Reunion(String sujet, Date dateReunion, int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
+    public Reunion(String sujet, Date dateReunion,  Date heureReunion, Date dureeReunion,int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
     {
         this.id = -1;
     	this.sujet = sujet;
         this.dateReunion = dateReunion;
+        this.heureReunion = heureReunion;
+        this.dureeReunion = dureeReunion;
         this.nbParticipants = nbParticipants;
         this.estRecurente = estRecurente;
         this.local = local;
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
         this.listeParticipants = new ListeParticipants();
+        //this.setCalendrier(dateReunion, heureReunion, dureeReunion);
     }
 
     public int getId()
@@ -98,6 +114,20 @@ public class Reunion {
     {
         return this.dateReunion;
     }
+    
+    public Date getHeureReunion()
+    {
+    	return this.heureReunion;
+    }
+    
+    public Date getDureeReunion()
+    {
+    	return this.dureeReunion;
+    }
+    
+   /* public Calendrier getCalendrier(Date date, Date heure, Date duree){
+    	return calendrier;
+    }*/
 
     public Local getLocal()
     {
@@ -129,6 +159,21 @@ public class Reunion {
         this.dateReunion = dateReunion;
     }
 
+    public void setHeureReunion(Date heureReunion)
+    {
+        this.heureReunion = heureReunion;
+    }
+    
+    public void setDureeReunion(Date dureeReunion)
+    {
+        this.dureeReunion = dureeReunion;
+    }
+    
+    /*public void setCalendrier(Date dateReunion, Date heureReunion, Date dureeReunion){
+    	this.calendrier = new Calendrier();
+    	calendrier.setLstPlageHoraire(dateReunion, heureReunion, dureeReunion);
+    }*/
+    
     public void setNbParticipants(int nbParticipants)
     {
         this.nbParticipants = nbParticipants;

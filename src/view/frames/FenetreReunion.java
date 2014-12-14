@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-/**
+/**reu
  * Created by Rémy on 2014-11-18.
  * Modified by Marie on 2014-11-23
  */
@@ -244,10 +244,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    	// conversion de la date, heure et durée de String à Date
 	    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	    	String strDateReunion = this.dateReunionField.getText();
-	    	Date dateReunion;
-	    	
-				dateReunion = dateFormat.parse(strDateReunion);
-			
+			Date dateReunion = dateFormat.parse(strDateReunion);
 	    	SimpleDateFormat heureFormat = new SimpleDateFormat("h:mm");
 	    	String strDebutReunion = (String) this.debutReunionCBox.getSelectedItem();
 	    	Date debutReunion = heureFormat.parse(strDebutReunion);
@@ -293,8 +290,11 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
+                SimpleDateFormat heureFormat = new SimpleDateFormat("h:mm");
+                this.reunion.setHeureReunion(heureFormat.parse((String)this.debutReunionCBox.getSelectedItem()));
+                this.reunion.setDureeReunion(heureFormat.parse((String)this.dureeReunionCBox.getSelectedItem()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);
-
+                
                 // autoriser gestion participants - equipements
                 this.btParticipants.setEnabled(true);
                 this.btEquip.setEnabled(true);
@@ -328,6 +328,10 @@ public class FenetreReunion extends JFrame implements ActionListener{
 
 	public void setDebutReunionField(String s){
 		// this.debutReunionCBox.setText(s);
+	}
+	
+	public void setDureeReunionField(String s){
+		// this.dureeReunionCBox.setText(s);
 	}
 
 	public void setSujetReunionField(String s){

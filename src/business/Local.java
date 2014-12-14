@@ -1,5 +1,7 @@
 package business;
 
+import java.util.Date;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -12,7 +14,8 @@ public class Local {
     private String code;
     @DatabaseField(useGetSet = true, canBeNull = false)
     private int capacite;
-
+    
+    private Calendrier calendrier;
     /*
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
@@ -23,6 +26,7 @@ public class Local {
     {
         this.code = code;
         this.capacite = capacite;
+        this.calendrier = new Calendrier();
     }
 
     public String getCode()
@@ -35,6 +39,10 @@ public class Local {
         return this.capacite;
     }
 
+    public Calendrier getCalendrier()
+    {
+    	return this.calendrier;
+    }
     public void setCode(String code)
     {
         this.code = code;
@@ -44,5 +52,8 @@ public class Local {
     {
         this.capacite = capacite;
     }
-
+    public void addLstPlageHoraire (Date date, Date heure, Date duree)
+    {
+    	this.calendrier.addLstPlageHoraire(date, heure, duree);
+    }
 }
