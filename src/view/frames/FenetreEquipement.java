@@ -1,33 +1,21 @@
 package view.frames;
-import java.awt.Dimension;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import business.Employe;
-import business.Equipement;
 import business.ListeEquipement;
 import controleurs.ControleurEquipement;
-import controleurs.ControleurParticipant;
 import view.components.*;
 import view.tablemodels.ListeEquipementReserveTableModel;
 import view.tablemodels.ListeEquipementTableModel;

@@ -1,15 +1,13 @@
 package controleurs;
 
 import business.*;
+import dbmanager.LocalDBManager;
 import dbmanager.OrganisateurDBManager;
 import dbmanager.ParticipantDBManager;
+import dbmanager.PlageHoraireDBManager;
 import dbmanager.ReservationEquipementDBManager;
 import dbmanager.ReunionDBManager;
 import view.frames.FenetreReunion;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -80,14 +78,26 @@ public class ControleurPlanifierReunion {
         }
     }
 
-    public List<Local> getLstLocauxDispos(Date dateReunion,Date heureReunion, Date dureeReunion,int nbParticipants){
-    //public List<Local> getLstLocauxDispos(int nbParticipants){
-    	//List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().trouverLocauxParCapaciteMin(nbParticipants);
-    	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().getLocauxDisponibles(dateReunion,heureReunion,dureeReunion,nbParticipants);
+    public List<Local> getLstLocauxDispos(Reunion reunion){
+    	List<Local> lstLocauxDispo = SessionManager.getInstance().getPoolLocaux().getLocauxDisponibles(reunion);
     	return lstLocauxDispo;
     }
 
-    
+	public void reserverLocal(Reunion reunion,String codeLocal){
+		Local localChoisi;
+		try {
+			localChoisi = LocalDBManager.getInstance().trouverLocal(codeLocal);
+			reunion.setLocal(localChoisi);
+			localChoisi.getCalendrier().addLstPlageHoraire(reunion.getDateReunion(), reunion.getHeureReunion(), reunion.getDureeReunion(), codeLocal);
+			for(PlageHoraire ph: localChoisi.getCalendrier().getLstPlageHoraire())
+			{
+					PlageHoraireDBManager.getInstance().creerPlageHoraire(ph);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+	}
     private void updateParticipants(Reunion reunion) throws SQLException
     {
         List<Participant> participantsEnBase = ParticipantDBManager.getInstance().trouverParticipantParReunion(reunion.getId());

@@ -1,15 +1,76 @@
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import business.Employe;
 import business.Equipement;
 import business.Local;
+import business.Organisateur;
+import business.Reunion;
 import dbmanager.EmployeDBManager;
 import dbmanager.EquipementDBManager;
 import dbmanager.LocalDBManager;
+import dbmanager.OrganisateurDBManager;
+import dbmanager.ReunionDBManager;
+
 
 
 public class InitialisationBD {
 	
+	public static void remplirDBOrganisateur(){
+		try {
+			Organisateur organisateur1 = OrganisateurDBManager.getInstance().trouverOrganisateur(1);
+			Organisateur organisateur5 = OrganisateurDBManager.getInstance().trouverOrganisateur(3);
+			Organisateur organisateur8 = OrganisateurDBManager.getInstance().trouverOrganisateur(8);
+			OrganisateurDBManager.getInstance().creerOrganisateur(organisateur1);
+			OrganisateurDBManager.getInstance().creerOrganisateur(organisateur5);
+			OrganisateurDBManager.getInstance().creerOrganisateur(organisateur8);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void creerReunion1(){
+		Date date1 = new Date();
+		Date heure1 = new Date();
+		Date duree1 = new Date();
+		String heure2;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat heureFormat = new SimpleDateFormat("K:mm");
+		try {
+			date1 = dateFormat.parse("12/12/2014");
+			heure1 = heureFormat.parse("13:00");
+			heure2 = heureFormat.format(heure1);
+			duree1 = heureFormat.parse("1:30");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		Reunion reunion1 = new Reunion();
+		try {
+			//Organisateur organisateur = new Organisateur(EmployeDBManager.getInstance().trouverEmploye(1));
+			reunion1.setOrganisateur(OrganisateurDBManager.getInstance().trouverOrganisateur(1));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		reunion1.setDateReunion(date1);
+		reunion1.setHeureReunion(heure1);
+		reunion1.setDureeReunion(duree1);
+		reunion1.setEstRecurente(false);
+		reunion1.setNbParticipants(10);
+		reunion1.setSujet("Revue projet xyz");
+		try {
+			ReunionDBManager.getInstance().creerReunion(reunion1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	public static void remplirDBEmploye(){
 		try {
 	        // test orm lite - methode 1, creation objet par constructeur
@@ -44,9 +105,28 @@ public class InitialisationBD {
 	public static void remplirDBLocal(){
 		try {
 	        LocalDBManager localDBManager = LocalDBManager.getInstance();
-	        Local testLocal = new Local("0E3C", 20);
+	        Local testLocal = new Local();
+	        testLocal.setCapacite(20);
+	        testLocal.setCode("0E3C");
 	        localDBManager.creerLocal(testLocal);
-	      
+	        Local testLocal1 = new Local();
+	        testLocal1.setCapacite(10);
+	        testLocal1.setCode("A0304");
+	        localDBManager.creerLocal(testLocal1);
+	        Local testLocal2 = new Local();
+	        testLocal2.setCapacite(5);
+	        testLocal2.setCode("B0432");
+	        localDBManager.creerLocal(testLocal2);
+	        Local testLocal3 = new Local();
+	        testLocal3.setCapacite(10);
+	        testLocal3.setCode("B5232");
+	        localDBManager.creerLocal(testLocal3);
+	        Local testLocal4 = new Local();
+	        testLocal4.setCapacite(15);
+	        testLocal4.setCode("A1265");
+	        localDBManager.creerLocal(testLocal4);
+	        
+	        
 		}
 		 catch (SQLException ex)
 	    {

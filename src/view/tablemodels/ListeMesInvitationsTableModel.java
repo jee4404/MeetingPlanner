@@ -1,6 +1,5 @@
 package view.tablemodels;
 
-import business.ListeParticipants;
 import business.Participant;
 import business.Reunion;
 import business.SessionManager;

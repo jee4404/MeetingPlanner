@@ -93,6 +93,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateReunionField = new JFormattedTextField(dateFormat);
         dateReunionField.setPreferredSize(dim100);
+        // Si modifier réunion existante
         dateReunionField.setText(reunion.getDateReunion() != null ? dateFormat.format(reunion.getDateReunion()) : ""); 
 	    
 	    
@@ -119,19 +120,25 @@ public class FenetreReunion extends JFrame implements ActionListener{
         recurrenceReunionSpinner.setEditor(new JSpinner.NumberEditor(this.recurrenceReunionSpinner));
 
 	    // Heure du début de la réunion
+    	SimpleDateFormat heureFormat = new SimpleDateFormat("k:mm");
         JLabel debutReunionLabel = new JLabel("Heure :");
 	    debutReunionLabel.setPreferredSize(dim100);
 	    String debLabels[] = { "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"};
 	    this.debutReunionCBox = new JComboBox(debLabels);
 	    debutReunionCBox.setPreferredSize(dim100);
-	    
+	    // Si modifier réunion existante
+	    if(reunion.getHeureReunion() != null)
+	    	debutReunionCBox.setSelectedItem(heureFormat.format(reunion.getHeureReunion()));
+	    	    
 	    // Durée de la réunion
         JLabel dureeReunionLabel = new JLabel("Durée :");
 	    dureeReunionLabel.setPreferredSize(dim50);
 	    String durLabels[] = { "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00"};
         dureeReunionCBox = new JComboBox(durLabels);
 	    dureeReunionCBox.setPreferredSize(dim100);
-	    
+	    // Si modifier réunion existante
+	    if(reunion.getDureeReunion() != null)
+	    	dureeReunionCBox.setSelectedItem(heureFormat.format(reunion.getDureeReunion()));
 	    
 	    // Choix du nombre de participants
         JLabel nombreParticipantsLabel = new JLabel("Nb de participants :");
@@ -222,6 +229,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
         btFermer.addActionListener(this);
         btSave.addActionListener(this);
  	   	recurrenceCBox.addActionListener(this);
+ 	   	
 
         // la fenetre connait la réunion pour la passer au controleur
         this.reunion = reunion;
@@ -241,16 +249,17 @@ public class FenetreReunion extends JFrame implements ActionListener{
         {
 	      try {
 	    	int nbParticipants = (int) this.nbParticipantsSpinner.getValue();
+	    	this.reunion.setNbParticipants(nbParticipants);
 	    	// conversion de la date, heure et durée de String à Date
 	    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	    	String strDateReunion = this.dateReunionField.getText();
-			Date dateReunion = dateFormat.parse(strDateReunion);
-	    	SimpleDateFormat heureFormat = new SimpleDateFormat("h:mm");
-	    	String strDebutReunion = (String) this.debutReunionCBox.getSelectedItem();
-	    	Date debutReunion = heureFormat.parse(strDebutReunion);
-	    	String strDureeReunion = (String) this.dureeReunionCBox.getSelectedItem();
-	    	Date dureeReunion = heureFormat.parse(strDureeReunion);
-	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(dateReunion,debutReunion,dureeReunion,nbParticipants);
+			Date dateReunion = dateFormat.parse(this.dateReunionField.getText());
+			this.reunion.setDateReunion(dateReunion);
+	    	SimpleDateFormat heureFormat = new SimpleDateFormat("k:mm");
+	    	Date debutReunion = heureFormat.parse( (String) this.debutReunionCBox.getSelectedItem());
+	    	this.reunion.setHeureReunion(debutReunion);
+	    	Date dureeReunion = heureFormat.parse((String) this.dureeReunionCBox.getSelectedItem());
+	    	this.reunion.setDureeReunion(dureeReunion);
+	    	List<Local> lstLocauxDispo = ControleurPlanifierReunion.getInstance().getLstLocauxDispos(this.reunion);
 
 	    	if (lstLocauxDispo.isEmpty()){
 	    		JOptionPane.showMessageDialog(this, "Aucun local disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -261,6 +270,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
 	    		String codeLocal = (String) JOptionPane.showInputDialog(this, "Locaux disponibles", "Locaux", JOptionPane.INFORMATION_MESSAGE, null, codesLocaux, codesLocaux[0]);
 	    		this.reunion.setLocal(lstLocauxDispo.stream().filter(local -> local.getCode() == codeLocal).findFirst().orElse(new Local()));
 	    		this.localReunionField.setText(codeLocal);
+	    		ControleurPlanifierReunion.getInstance().reserverLocal(this.reunion, codeLocal);
 	    	}
 	      } catch (ParseException e) {
 				// TODO Auto-generated catch block
@@ -290,7 +300,7 @@ public class FenetreReunion extends JFrame implements ActionListener{
                 this.reunion.setNbParticipants((Integer) this.nbParticipantsSpinner.getValue());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 this.reunion.setDateReunion(dateFormat.parse(this.dateReunionField.getText()));
-                SimpleDateFormat heureFormat = new SimpleDateFormat("h:mm");
+                SimpleDateFormat heureFormat = new SimpleDateFormat("k:mm");
                 this.reunion.setHeureReunion(heureFormat.parse((String)this.debutReunionCBox.getSelectedItem()));
                 this.reunion.setDureeReunion(heureFormat.parse((String)this.dureeReunionCBox.getSelectedItem()));
                 ControleurPlanifierReunion.getInstance().creerReunion(reunion);

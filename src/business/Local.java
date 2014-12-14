@@ -20,7 +20,10 @@ public class Local {
         orm-lite a besoin d'un constructeur
         sans paramêtre de visibilité package au min
     * */
-    public Local(){}
+    public Local()
+    {
+        this.calendrier = new Calendrier();
+    }
 
     public Local(String code, int capacite)
     {
@@ -54,6 +57,11 @@ public class Local {
     }
     public void addLstPlageHoraire (Date date, Date heure, Date duree)
     {
-    	this.calendrier.addLstPlageHoraire(date, heure, duree);
+    	this.calendrier.addLstPlageHoraire(date, heure, duree,this.code);
+    }
+    
+    public void setCalendrier(Calendrier calendrier)
+    {
+    	this.calendrier = calendrier;
     }
 }

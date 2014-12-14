@@ -1,5 +1,7 @@
 package business;
-
+/**
+ * Created by Marie
+ */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,12 +10,13 @@ public class Calendrier {
 	private List<PlageHoraire> lstPlageHoraire;
 	
 	public Calendrier(){
-		this.lstPlageHoraire = new ArrayList();
+		this.lstPlageHoraire = new ArrayList<PlageHoraire>();
 	}
-	
-	//public void addPlageHoraire(PlageHoraire plageHoraire){
-	//	this.lstPlageHoraire.add(plageHoraire);
-	//}
+
+	public Calendrier( List<PlageHoraire> lstPlageHoraire)
+	{
+		this.lstPlageHoraire = lstPlageHoraire;
+	}
 	
 	public List<PlageHoraire> getLstPlageHoraire(){
 		return this.lstPlageHoraire;
@@ -42,12 +45,11 @@ public class Calendrier {
 		return disponibilite;
 	}
 	
-	   public void addLstPlageHoraire (Date date, Date heure, Date duree){
-	    	//List<PlageHoraire> plageHoraireReunion = new ArrayList();
+	   public void addLstPlageHoraire (Date date, Date heure, Date duree, String codeLocal){
 	    	Date heureFin = ajouteTemps(heure,getHour(duree),getMin(duree));
 	    	Date heurePlageHoraire = heure;
 	    	while (heurePlageHoraire.compareTo(heureFin) < 0){
-	    		PlageHoraire ph = new PlageHoraire(date, heurePlageHoraire);
+	    		PlageHoraire ph = new PlageHoraire(date, heurePlageHoraire, codeLocal);
 	    		this.lstPlageHoraire.add(ph);
 	    		heurePlageHoraire = ajouteTemps(heurePlageHoraire, 0, 30);
 	    	}
@@ -70,6 +72,10 @@ public class Calendrier {
 	    	Calendar cal = Calendar.getInstance();
 	    	cal.setTime(date);
 	    	return cal.get(Calendar.MINUTE);
+	    }
+	    public void addPlageHoraire(PlageHoraire ph)
+	    {
+	    	this.lstPlageHoraire.add(ph);
 	    }
 	
 }

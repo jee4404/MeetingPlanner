@@ -1,9 +1,7 @@
 package view.tablemodels;
 
 
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-
 import business.InventaireEquipement;
 import business.SessionManager;
 

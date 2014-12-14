@@ -1,10 +1,8 @@
 package controleurs;
 
-import java.sql.SQLException;
 
 import business.*;
 import view.frames.FenetreEquipement;
-import dbmanager.ReservationEquipementDBManager;
 
 public class ControleurEquipement {
     private static ControleurEquipement controleurEquipement = new ControleurEquipement();

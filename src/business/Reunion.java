@@ -2,7 +2,10 @@ package business;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Rémy on 2014-11-13.
@@ -40,7 +43,6 @@ public class Reunion {
 
     private ListeEquipement listeEquipement;
     
-    //private Calendrier calendrier;
     
     /*
         orm-lite a besoin d'un constructeur
@@ -66,8 +68,6 @@ public class Reunion {
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
         this.listeParticipants = new ListeParticipants();
-        //this.calendrier = new Calendrier();
-        //this.setCalendrier(dateReunion, heureReunion, dureeReunion);
     }
 
     public Reunion(String sujet, Date dateReunion,  Date heureReunion, Date dureeReunion,int nbParticipants, boolean estRecurente, Local local, Organisateur organisateur)
@@ -83,7 +83,6 @@ public class Reunion {
         this.organisateur = organisateur;
         this.listeEquipement = new ListeEquipement();
         this.listeParticipants = new ListeParticipants();
-        //this.setCalendrier(dateReunion, heureReunion, dureeReunion);
     }
 
     public int getId()
@@ -124,10 +123,6 @@ public class Reunion {
     {
     	return this.dureeReunion;
     }
-    
-   /* public Calendrier getCalendrier(Date date, Date heure, Date duree){
-    	return calendrier;
-    }*/
 
     public Local getLocal()
     {
@@ -169,11 +164,6 @@ public class Reunion {
         this.dureeReunion = dureeReunion;
     }
     
-    /*public void setCalendrier(Date dateReunion, Date heureReunion, Date dureeReunion){
-    	this.calendrier = new Calendrier();
-    	calendrier.setLstPlageHoraire(dateReunion, heureReunion, dureeReunion);
-    }*/
-    
     public void setNbParticipants(int nbParticipants)
     {
         this.nbParticipants = nbParticipants;
@@ -208,4 +198,6 @@ public class Reunion {
     {
         this.listeParticipants = listeParticipants;
     }
+    
+
 }

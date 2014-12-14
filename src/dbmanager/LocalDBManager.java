@@ -1,12 +1,15 @@
 package dbmanager;
 
+import business.Calendrier;
 import business.Local;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,6 +75,13 @@ public class LocalDBManager {
 
     public List<Local> trouverTousLocaux() throws SQLException
     {
-        return this.daoLocal.queryForAll();
+    	List<Local> lstLocaux = new ArrayList<Local>();
+        //return this.daoLocal.queryForAll();
+        for(Local local : this.daoLocal.queryForAll())
+        {
+        	local.setCalendrier(new Calendrier(PlageHoraireDBManager.getInstance().trouverPlageHoraireParLocal(local.getCode())));
+        	lstLocaux.add(local);
+        }
+        return lstLocaux;
     }
 }

@@ -1,7 +1,9 @@
 package business;
 
 import java.util.List;
-
+/**
+ * Created by Marie
+ */
 public class InventaireEquipement {
 	private List<Equipement> lstEquipement;
 	
